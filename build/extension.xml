@@ -1,0 +1,24 @@
+<extension xmlns="http://ns.adobe.com/air/extension/4.0">
+    <id>digicrafts.extensions.Advertising</id>
+    <versionNumber>1.0.0</versionNumber>
+    <copyright>(c) 2014, Digicrafts, Inc. All rights reserved.</copyright>
+    <platforms>
+        <platform name="Android-ARM">
+            <applicationDeployment>
+                <nativeLibrary>libAdvertising.jar</nativeLibrary>
+                <initializer>digicrafts.extensions.AdvertisingExtension</initializer>
+                <finalizer>digicrafts.extensions.AdvertisingExtension</finalizer>
+            </applicationDeployment>
+        </platform>
+        <platform name="iPhone-ARM">
+            <applicationDeployment>
+                <nativeLibrary>libAdvertising.a</nativeLibrary>
+                <initializer>AdvertisingExtInitializer</initializer>
+                <finalizer>AdvertisingExtFinalizer</finalizer>
+            </applicationDeployment>
+        </platform>
+        <platform name="default">
+            <applicationDeployment/>
+        </platform>
+    </platforms>
+</extension>

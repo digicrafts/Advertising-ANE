@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Advertising' target in the 'Advertising' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif
