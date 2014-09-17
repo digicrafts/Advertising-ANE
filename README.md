@@ -82,22 +82,21 @@ import digicrafts.extensions.events.*;
 Create a settings object. And add the adapter for different network.
 
 ```javascript       
+// Create a setting instance for the banner         
+var settings:AdSettings= new AdSettings();
 
-        // Create a setting instance for the banner         
-        var settings:AdSettings= new AdSettings();
+// Manual create adapter
+// AdMob
+var adMob:AdMobAdapter=new AdMobAdapter('AD-UNIT-ID');
+// Amazon
+var amazon:AmazonAdapter=new AmazonAdapter('APP_ID');        
+// iAd
+var iAd:IAdAdapter=new IAdAdapter();
 
-        // Manual create adapter
-        // AdMob
-        var adMob:AdMobAdapter=new AdMobAdapter('AD-UNIT-ID');
-        // Amazon
-        var amazon:AmazonAdapter=new AmazonAdapter('APP_ID');        
-        // iAd
-        var iAd:IAdAdapter=new IAdAdapter();
-        
-        // Add the adapter to the settings
-        settings.add(adMob,2);
-        settings.add(amazon,1);
-        settings.iAd(amazon,3);
+// Add the adapter to the settings
+settings.add(adMob,2);
+settings.add(amazon,1);
+settings.iAd(amazon,3);
 ```
 
 Create a banner and load. Supply an unique name and size for each banner.
@@ -113,13 +112,14 @@ You can also show the banner immediately. Supply the position and refresh rate.
 ```
 
 Supported positions.
-- AdPosition.BOTTOM
-- AdPosition.BOTTOM_LEFT
-- AdPosition.BOTTOM_RIGHT
-- AdPosition.TOP
-- AdPosition.TOP_LEFT
-- AdPosition.TOP_RIGHT
-- AdPosition.CENTER
+
+* AdPosition.BOTTOM
+* AdPosition.BOTTOM_LEFT
+* AdPosition.BOTTOM_RIGHT
+* AdPosition.TOP
+* AdPosition.TOP_LEFT
+* AdPosition.TOP_RIGHT
+* AdPosition.CENTER
 
 Remove the banner from screen.
 
@@ -153,13 +153,21 @@ Advertising.getInstance().addEventListener(AdEvent.AD_LOADED, handleAdEvent );
 ```
 
 Supported events.
-*AdEvent.AD_LOADED*  Event type for ad loaded.
-*AdEvent.AD_WILL_PRESENT*  Event type for ad will going to show on screen.
-*AdEvent.AD_DID_PRESENT*  Event type for ad did show on screen.
-*AdEvent.AD_WILL_DISMISS*  Event type for ad will remove from screen.
-*AdEvent.AD_DID_DISMISS*  Event type for ad did remove from screen.
-*AdEvent.AD_FAILED_TO_LOAD*  Event type for ad did fail to load.
-*AdEvent.WILL_LEAVE_APPLICATION*  Event type for ad did fail to load.
+
+- *AdEvent.AD_LOADED*               
+    -Event type for ad loaded.
+- *AdEvent.AD_WILL_PRESENT*         
+    -Event type for ad will going to show on screen.
+- *AdEvent.AD_DID_PRESENT*          
+    -Event type for ad did show on screen.
+- *AdEvent.AD_WILL_DISMISS*         
+    -Event type for ad will remove from screen.
+- *AdEvent.AD_DID_DISMISS*          
+    -Event type for ad did remove from screen.
+- *AdEvent.AD_FAILED_TO_LOAD*       
+    -Event type for ad did fail to load.
+- *AdEvent.WILL_LEAVE_APPLICATION*  
+    -Event type for ad did fail to load.
      
 
 ##Setup for Android
