@@ -23,16 +23,16 @@
 
 @synthesize testMode=testMode_;
 @synthesize rootController=rootController_;
-@synthesize bannerIndex=bannerIndex_;
-@synthesize interstitialIndex=interstitialIndex_;
+@synthesize adapterIndex=adapterIndex_;
+@synthesize cleanAdapterIndex=cleanAdapterIndex_;
 @synthesize lastAdapter=lastAdapter_;
 @synthesize callback=callback_;
 
 - (void) dealloc {
     
     self.rootController=nil;
-    self.bannerIndex=nil;
-    self.interstitialIndex=nil;
+    self.adapterIndex=nil;
+    self.cleanAdapterIndex=nil;
     
     [super dealloc];
 }
@@ -41,69 +41,92 @@
     if (self=[self init]) {                
         
         self.rootController=controller;
-        self.bannerIndex=[[NSMutableDictionary alloc] init];
-        self.interstitialIndex=[[NSMutableDictionary alloc] init];
+        self.adapterIndex=[[NSMutableDictionary alloc] init];
+        self.cleanAdapterIndex=[[NSMutableDictionary alloc] init];
         
     }
     return self;
 }
 
-- (void) create:(NSString*)uid size:(NSString*) size network:(NSString*) network adUnitId:(NSString*)adUnitId settings:(NSDictionary*)settings{
-    
-    NSLog(@"AdManager create id:%@ size:%@ network:%@",uid,size,network);
-
-    // check if uid exist
-    if([bannerIndex_ objectForKey:uid]==nil){
-
-        // create adapter
-        AbstractAdAdapter *adapter = [self createAdAdapter:uid size:size network:network adUnitId:adUnitId settings:settings];
-        
-        // put adpater in the index
-        [bannerIndex_ setObject:adapter forKey:uid];
-        
-        // load the ads
-        [adapter refresh];
-    }
-    
-}
+//- (void) create:(NSString*)uid size:(NSString*) size network:(NSString*) network adUnitId:(NSString*)adUnitId settings:(NSDictionary*)settings{
+//    
+//    NSLog(@"AdManager create id:%@ size:%@ network:%@",uid,size,network);
+//
+//    // check if uid exist
+//    if([adapterIndex_ objectForKey:uid]==nil){
+//
+//        // create adapter
+//        AbstractAdAdapter *adapter = [self createAdAdapter:uid size:size network:network adUnitId:adUnitId settings:settings];
+//        
+//        // put adpater in the index
+//        [adapterIndex_ setObject:adapter forKey:uid];
+//        
+//        // load the ads
+//        [adapter refresh];
+//    }
+//    
+//}
 
 - (AbstractAdAdapter*) load:(NSString*)uid size:(NSString*) size network:(NSString*) network adUnitId:(NSString*)adUnitId setting:(NSDictionary*)settings
 {
-    NSLog(@"AdManager load: %@ network: %@", uid, network);
+//    NSLog(@"AdManager load: %@ network: %@", uid, network);
     
-    AbstractAdAdapter *adapter = [bannerIndex_ objectForKey:uid];
+    AbstractAdAdapter *adapter = [adapterIndex_ objectForKey:uid];
     
     // Check if the id exist
     if(adapter){
         
-        NSLog(@"adapter exist %@ %@", [adapter getNetworkType], network);
+//        NSLog(@"adapter exist %@ %@", [adapter getNetworkType], network);
         
         if([[adapter getNetworkType] isEqualToString:network]){
             
             if([size isEqualToString:kAdAdapterSizeINTERSTITIAL])
-                [adapter refresh];
+                [adapter load:settings];
             
         } else {
-            
-            // clean adapter
-            [adapter remove];
-            [adapter destroy];
-            [bannerIndex_ removeObjectForKey:uid];
+
+            // check if last adapter ready
+            if (adapter.ready) {
+                
+//                // remove old adapter
+//                AbstractAdAdapter *old_adapter = [cleanAdapterIndex_ objectForKey:uid];
+//                if(old_adapter){
+//                    [old_adapter remove];
+//                    [old_adapter destroy];
+//                    [adapterIndex_ removeObjectForKey:uid];
+//                }
+                
+                // add current adapter to clean list
+                [cleanAdapterIndex_ setObject:adapter forKey:uid];
+                
+            } else {
+
+                // clean not ready adapter
+                [adapter remove];
+                [adapter destroy];
+                [adapterIndex_ removeObjectForKey:uid];
+            }
             
             // create new adapter
             adapter = [self createAdAdapter:uid size:size network:network adUnitId:adUnitId settings:settings];
             
             // put adpater in the index
-            [bannerIndex_ setObject:adapter forKey:uid];
+            [adapterIndex_ setObject:adapter forKey:uid];
             
             // refresh the ad
-            [adapter refresh];
+            [adapter load:settings];
         }
         
     } else {
         
+        // create adapter
+        adapter = [self createAdAdapter:uid size:size network:network adUnitId:adUnitId settings:settings];
+        
+        // put adpater in the index
+        [adapterIndex_ setObject:adapter forKey:uid];
+        
         // refresh the ad
-        [adapter refresh];
+        [adapter load:settings];
         
     }
    
@@ -128,7 +151,7 @@
 
     NSLog(@"AdManager remove: %@", uid);
     
-    AbstractAdAdapter *adapter = [bannerIndex_ objectForKey:uid];
+    AbstractAdAdapter *adapter = [adapterIndex_ objectForKey:uid];
     
     if(adapter){
         [adapter remove];
@@ -137,9 +160,9 @@
 
 - (void) pause:(NSString*)uid{
     
-    NSLog(@"AdManager pause: %@", uid);
+//    NSLog(@"AdManager pause: %@", uid);
     
-    AbstractAdAdapter *adapter = [bannerIndex_ objectForKey:uid];
+    AbstractAdAdapter *adapter = [adapterIndex_ objectForKey:uid];
     
     if(adapter){
         [adapter pause];
@@ -149,9 +172,9 @@
 
 - (void) resume:(NSString*)uid{
     
-    NSLog(@"AdManager resume: %@", uid);
+//    NSLog(@"AdManager resume: %@", uid);
     
-    AbstractAdAdapter *adapter = [bannerIndex_ objectForKey:uid];
+    AbstractAdAdapter *adapter = [adapterIndex_ objectForKey:uid];
     
     if(adapter){
         [adapter resume];
@@ -176,7 +199,6 @@
 
 - (AbstractAdAdapter*) createAdAdapter:(NSString*)uid size:(NSString*) size network:(NSString*) network adUnitId:(NSString*)adUnitId settings:(NSDictionary*) settings
 {
-    
     if(settings==nil) return nil;
     
     // define
@@ -268,40 +290,20 @@
 
 #pragma mark - AdAdapterDelegate
 
-///**
-// * Event type for ad loaded.
-// */
-//public static const AD_LOADED:String="onAdLoaded";
-///**
-// * Event type for ad will going to show on screen.
-// */
-//public static const AD_WILL_PRESENT:String="onAdWillPresent";
-///**
-// * Event type for ad did show on screen.
-// */
-//public static const AD_DID_PRESENT:String="onAdDidPresent";
-///**
-// * Event type for ad will remove from screen.
-// */
-//public static const AD_WILL_DISMISS:String="onAdWillDismiss";
-///**
-// * Event type for ad did remove from screen.
-// */
-//public static const AD_DID_DISMISS:String="onAdDidDismiss";
-///**
-// * Event type for ad did fail to load.
-// */
-//public static const AD_FAILED_TO_LOAD:String="onAdFailedToLoad";
-///**
-// * Event type for ad did fail to load.
-// */
-//public static const WILL_LEAVE_APPLICATION:String="onWillLeaveApplication";
-///**
-// * Event type for ad did fail to load.
-// */
-//public static const AD_ACTION:String="onAdAction";
+- (void)adLog:(NSString*)msg
+{
+    if(callback_) callback_(@"LOGGING", msg);
+}
 
 - (void)adAdapterDidReceiveAd:(AbstractAdAdapter *)adapter{
+    
+    // remove old adapter
+    AbstractAdAdapter *old_adapter = [cleanAdapterIndex_ objectForKey:adapter.uid];
+    if(old_adapter){
+        [old_adapter remove];
+        [old_adapter destroy];
+        [cleanAdapterIndex_ removeObjectForKey:adapter.uid];
+    }
     
     if(callback_) callback_(@"onAdLoaded", [self buildEventWithUid:adapter.uid size:adapter.size network:adapter.getNetworkType error:nil]);
 }

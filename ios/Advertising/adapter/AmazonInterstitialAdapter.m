@@ -51,7 +51,7 @@
 
 - (void) showInPosition:(NSString*) position offsetX: (int) x offsetY:(int) y {
     
-    NSLog(@"amazon showInPosition %d",[adView_ isReady]);
+//    NSLog(@"amazon showInPosition %d",[adView_ isReady]);
     
     if([adView_ isReady]){
         [adView_ presentFromViewController:rootController_];
@@ -63,7 +63,7 @@
 - (void) remove{
 }
 
-- (void) refresh{
+- (void) load:(NSDictionary*)settings{
 
     NSLog(@"amazon refresh %d %d",[adView_ isShowing],[adView_ isReady]);
     
@@ -75,6 +75,14 @@
         // Turn on isTestRequest to load a test ad
         if(testMode_)
             options.isTestRequest = YES;
+        
+        // Get extra parameter
+        Boolean enableLocation=[settings objectForKey:@"enableGeoLocation"];
+        if(enableLocation)
+            options.usesGeoLocation=YES;
+        NSNumber *age=[settings objectForKey:@"age"];
+        if(age)
+            options.age=age;
         
         // Call loadAd
         [adView_ load:options];
@@ -114,7 +122,7 @@
 
 - (void)interstitialDidPresent:(AmazonAdInterstitial *)interstitial
 {
-    NSLog(@"[AmazonAds] Interstitial has been presented.");
+     [delegate_ adAdapterDidPresent:self];
 }
 
 - (void)interstitialWillDismiss:(AmazonAdInterstitial *)interstitial

@@ -16,16 +16,16 @@ typedef void(^AdManagerCallback)(NSString*, NSString*);
     
     bool testMode_;
     UIViewController* rootController_;
-    NSMutableDictionary *bannerIndex_;
-    NSMutableDictionary *interstitialIndex_;
+    NSMutableDictionary *adapterIndex_;
+    NSMutableDictionary *cleanAdapterIndex_;
     AbstractAdAdapter *lastAdapter_;
     AdManagerCallback callback_;
     
 }
 @property (nonatomic, assign) bool testMode;
 @property (nonatomic, retain) UIViewController* rootController;
-@property (nonatomic, retain) NSMutableDictionary *bannerIndex;
-@property (nonatomic, retain) NSMutableDictionary *interstitialIndex;
+@property (nonatomic, retain) NSMutableDictionary *adapterIndex;
+@property (nonatomic, retain) NSMutableDictionary *cleanAdapterIndex;
 @property (nonatomic, retain) AbstractAdAdapter *lastAdapter;
 @property (nonatomic, copy) AdManagerCallback callback;
 
@@ -34,7 +34,7 @@ typedef void(^AdManagerCallback)(NSString*, NSString*);
 
 
 - (id) initWithContiner:(UIViewController*)controller;
-- (void) create:(NSString*)uid size:(NSString*) size network:(NSString*) network adUnitId:(NSString*)adUnitId settings:(NSDictionary*)settings;
+//- (void) create:(NSString*)uid size:(NSString*) size network:(NSString*) network adUnitId:(NSString*)adUnitId settings:(NSDictionary*)settings;
 - (AbstractAdAdapter*) load:(NSString*)uid size:(NSString*) size network:(NSString*) network adUnitId:(NSString*)adUnitId setting:(NSDictionary*)settings;
 - (void) show:(NSString*)uid size:(NSString*) size network:(NSString*) network adUnitId:(NSString*)adUnitId setting:(NSDictionary*)settings position:(NSString*) position x:(int)x y:(int)y;
 - (void) remove:(NSString*)uid;

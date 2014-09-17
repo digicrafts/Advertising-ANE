@@ -2,9 +2,11 @@ package digicrafts.extensions.core;
 
 import android.app.Activity;
 import android.graphics.Rect;
+import android.location.Location;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import com.adobe.fre.FREContext;
 import com.inmobi.commons.InMobi;
 import com.inmobi.monetization.IMBanner;
 import digicrafts.extensions.adapter.*;
@@ -32,17 +34,18 @@ public class AdManager {
     public static String appKey = "";
     public static String deviceID = "";
     public static Button dummy;
-    public static AdAdapterListener listener;
+    public static Location location;
+
+//    public static AdAdapterListener listener;
 
 // Private var
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    private FREContext _context;
     private Activity _activity;
     private RelativeLayout _container;
-    private Map<String, AdAdapterInterface> _bannerMap;
-    private Map<String, AdAdapterInterface> _interstitialMap;
-    private AdAdapterInterface _lastAdapter;
-    private AdAdapterInterface _currentAdapter;
+    private Map<String, AdAdapterInterface> _adapterMap;
+    private Map<String, AdAdapterInterface> _cleanAdapterMap;
 
 // Constructor
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,11 +53,13 @@ public class AdManager {
     /**
      *
      */
-    public AdManager(Activity activity) {
+    public AdManager(FREContext context) {
 
-        _activity = activity;
-        _bannerMap = new HashMap<String, AdAdapterInterface>();
-        _container = ViewUtils.getContainerView(activity);
+        _context = context;
+        _activity = context.getActivity();
+        _adapterMap = new HashMap<String, AdAdapterInterface>();
+        _cleanAdapterMap = new HashMap<String, AdAdapterInterface>();
+        _container = ViewUtils.getContainerView(_activity);
 
         // use for fix the bug for banner not display at first start
         if(dummy==null) dummy=new Button(_activity);
@@ -66,15 +71,14 @@ public class AdManager {
     public void dispose()
     {
 
-        if(_interstitialMap !=null) {
-
-            _interstitialMap.clear();
-            _interstitialMap = null;
+        if(_cleanAdapterMap !=null) {
+            _cleanAdapterMap.clear();
+            _cleanAdapterMap = null;
         }
 
-        if(_bannerMap !=null) {
-            _bannerMap.clear();
-            _bannerMap = null;
+        if(_adapterMap !=null) {
+            _adapterMap.clear();
+            _adapterMap = null;
         }
 
         if(_container !=null){
@@ -87,24 +91,24 @@ public class AdManager {
 // Public Methods
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     *
-     * @param id
-     * @param size
-     * @param network
-     * @param settings
-     */
-    public void create(String id, String size, String network, String adUnitId, Map<String, Object> settings)
-    {
-        // Get existing adapter
-        AdAdapterInterface adapter = _bannerMap.get(id);
-
-        // Check if the id exist
-        if(adapter == null){
-            adapter = _createAdapter(id, size, network, adUnitId, settings);
-            adapter.load();
-        }
-    }
+//    /**
+//     *
+//     * @param id
+//     * @param size
+//     * @param network
+//     * @param settings
+//     */
+//    public void create(String id, String size, String network, String adUnitId, Map<String, Object> settings)
+//    {
+//        // Get existing adapter
+//        AdAdapterInterface adapter = _adapterMap.get(id);
+//
+//        // Check if the id exist
+//        if(adapter == null){
+//            adapter = _createAdapter(id, size, network, adUnitId, settings);
+//            adapter.load();
+//        }
+//    }
 
     /**
      *
@@ -117,7 +121,7 @@ public class AdManager {
     {
 
         // Get existing adapter
-        AdAdapterInterface adapter = _bannerMap.get(id);
+        AdAdapterInterface adapter = _adapterMap.get(id);
 
         // Check if the id exist
         if(adapter == null){
@@ -131,7 +135,7 @@ public class AdManager {
             // check if they are the same banner
             if(adapter.getNetworkType().equals(network)){
 
-                log("equal network: " + network + " isshow: " +adapter.isShow() + " id: " + id);
+                adAdapterListener.onLog("equal network: " + network + " isshow: " +adapter.isShow() + " id: " + id);
 
                 // if interstitial, lo
                 if(size.equals(AdAdapterSize.INTERSTITIAL)&&adapter.isShow())
@@ -139,12 +143,26 @@ public class AdManager {
 
             } else {
 
+                if(adapter.isLoaded()){
+
+                    // put in hash map
+                    _cleanAdapterMap.put(id, adapter);
+
+                } else {
+
+                    // clean not ready adapter
+                    adapter.setListener(null);
+                    adapter.pause();
+                    adapter.remove();
+                    _adapterMap.remove(id);
+                }
+
                 // clean adapter
-                _bannerMap.remove(id);
-                _lastAdapter=adapter;
-                _lastAdapter.setListener(null);
-                _lastAdapter.remove();
-                _lastAdapter.pause();
+//                _adapterMap.remove(id);
+//                _lastAdapter=adapter;
+//                _lastAdapter.setListener(null);
+//                _lastAdapter.remove();
+//                _lastAdapter.pause();
 
                 // create new adapter
                 adapter = _createAdapter(id, size, network, adUnitId, settings);
@@ -187,7 +205,7 @@ public class AdManager {
     {
 
         // Get existing adapter
-        AdAdapterInterface adapter = _bannerMap.get(id);
+        AdAdapterInterface adapter = _adapterMap.get(id);
 
 //        Log.d("DEBUG","remove");
 //        Log.d("DEBUG",id);
@@ -205,7 +223,7 @@ public class AdManager {
     public void pauseAll()
     {
 
-        for (Map.Entry<String, AdAdapterInterface> entry : _bannerMap.entrySet()) {
+        for (Map.Entry<String, AdAdapterInterface> entry : _adapterMap.entrySet()) {
             // Get existing adapter
             AdAdapterInterface adapter = entry.getValue();
             // pause the adapter
@@ -217,7 +235,7 @@ public class AdManager {
     public void resumeAll()
     {
 
-        for (Map.Entry<String, AdAdapterInterface> entry : _bannerMap.entrySet()) {
+        for (Map.Entry<String, AdAdapterInterface> entry : _adapterMap.entrySet()) {
             // Get existing adapter
             AdAdapterInterface adapter = entry.getValue();
             // pause the adapter
@@ -231,14 +249,14 @@ public class AdManager {
     {
 
         // Get existing adapter
-        AdAdapterInterface adapter = _bannerMap.get(id);
+        AdAdapterInterface adapter = _adapterMap.get(id);
 
         // Check if the id exist
         if(adapter != null){
 
             // clean adapter
             adapter.destroy();
-            _bannerMap.remove(id);
+            _adapterMap.remove(id);
 
         }
 
@@ -255,12 +273,30 @@ public class AdManager {
         Log.d(TAG, message);
     }
 
+
+    /**
+     *
+     * @param uid
+     * @param size
+     * @param network
+     * @param error
+     * @return
+     */
+    private String buildEvent(String uid, String size, String network, String error){
+
+        if(error==null)
+            return "{\"uid\":\""+uid+"\",\"size\":\""+size+"\",\"network\":\""+network+"\"}";
+
+        return "{\"uid\":\""+uid+"\",\"size\":\""+size+"\",\"network\":\""+network+"\",\"error\":\""+error+"\"}";
+    }
+
+
 // Private Methods
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private AdAdapterInterface _createAdapter(String id, String size, String network, String adUnitId, Map<String, Object> settings) {
 
-
+        adAdapterListener.onLog("create Adapter");
         Log.d("AdManager","_createAdapter: "+network+" size: "+size);
 
         // AdAdapter instance
@@ -316,63 +352,117 @@ public class AdManager {
             adapter.setSize(size);
 
             // if there last adapter
-            if(_lastAdapter!=null){
-                _currentAdapter=adapter;
-                _currentAdapter.setListener(
-                        new AdAdapterListener() {
-                            @Override
-                            public void onAdLoaded(String uid, String size, String network) {
-                                _lastAdapter.destroy();
-                                _lastAdapter=null;
-                                listener.onAdLoaded(uid,size,network);
-                                _currentAdapter.setListener(listener);
-                                _currentAdapter=null;
-                            }
+//            if(_lastAdapter!=null){
+//                _currentAdapter=adapter;
+//                _currentAdapter.setListener(
+//                        new AdAdapterListener() {
+//                            @Override
+//                            public void onAdLoaded(String uid, String size, String network) {
+//                                _lastAdapter.destroy();
+//                                _lastAdapter=null;
+//                                listener.onAdLoaded(uid,size,network);
+//                                _currentAdapter.setListener(listener);
+//                                _currentAdapter=null;
+//                            }
+//
+//                            @Override
+//                            public void onAdFailedToLoad(String uid, String size, String network, String error) {
+//                                _lastAdapter.destroy();
+//                                _lastAdapter=null;
+//                                listener.onAdFailedToLoad(uid,size,network,error);
+//                                _currentAdapter.setListener(listener);
+//                                _currentAdapter=null;
+//                            }
+//
+//                            @Override
+//                            public void onAdWillPresent(String uid, String size, String network) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onAdDidPresent(String uid, String size, String network) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onAdWillDismiss(String uid, String size, String network) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onAdDidDismiss(String uid, String size, String network) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onWillLeaveApplication(String uid, String size, String network) {
+//
+//                            }
+//                    });
+//            } else {
+//                adapter.setListener(listener);
+//                adapter.setListener(adAdapterListener);
+//            }
 
-                            @Override
-                            public void onAdFailedToLoad(String uid, String size, String network, String error) {
-                                _lastAdapter.destroy();
-                                _lastAdapter=null;
-                                listener.onAdFailedToLoad(uid,size,network,error);
-                                _currentAdapter.setListener(listener);
-                                _currentAdapter=null;
-                            }
-
-                            @Override
-                            public void onAdWillPresent(String uid, String size, String network) {
-
-                            }
-
-                            @Override
-                            public void onAdDidPresent(String uid, String size, String network) {
-
-                            }
-
-                            @Override
-                            public void onAdWillDismiss(String uid, String size, String network) {
-
-                            }
-
-                            @Override
-                            public void onAdDidDismiss(String uid, String size, String network) {
-
-                            }
-
-                            @Override
-                            public void onWillLeaveApplication(String uid, String size, String network) {
-
-                            }
-                    });
-            } else {
-                adapter.setListener(listener);
-            }
+            adapter.setListener(adAdapterListener);
 
             // put in hash map
-            _bannerMap.put(id, adapter);
+            _adapterMap.put(id, adapter);
         }
 
         // return the adapter
         return adapter;
     }
+
+    AdAdapterListener adAdapterListener = new AdAdapterListener() {
+        @Override
+        public void onAdLoaded(String uid, String size, String network) {
+            AdAdapterInterface adapter = _cleanAdapterMap.get(uid);
+            if(adapter!=null){
+                // clean not ready adapter
+                adapter.setListener(null);
+                adapter.pause();
+                adapter.remove();
+                _cleanAdapterMap.remove(uid);
+            }
+            _context.dispatchStatusEventAsync("onAdLoaded",buildEvent(uid,size,network,null));
+        }
+
+        @Override
+        public void onAdFailedToLoad(String uid, String size, String network, String error) {
+            _context.dispatchStatusEventAsync("onAdFailedToLoad",buildEvent(uid,size,network,error));
+        }
+
+        @Override
+        public void onAdWillPresent(String uid, String size, String network) {
+            _context.dispatchStatusEventAsync("onAdWillPresent",buildEvent(uid,size,network,null));
+        }
+
+        @Override
+        public void onAdDidPresent(String uid, String size, String network) {
+            _context.dispatchStatusEventAsync("onAdDidPresent",buildEvent(uid,size,network,null));
+        }
+
+        @Override
+        public void onAdWillDismiss(String uid, String size, String network) {
+            _context.dispatchStatusEventAsync("onAdWillDismiss",buildEvent(uid,size,network,null));
+        }
+
+        @Override
+        public void onAdDidDismiss(String uid, String size, String network) {
+            _context.dispatchStatusEventAsync("onAdDidDismiss",buildEvent(uid,size,network,null));
+        }
+
+        @Override
+        public void onWillLeaveApplication(String uid, String size, String network) {
+            _context.dispatchStatusEventAsync("onWillLeaveApplication",buildEvent(uid,size,network,null));
+        }
+
+        @Override
+        public void onLog(String msg) {
+            _context.dispatchStatusEventAsync("LOGGING",msg);
+        }
+    };
+
 
 }

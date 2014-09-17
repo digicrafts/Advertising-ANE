@@ -73,7 +73,7 @@
 + (BOOL) isLandscape;
 - (void) showInPosition:(NSString*) position offsetX: (int) x offsetY:(int) y;
 - (void) remove;
-- (void) refresh;
+- (void) load:(NSDictionary*)settings;
 - (void) pause;
 - (void) resume;
 - (void) destroy;
@@ -81,8 +81,6 @@
 
 // helper
 - (void) show_:(UIView*)view withPosition:(NSString*) position width: (int) w  height:(int) h offsetX: (int) x offsetY:(int) y;
-//- (void) layoutConstraint_:(UIView*)view withPosition:(NSString*) position offsetX: (int) x offsetY:(int) y;
-//- (void) layoutFrame_:(UIView*)view withPosition:(NSString*) position offsetX: (int) x offsetY:(int) y;
 - (NSString *) admobDeviceID_;
 
 @end
@@ -131,5 +129,6 @@
 - (void)adAdapterDidDismiss:(AbstractAdAdapter*)adapter;
 - (void)adAdapterWillDismiss:(AbstractAdAdapter *)adapter;
 - (void)adAdapterWillLeaveApplication:(AbstractAdAdapter*)adapter;
+- (void)adLog:(NSString*)msg;
 
 @end

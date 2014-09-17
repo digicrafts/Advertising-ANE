@@ -76,7 +76,7 @@ void ContextFinalizer(FREContext ctx);
 */
 ANE_FUNCTION(ext_initialize);
 ANE_FUNCTION(ext_testMode);
-ANE_FUNCTION(ext_create);
+//ANE_FUNCTION(ext_create);
 ANE_FUNCTION(ext_load);
 ANE_FUNCTION(ext_show);
 ANE_FUNCTION(ext_remove);

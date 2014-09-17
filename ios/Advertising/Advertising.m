@@ -56,7 +56,7 @@ void ContextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx, u
     {
         MAP_FUNCTION(ext_initialize, NULL),
         MAP_FUNCTION(ext_testMode, NULL),
-        MAP_FUNCTION(ext_create, NULL),
+//        MAP_FUNCTION(ext_create, NULL),
         MAP_FUNCTION(ext_load, NULL),
         MAP_FUNCTION(ext_show, NULL),
         MAP_FUNCTION(ext_remove, NULL),
@@ -128,33 +128,33 @@ ANE_FUNCTION(ext_testMode)
 	return nil;
 }
 
-ANE_FUNCTION(ext_create)
-{
-    if(adManager_){
-        
-        // get the parameters
-        uint32_t length = 0;
-        const uint8_t *uidString = NULL;
-        FREGetObjectAsUTF8( argv[0], &length, &uidString);
-        const uint8_t *sizeString = NULL;
-        FREGetObjectAsUTF8( argv[1], &length, &sizeString);
-        const uint8_t *networkString = NULL;
-        FREGetObjectAsUTF8( argv[2], &length, &networkString);
-        const uint8_t *adUnitIdString = NULL;
-        FREGetObjectAsUTF8( argv[3], &length, &adUnitIdString);
-        
-        // create the ads instance
-        [adManager_
-         create:[NSString stringWithUTF8String:(char *)uidString]
-         size:[NSString stringWithUTF8String:(char *)sizeString]
-         network:[NSString stringWithUTF8String:(char *)networkString]
-         adUnitId:[NSString stringWithUTF8String:(char *)adUnitIdString]
-         settings:FREConvertSettings(argv[4])];
-        
-    }
-    
-	return nil;
-}
+//ANE_FUNCTION(ext_create)
+//{
+//    if(adManager_){
+//        
+//        // get the parameters
+//        uint32_t length = 0;
+//        const uint8_t *uidString = NULL;
+//        FREGetObjectAsUTF8( argv[0], &length, &uidString);
+//        const uint8_t *sizeString = NULL;
+//        FREGetObjectAsUTF8( argv[1], &length, &sizeString);
+//        const uint8_t *networkString = NULL;
+//        FREGetObjectAsUTF8( argv[2], &length, &networkString);
+//        const uint8_t *adUnitIdString = NULL;
+//        FREGetObjectAsUTF8( argv[3], &length, &adUnitIdString);
+//        
+//        // create the ads instance
+//        [adManager_
+//         load:[NSString stringWithUTF8String:(char *)uidString]
+//         size:[NSString stringWithUTF8String:(char *)sizeString]
+//         network:[NSString stringWithUTF8String:(char *)networkString]
+//         adUnitId:[NSString stringWithUTF8String:(char *)adUnitIdString]
+//         settings:FREConvertSettings(argv[4])];
+//        
+//    }
+//    
+//	return nil;
+//}
 
 ANE_FUNCTION(ext_load)
 {
@@ -173,10 +173,6 @@ ANE_FUNCTION(ext_load)
         FREGetObjectAsUTF8( argv[3], &length, &adUnitIdString);
         const uint8_t *positionString = NULL;
         FREGetObjectAsUTF8( argv[5], &length, &positionString);
-        uint32_t x = 0;
-        FREGetObjectAsUint32(argv[6], &x);
-        uint32_t y = 0;
-        FREGetObjectAsUint32(argv[7], &y);
         
         // get root view controller
         UIViewController *rootViewController = [[UIApplication sharedApplication] keyWindow].rootViewController;

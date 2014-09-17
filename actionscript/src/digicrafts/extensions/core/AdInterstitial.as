@@ -27,5 +27,17 @@ public class AdInterstitial extends Ad{
         _show(AdPosition.FLOAT,0,0);
     }
 
+    /**
+     * @override
+     */
+    override protected function _next():void
+    {
+        super._next();
+
+        if(setting) {
+            _load();
+        }
+    }
+
 }
 }

@@ -5,12 +5,15 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.ViewGroup;
 import com.inmobi.commons.InMobi;
+import com.inmobi.monetization.IMBanner;
 import com.inmobi.monetization.IMErrorCode;
 import com.inmobi.monetization.IMInterstitial;
 import com.inmobi.monetization.IMInterstitialListener;
 import com.millennialmedia.android.*;
 import digicrafts.extensions.core.AbstractAdAdapter;
+import digicrafts.extensions.core.AdManager;
 import digicrafts.extensions.data.AdAdapterNetworkType;
+import digicrafts.extensions.data.AdAdapterSize;
 
 import java.util.Map;
 
@@ -36,8 +39,26 @@ public class InMobiInterstitialAdapter extends AbstractAdAdapter implements IMIn
                 InMobi.initialize(activity,adUnitId);
             }
 
+            // set debug message
+            if(AdManager.testMode){
+                InMobi.setLogLevel(InMobi.LOG_LEVEL.DEBUG);
+            }
+
             // Create an ad.
             _adView = new IMInterstitial(activity,adUnitId);
+
+            // Set the slot id
+            if(settings.get(AdAdapterSize.INTERSTITIAL)!=null){
+                long slotid = Long.parseLong((String)settings.get(AdAdapterSize.INTERSTITIAL),10);
+
+                // Create an ad with slot id.
+                if(slotid>0)
+                    _adView = new IMInterstitial(activity,slotid);
+            }
+
+            // create the banner view if not valid
+            if(_adView==null)
+                _adView = new IMInterstitial(activity,adUnitId);
 
             // setup listener
             _adView.setIMInterstitialListener(this);

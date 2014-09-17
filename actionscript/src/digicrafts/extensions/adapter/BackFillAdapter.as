@@ -8,15 +8,15 @@ import digicrafts.extensions.data.AdNetworkType;
 
 import flash.display.BitmapData;
 
-public class InHouseAdapter extends AbstractAdaper {
+public class BackFillAdapter extends AbstractAdaper {
 
     public var bitmap:BitmapData;
 
-    public function InHouseAdapter(link:String,priority:int, weight:int) {
+    public function BackFillAdapter(link:String) {
 
 //        this.bitmap=bmp;
 
-        super(AdNetworkType.BITMAP,priority,weight);
+        super(AdNetworkType.BACKFILL);
     }
 }
 }

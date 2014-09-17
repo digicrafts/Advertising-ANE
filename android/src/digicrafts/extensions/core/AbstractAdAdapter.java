@@ -45,8 +45,7 @@ public class AbstractAdAdapter implements AdAdapterInterface{
         if(view.getParent()==container){
             container.removeView(view);
         }
-
-        Log.d("_show","_show 2: " + position + " x:" + x + " y:"+y + " w:" + w + " h:"+ h+ " gw:" + view.getWidth() + " gh:"+ view.getHeight());
+//        Log.d("_show","_show 2: " + position + " x:" + x + " y:"+y + " w:" + w + " h:"+ h+ " gw:" + view.getWidth() + " gh:"+ view.getHeight());
 
         // Show the view in position
         if(position.equals(AdAdapterPosition.FLOAT)){
@@ -82,10 +81,10 @@ public class AbstractAdAdapter implements AdAdapterInterface{
      *
      * @return
      */
-//    public Boolean isLoaded()
-//    {
-//        return _isLoaded;
-//    }
+    public Boolean isLoaded()
+    {
+        return _isLoaded;
+    }
 
     /**
      *
@@ -160,7 +159,7 @@ public class AbstractAdAdapter implements AdAdapterInterface{
      *
      */
     public void callOnAdLoaded() {
-
+        _isLoaded=true;
         if(listener!=null) listener.onAdLoaded(_uid, this.getSize(), this.getNetworkType());
     }
 
@@ -192,7 +191,7 @@ public class AbstractAdAdapter implements AdAdapterInterface{
      */
     public void callOnAdDidPresent() {
 
-        if(listener!=null) listener.onAdWillPresent(_uid, this.getSize(), this.getNetworkType());
+        if(listener!=null) listener.onAdDidPresent(_uid, this.getSize(), this.getNetworkType());
     }
 
     /**
@@ -209,6 +208,15 @@ public class AbstractAdAdapter implements AdAdapterInterface{
     public void callOnAdDidDismiss() {
 
         if(listener!=null) listener.onAdDidDismiss(_uid, this.getSize(), this.getNetworkType());
+    }
+
+
+    /**
+     *
+     */
+    public void callLog(String msg) {
+
+        if(listener!=null) listener.onLog(msg);
     }
 
 }

@@ -35,18 +35,11 @@
         if(adView_==nil){
             
             // init InMobi
+            [InMobi setLogLevel:IMLogLevelDebug];
             [InMobi initialize:adUnitId];
             
-            // select size
-            int adSize = [self getAdSize:size];
             
-            self.adView = [[IMBanner alloc] initWithFrame:CGRectMake(0, 0, originWidth_, originHeight_)
-                                                    appId:adUnitId
-                                                   adSize:adSize];
-            // set delegate
-            adView_.delegate=self;
-            
-            // Set slot id
+            // Get slot id
             NSString *slotIdString=[settings objectForKey:size];
             if([size isEqual:kAdAdapterSizeSMART_BANNER]){
                 // for smart banner
@@ -60,12 +53,26 @@
                     }
                 }
             }
-                
+            
+            // Check if slot id valid
             if(slotIdString!=nil){
-                NSLog(@"InMobi banner size: %@ id: %@", size,slotIdString);
-                [adView_ setSlotId:[slotIdString intValue]];
+                
+                // create banner with slot id
+                self.adView = [[IMBanner alloc] initWithFrame:CGRectMake(0, 0, originWidth_, originHeight_)
+                                                       slotId:[slotIdString intValue]];
+            } else {
+                // get size
+                int adSize = [self getAdSize:size];
+                // create banner with appid
+                self.adView = [[IMBanner alloc] initWithFrame:CGRectMake(0, 0, originWidth_, originHeight_)
+                                                        appId:adUnitId
+                                                       adSize:adSize];
             }
+            
 
+            // set delegate
+            adView_.delegate=self;
+            
         }
         
     }
@@ -88,8 +95,8 @@
     }
 }
 
-- (void) refresh{    
-    if(adView_){
+- (void) load:(NSDictionary*)settings {    
+    if(adView_){        
         [adView_ loadBanner];
     }
 }

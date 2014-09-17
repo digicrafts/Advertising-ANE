@@ -23,10 +23,10 @@ public class AdSize {
      * 728x90 ads.
      */
     public static const LEADERBOARD:String      = "leaderboard"; // 728x90
-    /**
-     * 728x90 ads.
-     */
-    public static const WIDE_SKYSCRAPER:String  = "wide_skyscraper"; // 728x90
+//    /**
+//     * 728x90 ads.
+//     */
+//    public static const WIDE_SKYSCRAPER:String  = "wide_skyscraper"; // 728x90
     /**
      * 300x250 ads.
      */

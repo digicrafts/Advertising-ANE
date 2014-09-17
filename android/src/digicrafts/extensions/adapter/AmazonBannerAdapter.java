@@ -27,12 +27,12 @@ import java.util.Map;
  */
 public class AmazonBannerAdapter extends AbstractAdAdapter implements AdListener {
 
+    public static Boolean isInit = false;
     private AdLayout _adView;
     private int originalWidth_;
     private int originalHeight_;
 
     public AmazonBannerAdapter(Activity activity, String size, String adUnitId, Map<String, Object> settings){
-
 
         if(activity!=null) {
 
@@ -40,7 +40,16 @@ public class AmazonBannerAdapter extends AbstractAdAdapter implements AdListener
             this.settings=settings;
 
             // Set the appId
-            AdRegistration.setAppKey(adUnitId);
+            if(!AmazonBannerAdapter.isInit) {
+
+                AmazonBannerAdapter.isInit = true;
+                // For debugging purposes enable logging, but disable for production builds.
+                AdRegistration.enableLogging(AdManager.testMode);
+                // For debugging purposes flag all ad requests as tests, but set to false for production builds.
+                AdRegistration.enableTesting(AdManager.testMode);
+                // Set app key
+                AdRegistration.setAppKey(adUnitId);
+            }
 
             // Create and set size
             AdSize adsize = null;
@@ -64,7 +73,7 @@ public class AmazonBannerAdapter extends AbstractAdAdapter implements AdListener
 
                 Point res = ViewUtils.getScreenResolution(activity);
                 int w = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, res.x, activity.getResources().getDisplayMetrics());
-                int h =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, res.y, activity.getResources().getDisplayMetrics());
+                int h = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, res.y, activity.getResources().getDisplayMetrics());
 
                 if(w>=728){
                     originalWidth_=728;
@@ -83,6 +92,10 @@ public class AmazonBannerAdapter extends AbstractAdAdapter implements AdListener
                 _adView=new AdLayout(activity);
             else
                 _adView=new AdLayout(activity, adsize);
+
+            // get the correct pixel value
+            originalWidth_ = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, originalWidth_, activity.getResources().getDisplayMetrics());
+            originalHeight_ = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, originalHeight_, activity.getResources().getDisplayMetrics());
 
             // Add default layout
             _adView.setLayoutParams(ViewUtils.getViewPositionParams(AdAdapterPosition.BOTTOM,0,0,originalWidth_,originalHeight_));
@@ -110,7 +123,6 @@ public class AmazonBannerAdapter extends AbstractAdAdapter implements AdListener
                 _show(_adView,view,position,rect.left,rect.top, RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
             else
                 _show(_adView,view,position,rect.left,rect.top, originalWidth_, originalHeight_);
-
         }
     }
 
@@ -130,12 +142,14 @@ public class AmazonBannerAdapter extends AbstractAdAdapter implements AdListener
     public void load(){
         if(_adView!=null){
 
-            // For debugging purposes enable logging, but disable for production builds.
-            AdRegistration.enableLogging(AdManager.testMode);
-            // For debugging purposes flag all ad requests as tests, but set to false for production builds.
-            AdRegistration.enableTesting(AdManager.testMode);
+            AdTargetingOptions opt = new AdTargetingOptions();
 
-            _adView.loadAd();
+            if((Boolean)settings.get("enableGeoLocation"))
+                opt.enableGeoLocation(true);
+            if((Integer)settings.get("age")>0)
+                opt.setAge((Integer)settings.get("age"));
+
+            _adView.loadAd(opt);
         }
     }
 

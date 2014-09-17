@@ -15,8 +15,8 @@ public class InMobiAdapter extends AbstractAdaper {
     public var leaderboard:String='';
     public var medium_rectangle:String='';
 
-    public function InMobiAdapter(id:String, priority:int=0, weight:int=0) {
-        super(AdNetworkType.INMOBI,priority,weight,id);
+    public function InMobiAdapter(appId:String) {
+        super(AdNetworkType.INMOBI,appId);
     }
 
     /**

@@ -17,6 +17,13 @@
                 <finalizer>AdvertisingExtFinalizer</finalizer>
             </applicationDeployment>
         </platform>
+        <platform name="Android-x86">
+            <applicationDeployment>
+                <nativeLibrary>libAdvertising.jar</nativeLibrary>
+                <initializer>digicrafts.extensions.AdvertisingExtension</initializer>
+                <finalizer>digicrafts.extensions.AdvertisingExtension</finalizer>
+            </applicationDeployment>
+        </platform>
         <platform name="default">
             <applicationDeployment/>
         </platform>

@@ -3,12 +3,12 @@
  */
 package digicrafts.extensions.adapter {
 
-import digicrafts.extensions.core.ad_internal;
 import digicrafts.extensions.data.AdNetworkType;
 import digicrafts.extensions.core.AbstractAdaper;
 
 public class AdMobAdapter extends AbstractAdaper {
 
+    public var enableLocation:Boolean=false;
     public var testDevices:Vector.<String>;
 
     /**
@@ -17,11 +17,11 @@ public class AdMobAdapter extends AbstractAdaper {
      * @param priority
      * @param weight
      */
-    public function AdMobAdapter(adUnitId:String, priority:int=0, weight:int=0) {
+    public function AdMobAdapter(adUnitId:String) {
 
         testDevices=new Vector.<String>();
 
-        super(AdNetworkType.ADMOB,priority,weight,adUnitId);
+        super(AdNetworkType.ADMOB,adUnitId);
     }
 
     /**
@@ -30,6 +30,7 @@ public class AdMobAdapter extends AbstractAdaper {
      */
     override protected function getPropertiesArray():Vector.<String> {
         var properties:Vector.<String>=super.getPropertiesArray();
+        properties.push("enableLocation");
         properties.push("testDevices");
         return properties;
     }
@@ -40,6 +41,7 @@ public class AdMobAdapter extends AbstractAdaper {
      */
     override protected function getPropertiesTypeArray():Vector.<String> {
         var properties:Vector.<String>=super.getPropertiesTypeArray();
+        properties.push("boolean");
         properties.push("array_string");
         return properties;
     }

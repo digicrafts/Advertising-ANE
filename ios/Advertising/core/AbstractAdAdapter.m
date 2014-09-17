@@ -72,7 +72,7 @@
     [contentContainer_ removeFromSuperview];
 }
 
-- (void) refresh{
+- (void) load:(NSDictionary*)settings{
     
 }
 
@@ -87,7 +87,10 @@
 
 - (void) destroy
 {
-    
+    visible_=FALSE;
+    ready_=FALSE;
+    isNeedToShow_=NO;    
+    self.delegate=nil;
 }
 
 - (NSString*) getNetworkType{
@@ -109,7 +112,7 @@
     // create content container view
     if(contentContainer_==nil){
         self.contentContainer=[[UIView alloc] initWithFrame:CGRectMake(0, 0, w, h)];
-//        [contentContainer_ setBackgroundColor:[UIColor redColor]];
+        [contentContainer_ setBackgroundColor:[UIColor blackColor]];
         contentContainer_.translatesAutoresizingMaskIntoConstraints = NO;
     }
 

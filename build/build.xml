@@ -143,6 +143,7 @@
             <arg line='-doc-sources ../actionscript/src'/>
             <arg line='-output ../doc'/>
             <arg line='-external-library-path+="${flex.sdk}/frameworks/libs/air/airglobal.swc"'/>
+            <arg line='-library-path="${flex.sdk}/frameworks/libs/air/aircore.swc"'/>
         </exec>
 
         <delete dir="../temp/swc/content/"/>
@@ -159,6 +160,7 @@
             <arg line="-swc swc/${name}.swc"/>
             <arg line="-platform iPhone-ARM -platformoptions ../build/platform-ios.xml AmazonAd.framework AmazonInsightsSDK.framework MillennialMedia.framework SpeechKit.framework -C ios/ ."/>
             <arg line="-platform Android-ARM -platformoptions ../build/platform-android.xml -C android/ ."/>
+            <arg line="-platform Android-x86 -platformoptions ../build/platform-android.xml -C android/ ."/>
             <arg line="-platform default -C default/ ."/>
         </exec>
 

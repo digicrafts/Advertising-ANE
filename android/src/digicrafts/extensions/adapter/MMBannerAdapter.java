@@ -32,7 +32,6 @@ public class MMBannerAdapter extends AbstractAdAdapter implements RequestListene
 
     public MMBannerAdapter(Activity activity, String size, String adUnitId, Map<String, Object> settings){
 
-
         if(activity!=null) {
 
             // init
@@ -41,7 +40,8 @@ public class MMBannerAdapter extends AbstractAdAdapter implements RequestListene
             //
             if(!MMBannerAdapter.isInit){
                 MMBannerAdapter.isInit=true;
-                MMLog.setLogLevel(2);
+                // Set debug mode
+                if(AdManager.testMode) MMLog.setLogLevel(2);
                 MMSDK.initialize(activity);
             }
 
@@ -95,10 +95,7 @@ public class MMBannerAdapter extends AbstractAdAdapter implements RequestListene
             // setup listener
             _adView.setListener(this);
 
-        } else {
-
         }
-
     }
 
     @Override
@@ -125,10 +122,21 @@ public class MMBannerAdapter extends AbstractAdAdapter implements RequestListene
 
     @Override
     public void load(){
+        callLog("MM Load: " + _adView);
+
         if(_adView!=null){
 
             // Set your metadata in the MMRequest object
             MMRequest request = new MMRequest();
+
+            // Set extra paramter
+            if((Boolean)settings.get("enableLocation")==true&&AdManager.location!=null){
+                request.setUserLocation(AdManager.location);
+            }
+            String age = (String)settings.get("age");
+            if(age != null && !age.isEmpty()){
+                request.setAge(age);
+            }
 
             // Add the MMRequest object to your MMAdView.
             _adView.setMMRequest(request);

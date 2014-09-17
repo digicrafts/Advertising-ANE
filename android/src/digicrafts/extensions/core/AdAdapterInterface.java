@@ -11,7 +11,7 @@ public interface AdAdapterInterface {
     public String getId();
     public void setId(String id);
     public Boolean isShow();
-//    public Boolean isLoaded();
+    public Boolean isLoaded();
     public String getSize();
     public void setSize(String size);
     public String getNetworkType();

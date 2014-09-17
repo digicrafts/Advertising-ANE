@@ -66,16 +66,23 @@
     }
 }
 
-- (void) refresh{
+- (void) load:(NSDictionary*)settings{
     
     if(adView_){
         
         adView_.rootViewController=rootController_;
         
-        adView_.frame=CGRectMake(0, 0, rootController_.view.frame.size.width, 90);
+        // Fix problem on loading smart banner in landscape mode
+        if([size_ isEqual:kAdAdapterSizeSMART_BANNER]){
+            if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+                adView_.frame=CGRectMake(0, 0, rootController_.view.frame.size.width, 90);
+            else
+                adView_.frame=CGRectMake(0, 0, rootController_.view.frame.size.width, 32);
+        }
         
         GADRequest *request = [GADRequest request];
 
+        // Set Test Mode
         if(testMode_){
             
             // get device ID;
@@ -91,7 +98,7 @@
             // set the test devices
             request.testDevices = testDevices;
 
-        }
+        }        
         
         // load the request
         [self.adView loadRequest:request];
@@ -138,13 +145,12 @@
     }
     
     // auto select portrait/landscape
-//    if(UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])){
     if([AbstractAdAdapter isLandscape]){
-        originWidth_=-1;
+        originWidth_=rootController_.view.frame.size.width;
         originHeight_=-1;
         return kGADAdSizeSmartBannerLandscape;
     } else {
-        originWidth_=-1;
+        originWidth_=rootController_.view.frame.size.width;
         originHeight_=-1;
         return kGADAdSizeSmartBannerPortrait;
     }
@@ -156,7 +162,7 @@
 - (void)adViewDidReceiveAd:(GADBannerView *)bannerView{
     ready_=YES;
     if(visible_==NO&&isNeedToShow_){
-        if(originWidth_>0)
+        if(originHeight_>0)
             [self show_:adView_ withPosition:position_ width:originWidth_ height:originHeight_ offsetX:offsetX_ offsetY:offsetY_];
         else
             [self show_:adView_ withPosition:position_ width:originWidth_ height:bannerView.frame.size.height offsetX:offsetX_ offsetY:offsetY_];

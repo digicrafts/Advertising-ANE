@@ -4,15 +4,9 @@
 package digicrafts.extensions.core {
 
 import digicrafts.extensions.Advertising;
-import digicrafts.extensions.core.AbstractAdaper;
-import digicrafts.extensions.core.ad_internal;
-import digicrafts.extensions.core.ad_internal;
-import digicrafts.extensions.core.ad_internal;
-import digicrafts.extensions.core.ad_internal;
 import digicrafts.extensions.data.AdSize;
 
 import flash.events.EventDispatcher;
-
 
 public class Ad extends EventDispatcher {
 
@@ -31,7 +25,6 @@ public class Ad extends EventDispatcher {
      * The id of the ads instance.
      */
     public function get id ():String {return _id}
-
     /**
      *
      */
@@ -63,7 +56,7 @@ public class Ad extends EventDispatcher {
     ad_internal static var allowInstance:Boolean=false;
     ad_internal var uid:int = -1;
     ad_internal var refresh:int = 0;  // Frequency to show ads
-    ad_internal var frequency:int = 1;  // Frequency to show ads
+    ad_internal var frequency:int = 0;  // Frequency to show ads
     ad_internal var maxCount:int = 0;   // Store the max display count
     ad_internal var callCount:int = 0;  // Store the count which calling show()
     ad_internal var showCount:int = 0;  // Store the count which actually show the ads
@@ -85,7 +78,8 @@ public class Ad extends EventDispatcher {
             _id=id;
             _size=size;
             ad_internal::loading=true;
-            Advertising.ad_internal::extCreate(this);
+//            Advertising.ad_internal::extCreate(this);
+            Advertising.ad_internal::extLoad(this);
             super();
         } else {
             throw new Error("Please use Advertising.getBanner or Advertisting.getInterstitial to create instance of ads");
@@ -159,7 +153,7 @@ public class Ad extends EventDispatcher {
 
         if(ad_internal::loading) {
         // if in loading state
-        trace('check loading count',ad_internal::loadingcount,Advertising.timeout);
+//        trace('check loading count',ad_internal::loadingcount,Advertising.timeout);
             ad_internal::loadingcount +=t;
             if (ad_internal::loadingcount > Advertising.timeout)
                 _next();
@@ -171,7 +165,7 @@ public class Ad extends EventDispatcher {
 
 
     /**
-     *
+     * @private
      * @param position
      * @param x
      * @param y
@@ -180,27 +174,40 @@ public class Ad extends EventDispatcher {
      */
     protected function _show(position:String, x:int=0, y:int=0):void
     {
-        trace("AD _show",position,x,y);
+        Advertising.ad_internal::log(2,"AD _show",position,x,y);
+
+        Advertising.ad_internal::log(0,
+            "callCount",ad_internal::callCount,
+            "freq",ad_internal::callCount%ad_internal::frequency,
+            "maxCount",ad_internal::maxCount
+        );
+        // check if
+        if(ad_internal::callCount%ad_internal::frequency==0){
+
+            if(ad_internal::maxCount==0||ad_internal::callCount<=ad_internal::maxCount) {
+                _visible = true;
+                Advertising.ad_internal::extShow(this, position, x, y);
+            }
+        }
         ad_internal::callCount++;
-        _visible=true;
-//        ad_internal::ready=false;
-        Advertising.ad_internal::extShow(this, position, x, y );
     }
 
-
+    /**
+     * @private
+     */
     protected function _load():void
     {
-        trace("AD _load");
+        Advertising.ad_internal::log(2,"AD _load");
         ad_internal::ready=false;
         Advertising.ad_internal::extLoad(this);
     }
 
     /**
-     *
+     * @private
      */
     protected function _next():void
     {
-        trace("AD _next",setting);
+        Advertising.ad_internal::log(2,"AD _next",setting);
         if(setting){
             ad_internal::ready=false;
             ad_internal::loading = true;

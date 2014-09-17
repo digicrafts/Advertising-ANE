@@ -5,8 +5,6 @@ package digicrafts.extensions.core {
 public class AbstractAdaper extends Object{
 
     public var network:String;
-    public var priority:int=0;
-    public var weight:int=0;
     public var adUnitId:String;
 
     /**
@@ -16,11 +14,9 @@ public class AbstractAdaper extends Object{
      * @param weight
      * @param adUnitId
      */
-    public function AbstractAdaper(network:String, priority:int, weight:int, adUnitId:String="") {
+    public function AbstractAdaper(network:String, adUnitId:String="") {
 
         this.network=network;
-        this.priority=priority;
-        this.weight=weight;
         this.adUnitId=adUnitId;
     }
 
@@ -33,8 +29,6 @@ public class AbstractAdaper extends Object{
         var properties:Vector.<String>=new Vector.<String>();
 
         properties.push("network");
-        properties.push("priority");
-        properties.push("weight");
         properties.push("adUnitId");
 
         return properties;
@@ -49,8 +43,6 @@ public class AbstractAdaper extends Object{
         var properties:Vector.<String>=new Vector.<String>();
 
         properties.push("string");
-        properties.push("int");
-        properties.push("int");
         properties.push("string");
 
         return properties;

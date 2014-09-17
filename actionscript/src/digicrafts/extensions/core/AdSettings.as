@@ -3,7 +3,7 @@
  */
 package digicrafts.extensions.core {
 
-import digicrafts.extensions.adapter.AdMobAdapter;
+import digicrafts.extensions.Advertising;
 import digicrafts.extensions.data.AdNetworkType;
 
 public class AdSettings {
@@ -18,39 +18,40 @@ public class AdSettings {
 
         // create a vector to hold the setting
         _settings = new Vector.<AdSetting>();
+        _index = 0;
 
-        //
-        if(options!=null){
-
-            if(options is Array){
-
-            } else {
-
-                // Loop the options and get the settings
-                for (var key:String in options) {
-
-                    //
-                    var priority:int = -1;
-                    var weight:int = -1;
-                    var id:String;
-                    if (isFinite(options["priority"])) priority = options["priority"];
-                    if (isFinite(options["weight"])) priority = options["weight"];
-
-                    //
-                    switch (key) {
-                        case AdNetworkType.ADMOB:
-                            add(new AdMobAdapter(id, priority, weight));
-                            break;
-                        case AdNetworkType.IAD:
-                            add(new AdMobAdapter(id, priority, weight));
-                            break;
-                        case AdNetworkType.AMAZON:
-                            add(new AdMobAdapter(id, priority, weight));
-                            break;
-                    }
-                }
-            }
-        }
+//        //
+//        if(options!=null){
+//
+//            if(options is Array){
+//
+//            } else {
+//
+//                // Loop the options and get the settings
+//                for (var key:String in options) {
+//
+//                    //
+//                    var priority:int = -1;
+//                    var weight:int = -1;
+//                    var id:String;
+//                    if (isFinite(options["priority"])) priority = options["priority"];
+//                    if (isFinite(options["weight"])) priority = options["weight"];
+//
+//                    //
+//                    switch (key) {
+//                        case AdNetworkType.ADMOB:
+//                            add(new AdMobAdapter(id), priority, weight);
+//                            break;
+//                        case AdNetworkType.IAD:
+//                            add(new AdMobAdapter(id), priority, weight);
+//                            break;
+//                        case AdNetworkType.AMAZON:
+//                            add(new AdMobAdapter(id), priority, weight);
+//                            break;
+//                    }
+//                }
+//            }
+//        }
 
     }
 
@@ -60,21 +61,29 @@ public class AdSettings {
      * @param priority
      * @param weight
      */
-    public function add(adapter:AbstractAdaper,priority:int=-1,weight:int=-1):void
+    public function add(adapter:AbstractAdaper,priority:int=-1,weight:int=1):void
     {
+        trace('add',adapter.network,priority,weight);
 
-        var setting:AdSetting=new AdSetting();
-        setting.priority=priority;
-        setting.weight=weight;
-        setting.adapter=adapter;
+        // ignore iad in android devices
+        if(Advertising.isAndroid&&adapter.network==AdNetworkType.IAD){
 
-        // add to the settings array
-        _settings.push(setting);
 
-        // update the priority
-        _updatePriority();
-        _updateWeight();
+        } else {
 
+            // create a setting object
+            var setting:AdSetting = new AdSetting();
+            setting.priority = priority;
+            setting.weight = weight;
+            setting.adapter = adapter;
+
+            // add to the settings array
+            _settings.push(setting);
+
+            // update the priority
+            _updatePriority();
+            _updateWeight();
+        }
     }
 
     /**
@@ -86,8 +95,22 @@ public class AdSettings {
         var settings:AdSettings=new AdSettings();
 
         // add the settings
-        for each(var s:AdSetting in _settings)
-           settings.add(s.adapter,s.priority,s.weight);
+        for each(var s:AdSetting in _settings){
+
+            // ignore iad in android devices
+            if(Advertising.isAndroid&&s.adapter.network==AdNetworkType.IAD){
+
+
+            } else {
+                // create a setting object
+                var setting:AdSetting = new AdSetting();
+                setting.priority = s.priority;
+                setting.weight = s.weight;
+                setting.adapter = s.adapter;
+                settings._settings.push(setting);
+            }
+        }
+
 
         return settings;
     }
@@ -98,8 +121,48 @@ public class AdSettings {
      */
     ad_internal function nextAdapter():void
     {
-        _index++;
-        if(_index>=_settings.length) _index=0;
+        if(_settings.length>0) {
+
+            // get current setting
+            var current_setting:AdSetting = _settings[_index];
+            // increase weight of current setting
+            current_setting.currentWeight++;
+
+            var index:int = _index;
+            var count:int = _settings.length;
+            var loop:Boolean = true;
+            var noreset:Boolean = true;
+
+            while(loop&&noreset) {
+
+                // add the index
+                index++;
+                if (index >= _settings.length) index = 0;
+
+                var setting:AdSetting = _settings[index];
+                if (setting.currentWeight < setting.weight) {
+                    _index = index;
+                    loop = false;
+                }
+                count--;
+                if(count<=0) {
+                    noreset = false;
+                    _index = index;
+                }
+            }
+//            print debug info
+//            trace("index",_index);
+//            for(var i:int=0;i<_settings.length;i++){
+//                var  setting:AdSetting=_settings[i];
+//                trace(i,setting.adapter.network,setting.priority,setting.weight,setting.currentWeight);
+//            }
+
+            // reset all weight
+            if(!noreset){
+                for each(var s:AdSetting in _settings)
+                    s.currentWeight=0;
+            }
+        }
     }
 
     /**
@@ -147,9 +210,15 @@ public class AdSettings {
      */
     private function _updatePriority():void
     {
+//        trace('_updatePriority');
         if(_settings){
             _settings.sort(_sortOnPriority);
         }
+
+//        for(var i:int=0;i<_settings.length;i++){
+//            var  setting:AdSetting=_settings[i];
+//            trace(i,setting.adapter.network,setting.priority,setting.weight);
+//        }
     }
 
     /**
@@ -162,15 +231,3 @@ public class AdSettings {
 
 }
 }
-
-//import digicrafts.extensions.core.AbstractAdaper;
-///**
-// * @private
-// * Private class to hold the setting of each ads.
-// */
-//class AdSetting {
-//    public var priority:int=-1;
-//    public var weight:int=-1;
-//    public var adapter:AbstractAdaper;
-//}
-

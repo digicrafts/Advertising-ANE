@@ -8,8 +8,8 @@ import digicrafts.extensions.data.AdNetworkType;
 
 public class IAdAdapter extends AbstractAdaper {
 
-    public function IAdAdapter(priority:int=0, weight:int=0) {
-        super(AdNetworkType.IAD,priority,weight);
+    public function IAdAdapter() {
+        super(AdNetworkType.IAD);
     }
 
 }

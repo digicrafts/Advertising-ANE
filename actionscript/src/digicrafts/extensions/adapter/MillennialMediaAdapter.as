@@ -11,8 +11,11 @@ public class MillennialMediaAdapter extends AbstractAdaper {
     public var interstitial:String='';
     public var rectangle:String='';
 
-    public function MillennialMediaAdapter(id:String, priority:int=0, weight:int=0) {
-        super(AdNetworkType.MILLENNIALMEDIA,priority,weight,id);
+    public var enableLocation:Boolean=false;
+    public var age:String='';
+
+    public function MillennialMediaAdapter(appid:String) {
+        super(AdNetworkType.MILLENNIALMEDIA,appid);
     }
 
     /**
@@ -23,6 +26,8 @@ public class MillennialMediaAdapter extends AbstractAdaper {
         var properties:Vector.<String>=super.getPropertiesArray();
         properties.push("interstitial");
         properties.push("rectangle");
+        properties.push("age");
+        properties.push("enableLocation");
         return properties;
     }
 
@@ -34,6 +39,8 @@ public class MillennialMediaAdapter extends AbstractAdaper {
         var properties:Vector.<String>=super.getPropertiesTypeArray();
         properties.push("string");
         properties.push("string");
+        properties.push("string");
+        properties.push("boolean");
         return properties;
     }
 }

@@ -32,7 +32,16 @@ public class AmazonInterstitialAdapter extends AbstractAdAdapter implements AdLi
             this.settings=settings;
 
             // Set the appId
-            AdRegistration.setAppKey(adUnitId);
+            if(!AmazonBannerAdapter.isInit) {
+
+                AmazonBannerAdapter.isInit = true;
+                // For debugging purposes enable logging, but disable for production builds.
+                AdRegistration.enableLogging(AdManager.testMode);
+                // For debugging purposes flag all ad requests as tests, but set to false for production builds.
+                AdRegistration.enableTesting(AdManager.testMode);
+                // Set app key
+                AdRegistration.setAppKey(adUnitId);
+            }
 
             _interstitialAd = new InterstitialAd(activity);
             _interstitialAd.setListener(this);
@@ -57,13 +66,15 @@ public class AmazonInterstitialAdapter extends AbstractAdAdapter implements AdLi
 
         if(_interstitialAd!=null){
 
-            Log.d("AMAZON","isLoading: "+_interstitialAd.isLoading()+"isShowing: "+_interstitialAd.isShowing()+"isAdShowing: "+InterstitialAd.isAdShowing());
+//            Log.d("AMAZON","isLoading: "+_interstitialAd.isLoading()+"isShowing: "+_interstitialAd.isShowing()+"isAdShowing: "+InterstitialAd.isAdShowing());
 
             if(_interstitialAd.isLoading()){
                 _showAfterLoad=true;
             } else {
                 _isShow=true;
                 _interstitialAd.showAd();
+                callOnAdWillPresent();
+                callOnAdDidPresent();
             }
 
         }
@@ -71,16 +82,20 @@ public class AmazonInterstitialAdapter extends AbstractAdAdapter implements AdLi
 
     @Override
     public void load(){
+
         if(_interstitialAd!=null){
+//            callLog("Is loading: "+_interstitialAd.isLoading() + " init: " + _isInit);
+            if(!_interstitialAd.isLoading()) {
+                _isShow = false;
+                AdTargetingOptions opt = new AdTargetingOptions();
 
-            // For debugging purposes enable logging, but disable for production builds.
-            AdRegistration.enableLogging(AdManager.testMode);
-            // For debugging purposes flag all ad requests as tests, but set to false for production builds.
-            AdRegistration.enableTesting(AdManager.testMode);
+                if((Boolean)settings.get("enableGeoLocation"))
+                    opt.enableGeoLocation(true);
+                if((Integer)settings.get("age")>0)
+                    opt.setAge((Integer)settings.get("age"));
 
-            _isShow=false;
-
-            _interstitialAd.loadAd();
+                _interstitialAd.loadAd(opt);
+            }
         }
     }
 
@@ -99,12 +114,14 @@ public class AmazonInterstitialAdapter extends AbstractAdAdapter implements AdLi
 
     @Override
     public void onAdLoaded(Ad ad, AdProperties adProperties) {
+        callOnAdLoaded();
         if(_showAfterLoad){
             _showAfterLoad=false;
             _isShow=true;
             _interstitialAd.showAd();
+            callOnAdWillPresent();
+            callOnAdDidPresent();
         }
-        callOnAdLoaded();
     }
 
     @Override
@@ -114,8 +131,7 @@ public class AmazonInterstitialAdapter extends AbstractAdAdapter implements AdLi
 
     @Override
     public void onAdExpanded(Ad ad) {
-        callOnAdWillPresent();
-        callOnAdDidPresent();
+
     }
 
     @Override

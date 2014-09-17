@@ -10,6 +10,8 @@
 
 @implementation IAdInterstitialAdapter
 
+@synthesize adView=adView_;
+
 - (void) dealloc {
     
     adView_.delegate=nil;
@@ -20,6 +22,7 @@
 
 - (void) destroy {
     
+    [ADInterstitialAd release];
     adView_.delegate=nil;
     self.adView=nil;
     
@@ -30,32 +33,35 @@
 - (id) initWithSettings:(NSDictionary*) settings{
     
     if (self=[self init]) {
-        
         if(adView_==nil){
-//            self.contentContainer=[UIView initWithFrame:CGRectMake(0, 0, 1024, 768);
-
-//            [ADInterstitialAd release];
-//            self.adView = [[ADInterstitialAd alloc] init];
-//            adView_.delegate=self;
-//            rootController_.shouldPresentInterstitialAd=YES;
-            rootController_.interstitialPresentationPolicy = ADInterstitialPresentationPolicyAutomatic;
-//            [rootController_ requestInterstitialAdPresentation];
             
-        }
+            // clean
+            [ADInterstitialAd release];
+            // create a new intersitial
+            self.adView = [[ADInterstitialAd alloc] init];
+            adView_.delegate=self;
+       }
     }
     return self;
 }
 
 - (void) showInPosition:(NSString*) position offsetX: (int) x offsetY:(int) y {
     
-    [rootController_ requestInterstitialAdPresentation];
-    if (adView_.loaded)
-    {
-        [adView_ presentFromViewController:rootController_];
-    } else {
-        isNeedToShow_=YES;
-    }
+
     
+    if (adView_)
+    {        
+//        [delegate_ adLog:[NSString stringWithFormat:@"show loaded:%d isLoaded:%d",adView_.loaded,adView_.isLoaded]];
+        
+        if(adView_.isLoaded){
+            [adView_ presentFromViewController:rootController_];
+            [delegate_ adAdapterWillDismiss:self];
+            [delegate_ adAdapterDidDismiss:self];
+        } else {
+            isNeedToShow_=YES;
+        }
+    }
+
 }
 
 - (void) remove{
@@ -64,9 +70,9 @@
     }
 }
 
-- (void) refresh{
+- (void) load:(NSDictionary*)settings {
     if(adView_){
-
+//        rootController_.interstitialPresentationPolicy = ADInterstitialPresentationPolicyManual;
     }
 }
 
@@ -78,7 +84,6 @@
 
 -(void)interstitialAdDidLoad:(ADInterstitialAd *)interstitialAd
 {
-    NSLog(@"iAd interstitialAd interstitialAdDidLoad");
     if(isNeedToShow_){
         isNeedToShow_=NO;
         [adView_ presentFromViewController:rootController_];
@@ -92,8 +97,13 @@
 // if the content in the view has expired.
 - (void)interstitialAdDidUnload:(ADInterstitialAd *)interstitialAd
 {
-    NSLog(@"iAd interstitialAd unload");
+//    [delegate_ adLog:@"iAd interstitialAd unload"];
+//    NSLog(@"iAd interstitialAd unload");
     self.adView=nil;
+    
+    // fix problem of no event when dismiss interstitial with close button
+    [delegate_ adAdapterWillDismiss:self];
+    [delegate_ adAdapterDidDismiss:self];
 }
 
 
@@ -107,12 +117,22 @@
 
 - (void)interstitialAdWillLoad:(ADInterstitialAd *)interstitialAd
 {
-    NSLog(@"iAd interstitialAd interstitialAdWillLoad");
+//    [delegate_ adLog:@"iAd interstitialAd interstitialAdWillLoad"];
+//    NSLog(@"iAd interstitialAd interstitialAdWillLoad");
 }
 
 - (void)interstitialAdActionDidFinish:(ADInterstitialAd *)interstitialAd
 {
-    [delegate_ adAdapterDidDismiss:self];
+//    [delegate_ adLog:@"iAd interstitialAd interstitialAdActionDidFinish"];
+//    [delegate_ adAdapterDidDismiss:self];
+}
+
+- (BOOL)interstitialAdActionShouldBegin:(ADInterstitialAd *)interstitialAd
+                   willLeaveApplication:(BOOL)willLeave {
+    if(willLeave){
+        [delegate_ adAdapterWillLeaveApplication:self];
+    }
+    return YES; // YES allows the action to execute (NO would instead cancel the action).
 }
 
 // if you want to show iAd while pushing view controller just use
@@ -122,6 +142,10 @@
 ////        [self requestInterstitialAdPresentation]; // it will load iAD Full screen mode.
 //    }
 //    // do whatever you want to do.
+
+//    [delegate_ adLog:@"iAd interstitialAd onSearchClick"];
+    
 }
+
 
 @end

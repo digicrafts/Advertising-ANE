@@ -24,7 +24,7 @@
             
 //            if(MMSDKinited==NULL){
 //                MMSDKinited=@"i";
-//                [MMSDK setLogLevel:MMLOG_LEVEL_DEBUG];
+                [MMSDK setLogLevel:MMLOG_LEVEL_DEBUG];
                 [MMSDK initialize]; //Initialize a Millennial Media session
                 
 //            }        
@@ -59,20 +59,25 @@
 
 }
 
-- (void) refresh{
+- (void) load:(NSDictionary*)settings {
     
     if(![MMInterstitial isAdAvailableForApid:adUnitId_]){
 
         //MMRequest Object
         MMRequest *request = [MMRequest request];
         
+        // Set extra parameters
+        NSString *age=[settings objectForKey:@"age"];
+        if(age)
+            request.age=[NSNumber numberWithInt:[age intValue]];
+        
         //Replace YOUR_APID with the APID provided to you by Millennial Media
         [MMInterstitial fetchWithRequest:request
                                     apid:adUnitId_
                             onCompletion:^(BOOL success, NSError *error) {
-                                        NSLog(@"refresh interstitial complete");
+                                [delegate_ adLog:@"MMInterstitial refresh interstitial complete"];
                                 if (success) {
-                                    NSLog(@"MMInterstitial available");
+                                    [delegate_ adLog:@"MMInterstitial available"];
                                     if(isNeedToShow_){
                                         isNeedToShow_=NO;
                                         [MMInterstitial displayForApid:adUnitId_
@@ -88,7 +93,7 @@
                                     [delegate_ adAdapterDidReceiveAd:self];
                                 }
                                 else {
-                                    NSLog(@"MMInterstitial Error fetching ad: %@", error);
+                                    [delegate_ adLog:[NSString stringWithFormat:@"MMInterstitial Error fetching ad: %@", error]];
                                     [delegate_ adAdapter:self didFailToReceiveAdWithError:error.description];
                                 }
                             }];

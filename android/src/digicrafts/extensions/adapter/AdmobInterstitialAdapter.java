@@ -143,6 +143,11 @@ public class AdmobInterstitialAdapter extends AbstractAdAdapter {
                 }
             }
 
+            // Set Location
+            if(AdManager.location != null && (Boolean)settings.get("enableLocation") == true){
+                builder.setLocation(AdManager.location);
+            }
+
             AdRequest adRequest = builder.build();
 
             _isShow=false;

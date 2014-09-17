@@ -33,7 +33,7 @@
     
     if (self=[self init]) {        
         
-        if(adView_==nil){        
+        if(adView_==nil){
             
             // Set the ad unit id
             [[AmazonAdRegistration sharedRegistration] setAppKey:adUnitId];
@@ -66,7 +66,7 @@
     }
 }
 
-- (void) refresh{
+- (void) load:(NSDictionary*)settings {
     if(adView_){        
         
         // Set the adOptions.
@@ -75,6 +75,14 @@
         // Turn on isTestRequest to load a test ad
         if(testMode_)
             options.isTestRequest = YES;
+        
+        // Get extra parameter
+        Boolean enableLocation=[settings objectForKey:@"enableGeoLocation"];
+        if(enableLocation)
+            options.usesGeoLocation=YES;
+        NSNumber *age=[settings objectForKey:@"age"];
+        if(age)
+            options.age=age;
 
         // Call loadAd
         [adView_ loadAd:options];

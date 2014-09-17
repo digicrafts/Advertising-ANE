@@ -4,8 +4,6 @@
 package digicrafts.extensions {
 import air.net.URLMonitor;
 
-import digicrafts.extensions.Advertising;
-import digicrafts.extensions.adapter.InMobiAdapter;
 import digicrafts.extensions.adapter.MillennialMediaAdapter;
 import digicrafts.extensions.core.AbstractAdaper;
 import digicrafts.extensions.core.Ad;
@@ -24,24 +22,56 @@ import flash.events.EventDispatcher;
 import flash.events.StatusEvent;
 import flash.events.TimerEvent;
 import flash.external.ExtensionContext;
-import flash.external.ExtensionContext;
 import flash.net.URLRequest;
 import flash.system.Capabilities;
 import flash.utils.Dictionary;
 import flash.utils.Timer;
 import flash.utils.getTimer;
+import flash.utils.setTimeout;
 
-/** @see digicrafts.extensions.events.AdEvent Dispatched when a banner created and load. */
-[Event(name="bannerDidLoad", type="digicrafts.extensions.events.AdEvent")]
+/**
+ * Dispatched when a advertisement created and load.
+ * @see digicrafts.extensions.events.AdEvent
+ * */
+[Event(name="onAdLoaded", type="digicrafts.extensions.events.AdEvent")]
 
-/** Dispatched when the banner fail to load. */
-[Event(name="bannerDidFail", type="digicrafts.extensions.events.AdEvent")]
+/**
+ * Dispatched when the advertisement fail to load.
+ * @see digicrafts.extensions.events.AdEvent*
+ * */
+[Event(name="onAdFailedToLoad", type="digicrafts.extensions.events.AdEvent")]
 
-/** Dispatched when a interstitial created and load. */
-[Event(name="interstitialDidLoad", type="digicrafts.extensions.events.AdEvent")]
 
-/** Dispatched when the interstitial fail to load. */
-[Event(name="interstitialDidFail", type="digicrafts.extensions.events.AdEvent")]
+/**
+ * Dispatched when the advertisement going to present.
+ * @see digicrafts.extensions.events.AdEvent
+ * */
+[Event(name="onAdWillPresent", type="digicrafts.extensions.events.AdEvent")]
+
+/**
+ * Dispatched when the advertisement presented.
+ * @see digicrafts.extensions.events.AdEvent
+ * */
+[Event(name="onAdDidPresent", type="digicrafts.extensions.events.AdEvent")]
+
+/**
+ * Dispatched when the advertisement going to dismiss.
+ * @see digicrafts.extensions.events.AdEvent
+ * */
+[Event(name="onAdWillDismiss", type="digicrafts.extensions.events.AdEvent")]
+
+/**
+ * Dispatched when the advertisement dismissed.
+ * @see digicrafts.extensions.events.AdEvent
+ * */
+[Event(name="onAdDidDismiss", type="digicrafts.extensions.events.AdEvent")]
+
+/**
+ * Dispatched when the app will leave application when click on advertisement.
+ * @see digicrafts.extensions.events.AdEvent*
+ * */
+[Event(name="onWillLeaveApplication", type="digicrafts.extensions.events.AdEvent")]
+
 
 public class Advertising extends EventDispatcher{
 
@@ -62,7 +92,7 @@ public class Advertising extends EventDispatcher{
      */
     public static var defaultBannerRefresh:int=30;
     /**
-     *
+     * Set the log level. Set to zero to remove all logs.
      */
     public static var logLevel:int=0;
 
@@ -103,7 +133,7 @@ public class Advertising extends EventDispatcher{
 
             if ( !_extensionContext && Capabilities.os.indexOf("x86_64")==-1)
             {
-                log(0,"Create Advertising Extension Instance.");
+                ad_internal::log(0,"Create Advertising Extension Instance.");
 
                 // Create extension context instance
                 _extensionContext = ExtensionContext.createExtensionContext("digicrafts.extensions.Advertising","Advertising");
@@ -138,7 +168,7 @@ public class Advertising extends EventDispatcher{
                     mInternetMonitor.addEventListener(StatusEvent.STATUS, _handleCheckInternetConnection);
                     mInternetMonitor.start();
 
-                    log(0, "Advertising Extension Instance Ready.");
+                    ad_internal::log(0, "Advertising Extension Instance Ready.");
                     // fake activate event right here because we miss it on the first app load
                     _handleActivate(null);
 
@@ -248,13 +278,13 @@ public class Advertising extends EventDispatcher{
             // check if banner id exist
             if(_instance.mBannerDictionary[id]) {
 
-                log(0,'Banner id "'+id+'" already exist.');
+                ad_internal::log(2,'Banner id "'+id+'" already exist.');
 
             } else {
 
                 if(setting==null && _defaultSettings==null){
 
-                    log(0,'No setting specified and default setting null.');
+                    ad_internal::log(0,'No setting specified and default setting null.');
 
                 } else {
 
@@ -287,11 +317,11 @@ public class Advertising extends EventDispatcher{
             // check if banner id exist
             if(_instance.mInterstitialDictionary[id]) {
 
-                log(0,'Get Intersitial with id: '+id);
+                ad_internal::log(2,'Get Intersitial with id: '+id);
 
             } else {
 
-                log(0,'Create Intersitial with id: '+id);
+                ad_internal::log(2,'Create Intersitial with id: '+id);
 
                 // create the Intersitial instance
                 Ad.ad_internal::allowInstance=true;
@@ -327,36 +357,10 @@ public class Advertising extends EventDispatcher{
 
             } else {
 
-                log(0,'Banner id '+id+'not exist');
+                ad_internal::log(2,'Banner id '+id+'not exist');
             }
         }
     }
-
-    /**
-     * Display the banner in x/y position
-     * @param id Id of the banner that want to display.
-     * @param x The x coordination where to display the banner
-     * @param y The y coordination where to display the banner
-     * @param refresh Timer to refresh the ads in second. Zero means don't auto refresh. -1 means use Advertising.defaultBannerRefresh.
-     */
-//    public static function showBannerXY(id:String,x:Number,y:Number,refresh:int=-1):void
-//    {
-//        if(isSupported()){
-//
-//            // get the banner
-//            var banner:AdBanner=_instance.mBannerDictionary[id];
-//
-//            // check if banner id exist
-//            if(banner) {
-//
-//                banner.showXY(x,y,refresh);
-//
-//            } else {
-//
-//                log(0,'Banner id '+id+'not exist');
-//            }
-//        }
-//    }
 
     /**
      * Remove the banner with specify id from the screen
@@ -376,7 +380,7 @@ public class Advertising extends EventDispatcher{
 
             } else {
 
-                log(0,'Banner id '+id+'not exist');
+                ad_internal::log(2,'Banner id '+id+'not exist');
             }
         }
     }
@@ -417,7 +421,7 @@ public class Advertising extends EventDispatcher{
 
             } else {
 
-                log(0,'Intersitial id '+id+'not exist');
+                ad_internal::log(2,'Intersitial id '+id+'not exist');
             }
         }
     }
@@ -439,7 +443,7 @@ public class Advertising extends EventDispatcher{
 
             } else {
 
-                log(0,'No interstitial exist');
+                ad_internal::log(2,'No interstitial exist');
             }
         }
     }
@@ -465,7 +469,7 @@ public class Advertising extends EventDispatcher{
 
             } else {
 
-                log(0,'Banner id '+id+'not exist');
+                ad_internal::log(2,'Banner id '+id+'not exist');
             }
         }
         return false;
@@ -495,7 +499,7 @@ public class Advertising extends EventDispatcher{
 
             } else {
 
-                log(0,'Intersitial id '+id+'not exist');
+                ad_internal::log(2,'Intersitial id '+id+'not exist');
             }
         }
         return null;
@@ -543,6 +547,9 @@ public class Advertising extends EventDispatcher{
 // Private Static Functions
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * @private
+     */
     ad_internal static function get internetAvailabile():Boolean
     {
         if(isSupported())
@@ -550,21 +557,10 @@ public class Advertising extends EventDispatcher{
         return false;
     }
 
-    ad_internal static function extCreate(ad:Ad):void
-    {
-        // check if banner id exist
-        if(_extensionContext&&ad) {
-
-            // get the current adapter
-            var adapter:AbstractAdaper=ad.setting.ad_internal::getCurrentAdapter();
-
-            var adUnitId:String=getAdUnitId(adapter,ad.size);
-
-            _extensionContext.call('ext_create',ad.id, ad.size, adapter.network, adUnitId, adapter.ad_internal::getFREArray());
-
-        }
-    }
-
+    /**
+     * @private
+     * @param ad
+     */
     ad_internal static function extLoad(ad:Ad):void
     {
         // check if banner id exist
@@ -575,12 +571,21 @@ public class Advertising extends EventDispatcher{
 
             var adUnitId:String=getAdUnitId(adapter,ad.size);
 
-            trace("extLoad",adapter.network,ad.size,adapter.adUnitId);
+            ad_internal::log(0,"<LOAD> network:",adapter.network,"size:",ad.size,"adUnitId:",adapter.adUnitId);
 
             _extensionContext.call('ext_load',ad.id, ad.size, adapter.network, adUnitId, adapter.ad_internal::getFREArray());
         }
     }
 
+    /**
+     * @private
+     * @param ad
+     * @param position
+     * @param x
+     * @param y
+     * @param w
+     * @param h
+     */
     ad_internal static function extShow(ad:Ad, position:String, x:int=0, y:int=0, w:int=0, h:int=0):void
     {
         // check if banner id exist
@@ -591,12 +596,16 @@ public class Advertising extends EventDispatcher{
 
             var adUnitId:String=getAdUnitId(adapter,ad.size);
 
-            trace("extShow",adapter.network,ad.size,adapter.adUnitId,x,y);
+            ad_internal::log(0,"<SHOW> network:",adapter.network,"size:",ad.size,"adUnitId:",adapter.adUnitId,"offset:",x,y);
 
             _extensionContext.call('ext_show',ad.id, ad.size, adapter.network, adUnitId, adapter.ad_internal::getFREArray(), position, x, y);
         }
     }
 
+    /**
+     * @private
+     * @param ad
+     */
     ad_internal static function extRemove(ad:Ad):void
     {
         // check if banner id exist
@@ -605,6 +614,10 @@ public class Advertising extends EventDispatcher{
         }
     }
 
+    /**
+     * @private
+     * @param ad
+     */
     ad_internal static function extDestroy(ad:Ad):void
     {
         // check if banner id exist
@@ -617,6 +630,7 @@ public class Advertising extends EventDispatcher{
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
+     * @private
      * Select unitId for each network
      * @param adapter
      * @return
@@ -625,6 +639,7 @@ public class Advertising extends EventDispatcher{
     {
         var adUnitId:String=adapter.adUnitId;
 
+        // For millennial, select different adunit for each type of ad
         if(adapter.network==AdNetworkType.MILLENNIALMEDIA){
 
             var mm_adapter:MillennialMediaAdapter=adapter as MillennialMediaAdapter;
@@ -635,23 +650,6 @@ public class Advertising extends EventDispatcher{
                 adUnitId=mm_adapter.rectangle;
 
         }
-//        else if(adapter.network==AdNetworkType.INMOBI){
-//
-//            var in_adapter:InMobiAdapter=adapter as InMobiAdapter;
-//
-//            if(size==AdSize.INTERSTITIAL&&in_adapter.interstitial!=null&&in_adapter.interstitial!='')
-//                adUnitId=in_adapter.interstitial;
-//            else if(size==AdSize.BANNER&&in_adapter.banner!=null&&in_adapter.banner!='')
-//                adUnitId=in_adapter.banner;
-//            else if(size==AdSize.FULL_BANNER&&in_adapter.full_banner!=null&&in_adapter.full_banner!='')
-//                adUnitId=in_adapter.full_banner;
-//            else if(size==AdSize.LEADERBOARD&&in_adapter.leaderboard!=null&&in_adapter.leaderboard!='')
-//                adUnitId=in_adapter.leaderboard;
-//            else if(size==AdSize.MEDIUM_RECTANGLE&&in_adapter.medium_rectangle!=null&&in_adapter.medium_rectangle!='')
-//                adUnitId=in_adapter.medium_rectangle;
-//
-//        }
-
         return adUnitId;
     }
 
@@ -669,7 +667,7 @@ public class Advertising extends EventDispatcher{
      * @param level
      * @param arg
      */
-    protected static function log(level:int,...arg:Array):void {
+    ad_internal static function log(level:int,...arg:Array):void {
 
         if(level<=logLevel) {
             arg.unshift("[AdvertisingANE]");
@@ -688,51 +686,65 @@ public class Advertising extends EventDispatcher{
     private function _handleStatusEvents(e:StatusEvent):void
     {
 
-        log(0,'events',e.code,e.level);
+        if(e.code=="LOGGING"){
 
-        var ad:Ad;
-        var event:AdEvent;
-        var data:Object=JSON.parse(e.level);
+            ad_internal::log(1,"<LOG> "+e.level);
 
-        // get the banner
-        if(data&&data.uid&&data.size){
-            if(data.size==AdSize.INTERSTITIAL)
-                ad=getInterstitial(data.uid);
-            else
-                ad=getBanner(data.uid);
+        } else {
+
+            ad_internal::log(1,'<EVENT> ',e.code,e.level);
+
+            var ad:Ad;
+            var event:AdEvent;
+            var data:Object=JSON.parse(e.level);
+
+            // get the banner
+            if(data&&data.uid&&data.size){
+                if(data.size==AdSize.INTERSTITIAL)
+                    ad=getInterstitial(data.uid);
+                else
+                    ad=getBanner(data.uid);
+            }
+
+
+            // for different event
+            switch (e.code) {
+                case AdEvent.AD_LOADED:
+                    if(ad) {
+                        ad.ad_internal::loading=false;
+                        ad.ad_internal::ready=true;
+                    }
+                    break;
+                case AdEvent.AD_FAILED_TO_LOAD:
+                    if(ad) {
+                        ad.ad_internal::ready=false;
+                        ad.next();
+                    }
+                    break;
+                case AdEvent.AD_DID_DISMISS:
+                    if(ad&&ad.size==AdSize.INTERSTITIAL) {
+                        var load_ad:Ad=ad;
+                        // delay load for interstitial ads
+                        setTimeout(function():void{
+                            load_ad.ad_internal::ready=false;
+                            load_ad.next();
+                        },2000);
+                    }
+                    break;
+            }
+
+            // create the event
+            event = new AdEvent(e.code.toString(), false, data);
+
+            if (event) dispatchEvent(event);
         }
 
-
-        // for different event
-        switch (e.code) {
-            case "LOGGING":
-                log(0,e.level);
-            case AdEvent.AD_LOADED:
-                if(ad) {
-                    ad.ad_internal::loading=false;
-                    ad.ad_internal::ready=true;
-                }
-                break;
-            case AdEvent.AD_FAILED_TO_LOAD:
-                if(ad) {
-                    ad.ad_internal::ready=false;
-                    ad.next();
-                }
-                break;
-            case AdEvent.AD_DID_DISMISS:
-                if(ad&&ad.size==AdSize.INTERSTITIAL) {
-                    ad.ad_internal::ready=false;
-                    ad.next();
-                }
-                break;
-        }
-
-        // create the event
-        event = new AdEvent(e.code.toString(), false, data);
-
-        if (event) dispatchEvent(event);
     }
 
+    /**
+     * @private
+     * @param event
+     */
     private function _handleTimerEvent(event:TimerEvent):void {
 
         // calculate time offset
@@ -757,7 +769,7 @@ public class Advertising extends EventDispatcher{
     }
 
     /**
-     *
+     * @private
      * @param event
      */
     private function _handleActivate(event:Event):void {
@@ -770,7 +782,7 @@ public class Advertising extends EventDispatcher{
     }
 
     /**
-     *
+     * @private
      * @param event
      */
     private function _handleDeactivate(event:Event):void {

@@ -69,7 +69,7 @@ static NSString* MMSDKinited = nil;
     }
 }
 
-- (void) refresh{
+- (void) load:(NSDictionary*)settings {
     
     if(adView_){
         
@@ -77,6 +77,11 @@ static NSString* MMSDKinited = nil;
         
         //MMRequest Object
         MMRequest *request = [MMRequest request];
+        
+        // Get extra parameter
+        NSString *age=[settings objectForKey:@"age"];
+        if(age)
+            request.age=[NSNumber numberWithInt:[age intValue]];
         
         // load the request
         [adView_ getAdWithRequest:request onCompletion:^(BOOL success, NSError *error) {
@@ -110,7 +115,7 @@ static NSString* MMSDKinited = nil;
     } else if([size isEqualToString:kAdAdapterSizeFULL_BANNER]){
         originWidth_=480;
         originHeight_=60;
-        return CGRectMake(0, 0, 468, 60);
+        return CGRectMake(0, 0, 480, 60);
     } else if([size isEqualToString:kAdAdapterSizeLEADERBOARD]){
         originWidth_=728;
         originHeight_=90;

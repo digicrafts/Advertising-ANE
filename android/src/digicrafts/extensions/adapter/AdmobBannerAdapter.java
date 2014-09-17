@@ -137,9 +137,7 @@ public class AdmobBannerAdapter extends AbstractAdAdapter {
             // get test ads on a physical device.
             AdRequest.Builder builder = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
 
-            Log.d("ADDEBUG","testMode: " + AdManager.testMode + " deviceid: "+ AdManager.deviceID);
             if(AdManager.testMode){
-                Log.d("ADDEBUG","add device: "+ AdManager.deviceID);
                 builder.addTestDevice(AdManager.deviceID);
             }
 
@@ -152,7 +150,15 @@ public class AdmobBannerAdapter extends AbstractAdAdapter {
                 }
             }
 
+            // Set Location
+            if(AdManager.location != null && (Boolean)settings.get("enableLocation") == true){
+                builder.setLocation(AdManager.location);
+            }
+
             AdRequest adRequest = builder.build();
+
+
+
 
             // Start loading the ad in the background.
             _adView.loadAd(adRequest);

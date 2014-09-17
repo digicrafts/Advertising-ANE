@@ -37,19 +37,27 @@
             // init InMobi
             [InMobi initialize:adUnitId];
             
-            // Create an AmazonAdView instance
-            self.adView = [[IMInterstitial alloc] initWithAppId:adUnitId];
-            
-            // Register the ViewController with the delegate to receive callbacks.
-            adView_.delegate = self;
-            
             // Set slot id
             NSString *slotIdString=[settings objectForKey:kAdAdapterSizeINTERSTITIAL];
             if(slotIdString!=nil){
-                NSLog(@"InMobi Interstitial %@", slotIdString);
+//                NSLog(@"InMobi Interstitial %@", slotIdString);
                 [adView_ setSlotId:[slotIdString intValue]];
             }
             
+            // Check if slot id valid
+            if(slotIdString!=nil){
+                
+                // create banner with slot id
+                self.adView = [[IMInterstitial alloc] initWithSlotId:[slotIdString intValue]];
+                
+            } else {
+
+                // create interstitial with appid
+                self.adView = [[IMInterstitial alloc] initWithAppId:adUnitId];
+            }
+            
+            // Register the ViewController with the delegate to receive callbacks.
+            adView_.delegate = self;
             
         }
     }
@@ -68,7 +76,7 @@
 - (void) remove{
 }
 
-- (void) refresh{
+- (void) load:(NSDictionary*)settings {
     
     if(adView_){
         [adView_ loadInterstitial];
@@ -99,6 +107,7 @@
 
 - (void)interstitialWillPresentScreen:(IMInterstitial *)ad {
     [delegate_ adAdapterWillPresent:self];
+    [delegate_ adAdapterDidPresent:self];
 }
 - (void)interstitialWillDismissScreen:(IMInterstitial *)ad {
     [delegate_ adAdapterWillDismiss:self];

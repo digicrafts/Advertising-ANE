@@ -12,6 +12,6 @@ public interface AdAdapterListener {
     public void onAdWillDismiss(String uid, String size, String network);
     public void onAdDidDismiss(String uid, String size, String network);
     public void onWillLeaveApplication(String uid, String size, String network);
-
+    public void onLog(String msg);
 
 }

@@ -58,7 +58,7 @@
 //    }
 }
 
-- (void) refresh{
+- (void) load:(NSDictionary*)settings {
     
     if(adView_){
         
@@ -115,7 +115,7 @@
         isNeedToShow_=NO;
         [adView_ presentFromRootViewController:rootController_];
     }
-    [delegate_ adAdapterWillDismiss:self];
+    [delegate_ adAdapterDidReceiveAd:self];
 }
 
 - (void)interstitial:(GADInterstitial *)interstitial didFailToReceiveAdWithError:(GADRequestError *)error
@@ -137,6 +137,7 @@
 - (void)interstitialWillLeaveApplication:(GADInterstitial *)interstitial
 {
     NSLog(@"interstitialWillLeaveApplication");
+    [delegate_ adAdapterWillLeaveApplication:self];
 }
 
 

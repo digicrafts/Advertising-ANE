@@ -2,6 +2,7 @@ package digicrafts.extensions.adapter;
 
 import android.app.Activity;
 import android.graphics.Rect;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import com.inmobi.commons.InMobi;
@@ -9,6 +10,7 @@ import com.inmobi.monetization.IMBanner;
 import com.inmobi.monetization.IMBannerListener;
 import com.inmobi.monetization.IMErrorCode;
 import digicrafts.extensions.core.AbstractAdAdapter;
+import digicrafts.extensions.core.AdManager;
 import digicrafts.extensions.data.AdAdapterNetworkType;
 import digicrafts.extensions.data.AdAdapterSize;
 
@@ -38,6 +40,11 @@ public class InMobiBannerAdapter extends AbstractAdAdapter implements IMBannerLi
             if(!InMobiBannerAdapter.isInit){
                 InMobiBannerAdapter.isInit=true;
                 InMobi.initialize(activity,adUnitId);
+            }
+
+            // set debug message
+            if(AdManager.testMode){
+                InMobi.setLogLevel(InMobi.LOG_LEVEL.DEBUG);
             }
 
             int s;
@@ -72,8 +79,20 @@ public class InMobiBannerAdapter extends AbstractAdAdapter implements IMBannerLi
             _layouWidth=(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _adWidth, activity.getResources().getDisplayMetrics());
             _layouHeight=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _adHeight, activity.getResources().getDisplayMetrics());
 
-            // create the banner view
-            _adView = new IMBanner(activity,adUnitId,s);
+
+            // Set the slot id
+            if(settings.get(size)!=null){
+
+                long slotid = Long.parseLong((String)settings.get(size),10);
+
+                // create the banner view
+                if(slotid>0)
+                    _adView = new IMBanner(activity,slotid);
+            }
+
+            // create the banner view if not valid
+            if(_adView==null)
+                _adView = new IMBanner(activity,adUnitId,s);
 
             // setup listener
             _adView.setIMBannerListener(this);
@@ -97,11 +116,6 @@ public class InMobiBannerAdapter extends AbstractAdAdapter implements IMBannerLi
     }
 
     @Override
-//    public void remove(ViewGroup view){
-//        if(_adView!=null && _adView.getParent() == view) {
-//            view.removeView(_adView);
-//        }
-//    }
     public void remove(){
         if(_adView.getParent() !=null) {
             ((ViewGroup)_adView.getParent()).removeView(_adView);
@@ -111,8 +125,6 @@ public class InMobiBannerAdapter extends AbstractAdAdapter implements IMBannerLi
     @Override
     public void load(){
         if(_adView!=null){
-            _adView.stopLoading();
-//            _adView.setSlotId(1409990931311285L);
             _adView.setRefreshInterval(-1);
             _adView.loadBanner();
         }

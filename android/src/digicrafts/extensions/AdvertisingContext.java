@@ -1,16 +1,17 @@
 package digicrafts.extensions;
 
+import android.content.Context;
 import android.graphics.Rect;
+import android.location.Location;
+import android.location.LocationManager;
 import android.provider.Settings;
 
 import android.util.Log;
 import android.util.TypedValue;
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
-import com.inmobi.commons.InMobi;
-import com.inmobi.monetization.IMBanner;
+
 import digicrafts.extensions.core.AbstractAdAdapter;
-import digicrafts.extensions.core.AdAdapterListener;
 import digicrafts.extensions.core.AdManager;
 
 
@@ -30,6 +31,7 @@ public class AdvertisingContext extends FREContext {
 	@Override
 	public void dispose() {
         if(_adManager!=null){
+            AdManager.location=null;
             _adManager.dispose();
             _adManager=null;
         }
@@ -48,11 +50,11 @@ public class AdvertisingContext extends FREContext {
         try {
 
             //
-            _methods.add(new AdvertisingFunction<Void>("ext_initialize") {
+        _methods.add(new AdvertisingFunction<Void>("ext_initialize") {
                 public Void onCall(AdvertisingContext context, Object[] args) {
 
                     // create a AdManager Instance
-                    _adManager=new AdManager(context.getActivity());
+                    _adManager=new AdManager(context);
                     // init static var
                     AdManager.packageName = context.getActivity().getPackageName();
 //                    // Get hash key
@@ -72,7 +74,24 @@ public class AdvertisingContext extends FREContext {
                     // Get device id
                     String android_id = Settings.Secure.getString(context.getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
                     AdManager.deviceID=md5(android_id).toUpperCase();
-                    AdManager.listener=adAdapterListener;
+
+                    // Get location
+                    try{
+
+                        LocationManager lm = (LocationManager) context.getActivity().getSystemService(Context.LOCATION_SERVICE);
+                        Location loc = null;
+
+                        if(lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                            loc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        } else if(lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+                            loc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                        }
+
+                        if(loc!=null)
+                            AdManager.location=loc;
+
+                    }catch(Exception ex){}
+
                     return null;
                 }
             });
@@ -85,21 +104,21 @@ public class AdvertisingContext extends FREContext {
                 }
             });
 
-            //
-            _methods.add(new AdvertisingFunction<Void>("ext_create", String.class, String.class, String.class, String.class, AbstractAdAdapter.class) {
-                public Void onCall(AdvertisingContext context, Object[] args) {
-
-                    // create the banner
-                    _adManager.create(
-                            (String) args[0],
-                            (String) args[1],
-                            (String) args[2],
-                            (String) args[3],
-                            (Map<String, Object>) args[4]);
-
-                    return null;
-                }
-            });
+//            //
+//            _methods.add(new AdvertisingFunction<Void>("ext_create", String.class, String.class, String.class, String.class, AbstractAdAdapter.class) {
+//                public Void onCall(AdvertisingContext context, Object[] args) {
+//
+//                    // create the banner
+//                    _adManager.create(
+//                            (String) args[0],
+//                            (String) args[1],
+//                            (String) args[2],
+//                            (String) args[3],
+//                            (Map<String, Object>) args[4]);
+//
+//                    return null;
+//                }
+//            });
 
             //
             _methods.add(new AdvertisingFunction<Void>("ext_load", String.class, String.class, String.class, String.class, AbstractAdAdapter.class) {
@@ -235,53 +254,53 @@ public class AdvertisingContext extends FREContext {
 // */
 //public static const AD_ACTION:String="onAdAction";
 
-    AdAdapterListener adAdapterListener = new AdAdapterListener() {
-        @Override
-        public void onAdLoaded(String uid, String size, String network) {
-            dispatchStatusEventAsync("onAdLoaded",buildEvent(uid,size,network,null));
-        }
-
-        @Override
-        public void onAdFailedToLoad(String uid, String size, String network, String error) {
-            dispatchStatusEventAsync("onAdFailedToLoad",buildEvent(uid,size,network,error));
-        }
-
-        @Override
-        public void onAdWillPresent(String uid, String size, String network) {
-            dispatchStatusEventAsync("onAdWillPresent",buildEvent(uid,size,network,null));
-        }
-
-        @Override
-        public void onAdDidPresent(String uid, String size, String network) {
-            dispatchStatusEventAsync("onAdDidPresent",buildEvent(uid,size,network,null));
-        }
-
-        @Override
-        public void onAdWillDismiss(String uid, String size, String network) {
-            dispatchStatusEventAsync("onAdWillDismiss",buildEvent(uid,size,network,null));
-        }
-
-        @Override
-        public void onAdDidDismiss(String uid, String size, String network) {
-            dispatchStatusEventAsync("onAdDidDismiss",buildEvent(uid,size,network,null));
-        }
-
-        @Override
-        public void onWillLeaveApplication(String uid, String size, String network) {
-            dispatchStatusEventAsync("onWillLeaveApplication",buildEvent(uid,size,network,null));
-        }
-    };
+//    AdAdapterListener adAdapterListener = new AdAdapterListener() {
+//        @Override
+//        public void onAdLoaded(String uid, String size, String network) {
+//            dispatchStatusEventAsync("onAdLoaded",buildEvent(uid,size,network,null));
+//        }
+//
+//        @Override
+//        public void onAdFailedToLoad(String uid, String size, String network, String error) {
+//            dispatchStatusEventAsync("onAdFailedToLoad",buildEvent(uid,size,network,error));
+//        }
+//
+//        @Override
+//        public void onAdWillPresent(String uid, String size, String network) {
+//            dispatchStatusEventAsync("onAdWillPresent",buildEvent(uid,size,network,null));
+//        }
+//
+//        @Override
+//        public void onAdDidPresent(String uid, String size, String network) {
+//            dispatchStatusEventAsync("onAdDidPresent",buildEvent(uid,size,network,null));
+//        }
+//
+//        @Override
+//        public void onAdWillDismiss(String uid, String size, String network) {
+//            dispatchStatusEventAsync("onAdWillDismiss",buildEvent(uid,size,network,null));
+//        }
+//
+//        @Override
+//        public void onAdDidDismiss(String uid, String size, String network) {
+//            dispatchStatusEventAsync("onAdDidDismiss",buildEvent(uid,size,network,null));
+//        }
+//
+//        @Override
+//        public void onWillLeaveApplication(String uid, String size, String network) {
+//            dispatchStatusEventAsync("onWillLeaveApplication",buildEvent(uid,size,network,null));
+//        }
+//    };
 
 // Private Methods
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private String buildEvent(String uid, String size, String network, String error){
-
-        if(error==null)
-            return "{\"uid\":\""+uid+"\",\"size\":\""+size+"\",\"network\":\""+network+"\"}";
-
-        return "{\"uid\":\""+uid+"\",\"size\":\""+size+"\",\"network\":\""+network+"\",\"error\":\""+error+"\"}";
-    }
+//    private String buildEvent(String uid, String size, String network, String error){
+//
+//        if(error==null)
+//            return "{\"uid\":\""+uid+"\",\"size\":\""+size+"\",\"network\":\""+network+"\"}";
+//
+//        return "{\"uid\":\""+uid+"\",\"size\":\""+size+"\",\"network\":\""+network+"\",\"error\":\""+error+"\"}";
+//    }
 
 // Public Methods
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

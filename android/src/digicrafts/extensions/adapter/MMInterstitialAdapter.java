@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.view.ViewGroup;
 import com.millennialmedia.android.*;
 import digicrafts.extensions.core.AbstractAdAdapter;
+import digicrafts.extensions.core.AdManager;
 import digicrafts.extensions.data.AdAdapterNetworkType;
 import digicrafts.extensions.data.AdAdapterSize;
 
@@ -75,6 +76,15 @@ public class MMInterstitialAdapter extends AbstractAdAdapter implements RequestL
 
             // Set your metadata in the MMRequest object
             MMRequest request = new MMRequest();
+
+            // Set extra paramter
+            if((Boolean)settings.get("enableLocation")==true&& AdManager.location!=null){
+                request.setUserLocation(AdManager.location);
+            }
+            String age = (String)settings.get("age");
+            if(age != null && !age.isEmpty()){
+                request.setAge(age);
+            }
 
             // Add the MMRequest object to your MMAdView.
             _adView.setMMRequest(request);

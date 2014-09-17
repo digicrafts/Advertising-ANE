@@ -55,12 +55,24 @@
     
     [super showInPosition:position offsetX:x offsetY:y];
     
+    //
+    if ([AbstractAdAdapter isLandscape]) {
+        adView_.currentContentSizeIdentifier=ADBannerContentSizeIdentifierLandscape;
+    } else {
+        adView_.currentContentSizeIdentifier=ADBannerContentSizeIdentifierPortrait;
+    }
+    
     if([size_ isEqualToString:kAdAdapterSizeBANNER]){
         originWidth_=320;
-    } else if([size_ isEqualToString:kAdAdapterSizeFULL_BANNER]){
-        originWidth_=468;
+        adView_.currentContentSizeIdentifier=ADBannerContentSizeIdentifier320x50;
+//    } else if([size_ isEqualToString:kAdAdapterSizeFULL_BANNER]){
+//        originWidth_=480;
+//        originHeight_=60;
+//        adView_.currentContentSizeIdentifier=ADBannerContentSizeIdentifier480x32;
     } else if([size_ isEqualToString:kAdAdapterSizeLEADERBOARD]){
         originWidth_=728;
+        originHeight_=90;
+        adView_.currentContentSizeIdentifier=ADBannerContentSizeIdentifierPortrait;
     } else if([size_ isEqualToString:kAdAdapterSizeMEDIUM_RECTANGLE]){
         originWidth_=300;
         originHeight_=250;
@@ -71,12 +83,7 @@
         originWidth_=rootController_.view.frame.size.width;
     }
     
-    //
-    if ([AbstractAdAdapter isLandscape]) {
-        adView_.currentContentSizeIdentifier=ADBannerContentSizeIdentifierLandscape;
-    } else {
-        adView_.currentContentSizeIdentifier=ADBannerContentSizeIdentifierPortrait;
-    }
+
     [adView_ sizeToFit];
     
 //    NSLog(@"showInPosition ready_:%d x:%d y%d w2:%d h2:%d loaded:%d",ready_,offsetX_,offsetY_,originWidth_,originHeight_,[adView_ isBannerLoaded]);
@@ -97,7 +104,7 @@
     }
 }
 
-- (void) refresh{
+- (void) load:(NSDictionary*)settings {
     if(adView_){
         ready_=NO;
         if(adView_.isBannerLoaded){
