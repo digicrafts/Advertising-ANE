@@ -19,11 +19,11 @@ The Universal Advertising AIR native extension will include the following highli
 
 The current supporting network are list below:
 
-* AdMob
-* iAd (IOS only)
-* MillennialMedia
-* InMobi
-* Amazon Mobile Ads
+* Google Mobile Ads (AdMob) (ios 6.11.1/newest google play services)
+* iAd (IOS only/Compile with IOS SDK 8.0)
+* MillennialMedia (ios 5.3.0/android 5.3.0)
+* InMobi (ios 4.5.0/android 4.5.0)
+* Amazon Mobile Ads (ios 2.0.3/android 5.4.78)
 * Static backfill in house ads (via bitmap or external images)
 * Platform supporting via AdMob Mediation Networks
 
@@ -100,40 +100,113 @@ Create a settings object. And add the adapter for different network.
         settings.iAd(amazon,3);
 ```
 
-Show a banner AD. Supply an unique name for each banner. You need it for removing the ad. 
+Create a banner and load. Supply an unique name and size for each banner.
 
 ```javascript
-  AmazonAds.showAdView('banner_name');
+  Advertising.getBanner('BANNER_1',AdSize.BANNER,settings);
 ```
 
-Remove the Ad
+You can also show the banner immediately. Supply the position and refresh rate.
 
 ```javascript
-  AmazonAds.removeAdView('banner_name');
+  Advertising.getBanner('BANNER_1',AdSize.BANNER,settings).show(AdPosition.BOTTOM,30);
 ```
 
-Show a Interstitial Ad
+Supported positions.
+- AdPosition.BOTTOM
+- AdPosition.BOTTOM_LEFT
+- AdPosition.BOTTOM_RIGHT
+- AdPosition.TOP
+- AdPosition.TOP_LEFT
+- AdPosition.TOP_RIGHT
+- AdPosition.CENTER
+
+Remove the banner from screen.
 
 ```javascript
-  AmazonAds.showInterstitial();
+  Advertising.getBanner('BANNER_1').remove();
 ```
 
-Remove the Interstitial Ad
+Create an interstitial and load.
 
 ```javascript
-  AmazonAds.removeInterstitial();
+  Advertising.getInterstitial('INTERSTITIAL_1',AdSize.BANNER,settings);
 ```
+
+Show the Interstitial Ad. Supply the frequency to appear. Also, you can specify the max count to show.
+
+```javascript
+  Advertising.getInterstitial('INTERSTITIAL_1').show(3,2);
+```
+
+You can listen to the event by adding a listener to the Advertising instance.
+
+```javascript
+function handleAdEvent(e:AdEvent):void{
+
+ // e.data contains the raw event data
+
+ // e.ad contains the ad instance for the event 
+
+}
+Advertising.getInstance().addEventListener(AdEvent.AD_LOADED, handleAdEvent );
+```
+
+Supported events.
+*AdEvent.AD_LOADED*  Event type for ad loaded.
+*AdEvent.AD_WILL_PRESENT*  Event type for ad will going to show on screen.
+*AdEvent.AD_DID_PRESENT*  Event type for ad did show on screen.
+*AdEvent.AD_WILL_DISMISS*  Event type for ad will remove from screen.
+*AdEvent.AD_DID_DISMISS*  Event type for ad did remove from screen.
+*AdEvent.AD_FAILED_TO_LOAD*  Event type for ad did fail to load.
+*AdEvent.WILL_LEAVE_APPLICATION*  Event type for ad did fail to load.
+     
 
 ##Setup for Android
 
 Update Your Application Descriptor
 
-You'll need to be using the AIR 3.1 SDK or higher, include the extension in your Application Descriptor XML, and update the Android Manifest Additions with some settings.
+You'll need to be using the AIR 14.0 SDK or higher, include the extension in your Application Descriptor XML, and update the Android Manifest Additions with some settings.
 
 Add the following settings in <application> tag.
 
 ```xml
-<activity android:name="com.amazon.device.ads.AdActivity" android:configChanges="keyboardHidden|orientation|screenSize"/>
+<!-- Google Play -->
+<meta-data android:name="com.google.android.gms.version"
+    android:value="@integer/google_play_services_version"/>
+<activity android:name="com.google.android.gms.ads.AdActivity"
+    android:theme="@android:style/Theme.Translucent"
+    android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+
+<!-- Amazon Mobile Ads -->
+<activity android:name="com.amazon.device.ads.AdActivity"
+    android:configChanges="keyboardHidden|orientation|screenSize"/>
+
+<!-- Millennial Media -->
+<activity android:name="com.millennialmedia.android.MMActivity"
+    android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    android:configChanges="keyboardHidden|orientation|keyboard|screenSize" ></activity>
+
+<!-- InMobi -->
+<activity android:name="com.inmobi.androidsdk.IMBrowserActivity"
+    android:configChanges="keyboardHidden|orientation|keyboard|smallestScreenSize|screenSize"
+    android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    android:hardwareAccelerated="true" />
+```
+Add the following basic permissions.
+
+```xml
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+```
+
+Add the following permission if you want video interstitial supported (millennialmedia).
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-feature android:name="android.hardware.microphone" android:required="false" />
 ```
 
 Add the following permission if you want the ad target location.
@@ -142,14 +215,6 @@ Add the following permission if you want the ad target location.
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 ```
-
-##Game we made using this ANE
-
-[Flippy Day](http://www.amazon.com/Digicrafts-Flippy-Day/dp/B00KL3TYJE/ref=sr_1_1?ie=UTF8&qid=1401244788&sr=8-1&keywords=Flippy+Day)
-
-[Recycle Rangers](http://www.amazon.com/Recycle-Rangers-Free-Kindle-Tablet/dp/B00B4MTUEU/ref=sr_1_1?ie=UTF8&qid=1401244943&sr=8-1&keywords=Recycle+rangers)
-
-[Diamond Speedy](http://www.amazon.com/Diamond-Speedy-Kindle-Tablet-Edition/dp/B0091FQNHO/ref=sr_1_1?ie=UTF8&qid=1401244971&sr=8-1&keywords=Diamond+Speedy)
 
 ##Developer
 
