@@ -11,7 +11,10 @@
 #import <MillennialMedia/MMInterstitial.h>
 #import <MillennialMedia/MMRequest.h>
 
-@interface MMInterstitialAdapter : AbstractAdAdapter
+@interface MMInterstitialAdapter : AbstractAdAdapter {
+    
+    Boolean cached_;
+}
 
 - (id) initWithAdUnitId:(NSString*) adUnitId settings:(NSDictionary*) settings;
 

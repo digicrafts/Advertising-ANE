@@ -120,7 +120,7 @@ public class MMInterstitialAdapter extends AbstractAdAdapter implements RequestL
 
     @Override
     public void MMAdRequestIsCaching(MMAd mmAd) {
-
+        callOnAdLoaded();
     }
 
     @Override

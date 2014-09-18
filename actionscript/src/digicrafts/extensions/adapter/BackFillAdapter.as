@@ -2,19 +2,24 @@
  * Created by tsangwailam on 11/8/14.
  */
 package digicrafts.extensions.adapter {
-import digicrafts.extensions.adapter.*;
+
 import digicrafts.extensions.core.AbstractAdaper;
 import digicrafts.extensions.data.AdNetworkType;
 
-import flash.display.BitmapData;
-
 public class BackFillAdapter extends AbstractAdaper {
 
-    public var bitmap:BitmapData;
+    public var url:String="";
+    public var interstitial:String='';
+    public var banner:String='';
+    public var smart_banner:String='';
+    public var full_banner:String='';
+    public var leaderboard:String='';
+    public var medium_rectangle:String='';
 
-    public function BackFillAdapter(link:String) {
+    public function BackFillAdapter(url:String,banner:String="") {
 
-//        this.bitmap=bmp;
+        this.url=url;
+        this.banner=banner;
 
         super(AdNetworkType.BACKFILL);
     }

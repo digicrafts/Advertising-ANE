@@ -37,10 +37,10 @@ public class InMobiBannerAdapter extends AbstractAdAdapter implements IMBannerLi
             this.settings=settings;
 
             //
-            if(!InMobiBannerAdapter.isInit){
-                InMobiBannerAdapter.isInit=true;
+//            if(!InMobiBannerAdapter.isInit){
+//                InMobiBannerAdapter.isInit=true;
                 InMobi.initialize(activity,adUnitId);
-            }
+//            }
 
             // set debug message
             if(AdManager.testMode){

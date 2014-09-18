@@ -34,7 +34,7 @@ public class AdInterstitial extends Ad{
     {
         super._next();
 
-        if(setting) {
+        if(setting&&ad_internal::retry<20) {
             _load();
         }
     }

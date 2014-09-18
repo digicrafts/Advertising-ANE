@@ -55,21 +55,16 @@
     
     [super showInPosition:position offsetX:x offsetY:y];
     
-    //
-    if ([AbstractAdAdapter isLandscape]) {
-        adView_.currentContentSizeIdentifier=ADBannerContentSizeIdentifierLandscape;
-    } else {
-        adView_.currentContentSizeIdentifier=ADBannerContentSizeIdentifierPortrait;
-    }
-    
-    if([size_ isEqualToString:kAdAdapterSizeBANNER]){
+    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad&&[size_ isEqualToString:kAdAdapterSizeBANNER]){
         originWidth_=320;
+        originHeight_=50;
         adView_.currentContentSizeIdentifier=ADBannerContentSizeIdentifier320x50;
-//    } else if([size_ isEqualToString:kAdAdapterSizeFULL_BANNER]){
+//    } else if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad&&[size_ isEqualToString:kAdAdapterSizeFULL_BANNER]){
 //        originWidth_=480;
-//        originHeight_=60;
+//        originHeight_=32;
 //        adView_.currentContentSizeIdentifier=ADBannerContentSizeIdentifier480x32;
-    } else if([size_ isEqualToString:kAdAdapterSizeLEADERBOARD]){
+    } else
+    if([size_ isEqualToString:kAdAdapterSizeLEADERBOARD]){
         originWidth_=728;
         originHeight_=90;
         adView_.currentContentSizeIdentifier=ADBannerContentSizeIdentifierPortrait;
@@ -81,9 +76,18 @@
         originHeight_=600;
     } else {
         originWidth_=rootController_.view.frame.size.width;
+        
+        if([size_ isEqualToString:kAdAdapterSizeBANNER]||[size_ isEqualToString:kAdAdapterSizeFULL_BANNER]){
+            adView_.currentContentSizeIdentifier=ADBannerContentSizeIdentifierPortrait;
+        } else {
+            if ([AbstractAdAdapter isLandscape]) {
+                adView_.currentContentSizeIdentifier=ADBannerContentSizeIdentifierLandscape;
+            } else {
+                adView_.currentContentSizeIdentifier=ADBannerContentSizeIdentifierPortrait;
+            }
+        }
     }
     
-
     [adView_ sizeToFit];
     
 //    NSLog(@"showInPosition ready_:%d x:%d y%d w2:%d h2:%d loaded:%d",ready_,offsetX_,offsetY_,originWidth_,originHeight_,[adView_ isBannerLoaded]);

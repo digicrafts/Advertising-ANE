@@ -63,7 +63,7 @@ public class AdSettings {
      */
     public function add(adapter:AbstractAdaper,priority:int=-1,weight:int=1):void
     {
-        trace('add',adapter.network,priority,weight);
+//        trace('add',adapter.network,priority,weight);
 
         // ignore iad in android devices
         if(Advertising.isAndroid&&adapter.network==AdNetworkType.IAD){
@@ -128,10 +128,12 @@ public class AdSettings {
             // increase weight of current setting
             current_setting.currentWeight++;
 
-            var index:int = _index;
             var count:int = _settings.length;
             var loop:Boolean = true;
             var noreset:Boolean = true;
+            var index:int = _index;
+            var last_index:int = _index-1;
+            if(last_index<0)last_index=_settings.length-1;
 
             while(loop&&noreset) {
 
@@ -140,9 +142,16 @@ public class AdSettings {
                 if (index >= _settings.length) index = 0;
 
                 var setting:AdSetting = _settings[index];
-                if (setting.currentWeight < setting.weight) {
-                    _index = index;
-                    loop = false;
+                if (index==last_index||setting.currentWeight < setting.weight) {
+
+                    // check if internet not available.
+                    if(!Advertising.ad_internal::internetAvailabile&&
+                            AdNetworkType.ad_internal::OFFLINE_NETWORK[setting.adapter.network]==null){
+
+                    } else {
+                        _index = index;
+                        loop = false;
+                    }
                 }
                 count--;
                 if(count<=0) {
@@ -151,7 +160,7 @@ public class AdSettings {
                 }
             }
 //            print debug info
-//            trace("index",_index);
+//            trace("index",_index,"noreset",noreset);
 //            for(var i:int=0;i<_settings.length;i++){
 //                var  setting:AdSetting=_settings[i];
 //                trace(i,setting.adapter.network,setting.priority,setting.weight,setting.currentWeight);

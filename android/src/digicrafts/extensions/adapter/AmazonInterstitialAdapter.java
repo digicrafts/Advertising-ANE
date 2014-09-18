@@ -31,6 +31,8 @@ public class AmazonInterstitialAdapter extends AbstractAdAdapter implements AdLi
             // init
             this.settings=settings;
 
+            _showAfterLoad=false;
+
             // Set the appId
             if(!AmazonBannerAdapter.isInit) {
 
@@ -118,7 +120,8 @@ public class AmazonInterstitialAdapter extends AbstractAdAdapter implements AdLi
         if(_showAfterLoad){
             _showAfterLoad=false;
             _isShow=true;
-            _interstitialAd.showAd();
+            if(_interstitialAd!=null)
+                _interstitialAd.showAd();
             callOnAdWillPresent();
             callOnAdDidPresent();
         }

@@ -6,6 +6,7 @@
 
     <!-- All -->
     <target name="all" depends="ios,android,swc,ios-dependencies,package" description="Full build of extension"/>
+    <!--<target name="all" depends="android,swc,package" description="Full build of extension"/>-->
 
     <!-- iOS -->
     <target name="ios" description="Build iOS Library">

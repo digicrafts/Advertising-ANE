@@ -54,6 +54,7 @@
 //    NSLog(@"amazon showInPosition %d",[adView_ isReady]);
     
     if([adView_ isReady]){
+
         [adView_ presentFromViewController:rootController_];
     } else {
         isNeedToShow_=YES;
@@ -67,7 +68,7 @@
 
     NSLog(@"amazon refresh %d %d",[adView_ isShowing],[adView_ isReady]);
     
-    if(adView_&&![adView_ isShowing]&&![adView_ isReady]){
+    if(adView_&&![adView_ isReady]){//![adView_ isShowing]&&
         
         // Set the adOptions.
         AmazonAdOptions *options = [AmazonAdOptions options];

@@ -34,18 +34,15 @@ public class InMobiInterstitialAdapter extends AbstractAdAdapter implements IMIn
             this.settings=settings;
 
             //
-            if(!InMobiBannerAdapter.isInit){
-                InMobiBannerAdapter.isInit=true;
+//            if(!InMobiBannerAdapter.isInit){
+//                InMobiBannerAdapter.isInit=true;
                 InMobi.initialize(activity,adUnitId);
-            }
+//            }
 
             // set debug message
             if(AdManager.testMode){
                 InMobi.setLogLevel(InMobi.LOG_LEVEL.DEBUG);
             }
-
-            // Create an ad.
-            _adView = new IMInterstitial(activity,adUnitId);
 
             // Set the slot id
             if(settings.get(AdAdapterSize.INTERSTITIAL)!=null){

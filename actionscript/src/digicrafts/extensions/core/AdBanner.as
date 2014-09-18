@@ -38,30 +38,6 @@ public class AdBanner extends Ad {
         _show(position,int(offsetX),int(offsetY));
     }
 
-//    /**
-//     * Display the ads in X/Y position on the screen
-//     * @param x
-//     * @param y
-//     * @param refresh
-//     */
-//    public function showXY(x:int=0, y:int=0, refresh:int=-1):void
-//    {
-//        if(refresh==-1) refresh=Advertising.defaultBannerRefresh;
-//        if(refresh>0) ad_internal::refresh=refresh*1000;
-//
-//        _show(AdPosition.FLOAT,int(x),int(y));
-//    }
-
-    /**
-     * @override
-     */
-    override public function refresh():void
-    {
-        if(_position){
-//            show(_position);
-        }
-    }
-
     /**
      * @override
      */
@@ -69,7 +45,7 @@ public class AdBanner extends Ad {
     {
         super._next();
 
-        if(setting) {
+        if(setting&&ad_internal::retry<20) {
 
             if(visible)
                 _show(_position, _offsetX, _offsetY);

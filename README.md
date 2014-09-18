@@ -3,6 +3,12 @@ Advertising Native Extension for Adobe Air
 
 This Advertising ANE add supprt to using all major mobile system and popular adverting network with Adobe Air. Supports IOS, Android and Kindle.
 
+Brought to you by the [Indiegogo Campaign](https://www.indiegogo.com/projects/universal-advertising-air-native-extension/x/4441429). Thanks to the Backers.
+
+* Michał Moczyński [link](https://www.indiegogo.com/individuals/8561839/x/4441429)
+* Marcus Frasier [link](https://www.indiegogo.com/individuals/2120782/x/4441429)
+* dwight.eppinger
+
 ##Highlighted Features
 
 The Universal Advertising AIR native extension will include the following highlighted features:

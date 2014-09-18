@@ -706,13 +706,21 @@ public class Advertising extends EventDispatcher{
                     ad=getBanner(data.uid);
             }
 
+            // create the event
+            event = new AdEvent(e.code.toString(), false, data, ad);
 
-            // for different event
+            // fire the event
+            if (event) dispatchEvent(event);
+
+            // for different event action
             switch (e.code) {
                 case AdEvent.AD_LOADED:
                     if(ad) {
                         ad.ad_internal::loading=false;
                         ad.ad_internal::ready=true;
+                        if(ad.ad_internal::showAfterLoad&&ad is AdBanner){
+                            (ad as AdBanner).show();
+                        }
                     }
                     break;
                 case AdEvent.AD_FAILED_TO_LOAD:
@@ -721,22 +729,19 @@ public class Advertising extends EventDispatcher{
                         ad.next();
                     }
                     break;
-                case AdEvent.AD_DID_DISMISS:
+                case AdEvent.AD_WILL_DISMISS:
                     if(ad&&ad.size==AdSize.INTERSTITIAL) {
                         var load_ad:Ad=ad;
                         // delay load for interstitial ads
                         setTimeout(function():void{
                             load_ad.ad_internal::ready=false;
                             load_ad.next();
-                        },2000);
+                        },500);
                     }
                     break;
             }
 
-            // create the event
-            event = new AdEvent(e.code.toString(), false, data);
 
-            if (event) dispatchEvent(event);
         }
 
     }
@@ -764,8 +769,17 @@ public class Advertising extends EventDispatcher{
      *
      * @param event
      */
-    private function _handleCheckInternetConnection(event:Event):void {
+    private function _handleCheckInternetConnection(event:Event):void
+    {
+        ad_internal::log(0,"Network status change. InternetAvailable ", ad_internal::internetAvailabile)
 
+        // reset all retry status
+        if(ad_internal::internetAvailabile){
+            // Call each banner timeAdvanced
+            for each(var banner:AdBanner in _instance.mBannerDictionary){
+                banner.ad_internal::retry=0;
+            }
+        }
     }
 
     /**

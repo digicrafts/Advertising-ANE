@@ -2,6 +2,8 @@
  * Created by tsangwailam on 3/8/14.
  */
 package digicrafts.extensions.events {
+import digicrafts.extensions.core.Ad;
+
 import flash.events.Event;
 
 public class AdEvent extends Event {
@@ -46,13 +48,19 @@ public class AdEvent extends Event {
     public var data:*;
 
     /**
+     * Store the ad instance responded for the event if any
+     */
+    public var ad:Ad;
+
+    /**
      * @param type
      * @param bubbles
      * @param data
      */
-    public function AdEvent(type:String, bubbles:Boolean = false, data:Object = null) {
+    public function AdEvent(type:String, bubbles:Boolean = false, data:Object = null, ad:Ad = null) {
 
         this.data = data;
+        this.ad = ad;
 
         super(type, bubbles, false);
     }

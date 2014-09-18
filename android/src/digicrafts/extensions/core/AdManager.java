@@ -91,62 +91,55 @@ public class AdManager {
 // Public Methods
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//    /**
-//     *
-//     * @param id
-//     * @param size
-//     * @param network
-//     * @param settings
-//     */
-//    public void create(String id, String size, String network, String adUnitId, Map<String, Object> settings)
-//    {
-//        // Get existing adapter
-//        AdAdapterInterface adapter = _adapterMap.get(id);
-//
-//        // Check if the id exist
-//        if(adapter == null){
-//            adapter = _createAdapter(id, size, network, adUnitId, settings);
-//            adapter.load();
-//        }
-//    }
-
     /**
      *
-     * @param id
+     * @param uid
      * @param size
      * @param network
      * @param settings
      */
-    public AdAdapterInterface load(String id, String size, String network, String adUnitId, Map<String, Object> settings)
+    public AdAdapterInterface load(String uid, String size, String network, String adUnitId, Map<String, Object> settings)
     {
 
         // Get existing adapter
-        AdAdapterInterface adapter = _adapterMap.get(id);
+        AdAdapterInterface adapter = _adapterMap.get(uid);
 
         // Check if the id exist
         if(adapter == null){
 
             // create the adapter
-            adapter = _createAdapter(id, size, network, adUnitId, settings);
+            adapter = _createAdapter(uid, size, network, adUnitId, settings);
             adapter.load();
 
         } else {
 
             // check if they are the same banner
-            if(adapter.getNetworkType().equals(network)){
+            if(adapter.getNetworkType().equals(network)) {
 
-                adAdapterListener.onLog("equal network: " + network + " isshow: " +adapter.isShow() + " id: " + id);
+                adAdapterListener.onLog("equal network: " + network + " isshow: " + adapter.isShow() + " isload: " + adapter.isLoaded() + " uid: " + uid);
 
-                // if interstitial, lo
-                if(size.equals(AdAdapterSize.INTERSTITIAL)&&adapter.isShow())
-                    adapter.load();
+                // if interstitial, load again
+                if (size.equals(AdAdapterSize.INTERSTITIAL)){
+
+                    // check if it is shown
+                    if(adapter.isShow())
+                        adapter.load();
+                } else {
+                // if banner, check if it is loaded
+
+                    if(adapter.isLoaded()){
+                        adAdapterListener.onAdLoaded(uid,size,network);
+                    } else {
+                        adapter.load();
+                    }
+                }
 
             } else {
 
                 if(adapter.isLoaded()){
 
                     // put in hash map
-                    _cleanAdapterMap.put(id, adapter);
+                    _cleanAdapterMap.put(uid, adapter);
 
                 } else {
 
@@ -154,7 +147,7 @@ public class AdManager {
                     adapter.setListener(null);
                     adapter.pause();
                     adapter.remove();
-                    _adapterMap.remove(id);
+                    _adapterMap.remove(uid);
                 }
 
                 // clean adapter
@@ -165,7 +158,7 @@ public class AdManager {
 //                _lastAdapter.pause();
 
                 // create new adapter
-                adapter = _createAdapter(id, size, network, adUnitId, settings);
+                adapter = _createAdapter(uid, size, network, adUnitId, settings);
 
                 // refresh the ad
                 adapter.load();
@@ -296,15 +289,12 @@ public class AdManager {
 
     private AdAdapterInterface _createAdapter(String id, String size, String network, String adUnitId, Map<String, Object> settings) {
 
-        adAdapterListener.onLog("create Adapter");
-        Log.d("AdManager","_createAdapter: "+network+" size: "+size);
+//        Log.d("AdManager","_createAdapter: "+network+" size: "+size);
 
         // AdAdapter instance
         AdAdapterInterface adapter = null;
-//        // Get the ad unitId
-//        String adUnitId = (String) settings.get("adUnitId");
 
-        Log.d("AdManager","adUnitId: "+adUnitId+" type: "+network+" size: "+size);
+//        Log.d("AdManager","adUnitId: "+adUnitId+" type: "+network+" size: "+size);
 
         // Select differ network
         if (size.equals(AdAdapterSize.INTERSTITIAL)){
@@ -347,63 +337,9 @@ public class AdManager {
 
         if(adapter!=null) {
 
-            // set the id
+            // set the parameters
             adapter.setId(id);
             adapter.setSize(size);
-
-            // if there last adapter
-//            if(_lastAdapter!=null){
-//                _currentAdapter=adapter;
-//                _currentAdapter.setListener(
-//                        new AdAdapterListener() {
-//                            @Override
-//                            public void onAdLoaded(String uid, String size, String network) {
-//                                _lastAdapter.destroy();
-//                                _lastAdapter=null;
-//                                listener.onAdLoaded(uid,size,network);
-//                                _currentAdapter.setListener(listener);
-//                                _currentAdapter=null;
-//                            }
-//
-//                            @Override
-//                            public void onAdFailedToLoad(String uid, String size, String network, String error) {
-//                                _lastAdapter.destroy();
-//                                _lastAdapter=null;
-//                                listener.onAdFailedToLoad(uid,size,network,error);
-//                                _currentAdapter.setListener(listener);
-//                                _currentAdapter=null;
-//                            }
-//
-//                            @Override
-//                            public void onAdWillPresent(String uid, String size, String network) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onAdDidPresent(String uid, String size, String network) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onAdWillDismiss(String uid, String size, String network) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onAdDidDismiss(String uid, String size, String network) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onWillLeaveApplication(String uid, String size, String network) {
-//
-//                            }
-//                    });
-//            } else {
-//                adapter.setListener(listener);
-//                adapter.setListener(adAdapterListener);
-//            }
-
             adapter.setListener(adAdapterListener);
 
             // put in hash map
@@ -414,6 +350,9 @@ public class AdManager {
         return adapter;
     }
 
+    /**
+     * Listener object
+     */
     AdAdapterListener adAdapterListener = new AdAdapterListener() {
         @Override
         public void onAdLoaded(String uid, String size, String network) {

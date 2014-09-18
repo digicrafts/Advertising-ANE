@@ -4,6 +4,8 @@
 package digicrafts.extensions.core {
 
 import digicrafts.extensions.Advertising;
+import digicrafts.extensions.core.ad_internal;
+import digicrafts.extensions.data.AdNetworkType;
 import digicrafts.extensions.data.AdSize;
 
 import flash.events.EventDispatcher;
@@ -14,7 +16,6 @@ public class Ad extends EventDispatcher {
     private var _id:String;
     private var _size:String=AdSize.BANNER;
     private var _visible:Boolean=false;
-    private var _currentAdapter:AbstractAdaper;
 
     /**
      * Instance of AdSettings class. Store the config of the ads.
@@ -48,7 +49,11 @@ public class Ad extends EventDispatcher {
     /**
      * The current network adapter use to show the ads.
      */
-    public function get currentAdapter ():AbstractAdaper { return _currentAdapter}
+    public function get currentAdapter ():AbstractAdaper {
+        if(setting)
+            return setting.ad_internal::getCurrentAdapter();
+        return null;
+    }
 
     /**
      *  internal var
@@ -64,6 +69,8 @@ public class Ad extends EventDispatcher {
     ad_internal var timecount:Number = 0;
     ad_internal var ready:Boolean=false;
     ad_internal var loading:Boolean=false;
+    ad_internal var retry:int=0;
+    ad_internal var showAfterLoad:Boolean=false;
 
     /**
      * Abstract class for a basic ads.
@@ -111,14 +118,6 @@ public class Ad extends EventDispatcher {
     }
 
     /**
-     * Refresh current ads.
-     */
-    public function refresh():void
-    {
-
-    }
-
-    /**
      * Switch to next adapter.
      */
     public function next():void
@@ -151,9 +150,8 @@ public class Ad extends EventDispatcher {
 
         }
 
-        if(ad_internal::loading) {
         // if in loading state
-//        trace('check loading count',ad_internal::loadingcount,Advertising.timeout);
+        if(ad_internal::loading) {
             ad_internal::loadingcount +=t;
             if (ad_internal::loadingcount > Advertising.timeout)
                 _next();
@@ -176,20 +174,41 @@ public class Ad extends EventDispatcher {
     {
         Advertising.ad_internal::log(2,"AD _show",position,x,y);
 
-        Advertising.ad_internal::log(0,
-            "callCount",ad_internal::callCount,
-            "freq",ad_internal::callCount%ad_internal::frequency,
-            "maxCount",ad_internal::maxCount
-        );
-        // check if
-        if(ad_internal::callCount%ad_internal::frequency==0){
+//        Advertising.ad_internal::log(0,
+//            "callCount",ad_internal::callCount,
+//            "freq",ad_internal::frequency,
+//            "callCount%freq",ad_internal::callCount%ad_internal::frequency,
+//            "maxCount",ad_internal::maxCount
+//        );
 
-            if(ad_internal::maxCount==0||ad_internal::callCount<=ad_internal::maxCount) {
-                _visible = true;
-                Advertising.ad_internal::extShow(this, position, x, y);
+
+        if(setting) {
+
+            // get current adapter
+            var adapter:AbstractAdaper=this.currentAdapter;
+            if(adapter){
+
+                // check if has internet connection
+                if (!Advertising.ad_internal::internetAvailabile &&
+                        AdNetworkType.ad_internal::OFFLINE_NETWORK[currentAdapter.network] == null) {
+                    // Not display any ads
+                    Advertising.ad_internal::log(0,"No network. Not display any advertisement.")
+                    ad_internal::showAfterLoad=true;
+                    remove();
+                } else {
+                    // check for frequency and call count
+                    if (ad_internal::frequency == 0 || ad_internal::callCount % ad_internal::frequency == 0) {
+
+                        if (ad_internal::maxCount == 0 || ad_internal::callCount <= ad_internal::maxCount) {
+                            _visible = true;
+                            ad_internal::showAfterLoad=false;
+                            Advertising.ad_internal::extShow(this, position, x, y);
+                        }
+                    }
+                    ad_internal::callCount++;
+                }
             }
         }
-        ad_internal::callCount++;
     }
 
     /**
@@ -197,7 +216,7 @@ public class Ad extends EventDispatcher {
      */
     protected function _load():void
     {
-        Advertising.ad_internal::log(2,"AD _load");
+        Advertising.ad_internal::log(2,"AD._load");
         ad_internal::ready=false;
         Advertising.ad_internal::extLoad(this);
     }
@@ -207,13 +226,19 @@ public class Ad extends EventDispatcher {
      */
     protected function _next():void
     {
-        Advertising.ad_internal::log(2,"AD _next",setting);
-        if(setting){
+        Advertising.ad_internal::log(2,"AD._next",setting);
+//        Advertising.ad_internal::log(0,'Retry', ad_internal::retry);
+        if(setting && ad_internal::retry<20){
+            // reset status
             ad_internal::ready=false;
             ad_internal::loading = true;
             ad_internal::timecount = 0;
             ad_internal::loadingcount = 0;
+            // swtich to next adapter
             setting.ad_internal::nextAdapter();
+            // if no internet, mark retry
+            if(!Advertising.ad_internal::internetAvailabile)
+                ad_internal::retry++;
         }
 
     }

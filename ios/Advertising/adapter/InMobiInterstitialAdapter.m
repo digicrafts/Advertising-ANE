@@ -38,11 +38,12 @@
             [InMobi initialize:adUnitId];
             
             // Set slot id
-            NSString *slotIdString=[settings objectForKey:kAdAdapterSizeINTERSTITIAL];
-            if(slotIdString!=nil){
-//                NSLog(@"InMobi Interstitial %@", slotIdString);
-                [adView_ setSlotId:[slotIdString intValue]];
-            }
+            NSString *slotIdString=[settings objectForKey:@"interstitial"];
+//            if(slotIdString!=nil){
+//                [delegate_ adLog:[NSString stringWithFormat:@"InMobi Interstitial %@", slotIdString]];
+//            NSLog(@"InMobi Interstitial %@", slotIdString);
+//                [adView_ setSlotId:[slotIdString intValue]];
+//            }
             
             // Check if slot id valid
             if(slotIdString!=nil){

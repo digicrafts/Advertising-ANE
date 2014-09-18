@@ -122,7 +122,7 @@ public class MMBannerAdapter extends AbstractAdAdapter implements RequestListene
 
     @Override
     public void load(){
-        callLog("MM Load: " + _adView);
+//        callLog("MM Load: " + _adView);
 
         if(_adView!=null){
 
