@@ -98,7 +98,7 @@ public class AmazonBannerAdapter extends AbstractAdAdapter implements AdListener
             originalHeight_ = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, originalHeight_, activity.getResources().getDisplayMetrics());
 
             // Add default layout
-            _adView.setLayoutParams(ViewUtils.getViewPositionParams(AdAdapterPosition.BOTTOM,0,0,originalWidth_,originalHeight_));
+            _adView.setLayoutParams(ViewUtils.getViewPositionParams(AdAdapterPosition.BOTTOM,0,0,originalWidth_,originalHeight_,0));
 
             // add listener
             _adView.setListener(this);

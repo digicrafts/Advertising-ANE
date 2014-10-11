@@ -4,6 +4,8 @@
 package digicrafts.extensions {
 import air.net.URLMonitor;
 
+import digicrafts.extensions.adapter.BackFillAdapter;
+
 import digicrafts.extensions.adapter.MillennialMediaAdapter;
 import digicrafts.extensions.core.AbstractAdaper;
 import digicrafts.extensions.core.Ad;
@@ -649,6 +651,20 @@ public class Advertising extends EventDispatcher{
             else if(size==AdSize.MEDIUM_RECTANGLE&&mm_adapter.rectangle!=null&&mm_adapter.rectangle!='')
                 adUnitId=mm_adapter.rectangle;
 
+        } else if(adapter.network==AdNetworkType.BACKFILL){
+        // For backfill
+
+            var back_adapter:BackFillAdapter=adapter as BackFillAdapter;
+
+            if(Advertising.isIOS&&back_adapter.iosLink!=null&&back_adapter.iosLink!='')
+                adUnitId=back_adapter.iosLink;
+            else if(Advertising.isAndroid&&back_adapter.androidLink!=null&&back_adapter.androidLink!='')
+                adUnitId=back_adapter.androidLink;
+            else if(Advertising.isKindleStore&&back_adapter.kindleLink!=null&&back_adapter.kindleLink!='')
+                adUnitId=back_adapter.kindleLink;
+            else
+                adUnitId=back_adapter.link;
+
         }
         return adUnitId;
     }
@@ -775,10 +791,20 @@ public class Advertising extends EventDispatcher{
 
         // reset all retry status
         if(ad_internal::internetAvailabile){
-            // Call each banner timeAdvanced
+            // For each banner
             for each(var banner:AdBanner in _instance.mBannerDictionary){
                 banner.ad_internal::retry=0;
+                if(banner.ad_internal::showAfterLoad){
+                    banner.show();
+                }
             }
+//            // For each banner
+//            for each(var banner:AdBanner in _instance.mBannerDictionary){
+//                banner.ad_internal::retry=0;
+//                if(banner.ad_internal::showAfterLoad){
+//                    banner.show();
+//                }
+//            }
         }
     }
 

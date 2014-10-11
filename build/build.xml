@@ -26,7 +26,6 @@
         </exec>
 
         <copy file="../temp/ios/build/Release-iphoneos/lib${name}.a" todir="../temp/ios" overwrite="true"/>
-        <!--<copy file="../ios/Mopub/MPAdBrowserController.nib" todir="../temp/ios" overwrite="true"/>-->
         <delete dir="../temp/ios/build/"/>
     </target>
 
@@ -90,6 +89,9 @@
         </copy>
         <copy todir="../temp/AmazonAd.framework" overwrite="true">
             <fileset dir="../ios/AdNetworkSupport/Amazon/AmazonAd.framework"/>
+        </copy>
+        <copy todir="../temp/AmazonInsightsSDK.framework" overwrite="true">
+            <fileset dir="../ios/AdNetworkSupport/Amazon/AmazonInsightsSDK.framework"/>
         </copy>
         <copy todir="../temp/AmazonInsightsSDK.framework" overwrite="true">
             <fileset dir="../ios/AdNetworkSupport/Amazon/AmazonInsightsSDK.framework"/>

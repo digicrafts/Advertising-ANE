@@ -51,6 +51,10 @@
 		E0848BB019AC318800FB4930 /* Advertising.m in Sources */ = {isa = PBXBuildFile; fileRef = E0848BAF19AC318800FB4930 /* Advertising.m */; };
 		E0848BC319AC324A00FB4930 /* AdManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E0848BC119AC324A00FB4930 /* AdManager.h */; };
 		E0848BC419AC324A00FB4930 /* AdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E0848BC219AC324A00FB4930 /* AdManager.m */; };
+		E0BCEBD719E5443E00975F97 /* BackFillBannerAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = E0BCEBD519E5443E00975F97 /* BackFillBannerAdapter.h */; };
+		E0BCEBD819E5443E00975F97 /* BackFillBannerAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BCEBD619E5443E00975F97 /* BackFillBannerAdapter.m */; };
+		E0BF36D019E7B5A4004FBCD0 /* BackFillInterstitialAdapter.h in Sources */ = {isa = PBXBuildFile; fileRef = E0BF36CE19E7B5A4004FBCD0 /* BackFillInterstitialAdapter.h */; };
+		E0BF36D119E7B5A4004FBCD0 /* BackFillInterstitialAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF36CF19E7B5A4004FBCD0 /* BackFillInterstitialAdapter.m */; };
 		E0E2AD6919AF79530097D303 /* AmazonAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0E2AD5419AF79530097D303 /* AmazonAd.framework */; };
 		E0E2AD6A19AF79530097D303 /* AmazonInsightsSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0E2AD5519AF79530097D303 /* AmazonInsightsSDK.framework */; };
 		E0E2AD7719AF79530097D303 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0E2AD6319AF79530097D303 /* libGoogleAdMobAds.a */; };
@@ -118,6 +122,12 @@
 		E0848BB419AC318800FB4930 /* debugIPA.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = debugIPA.sh; sourceTree = "<group>"; };
 		E0848BC119AC324A00FB4930 /* AdManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdManager.h; sourceTree = "<group>"; };
 		E0848BC219AC324A00FB4930 /* AdManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdManager.m; sourceTree = "<group>"; };
+		E0BCEBD519E5443E00975F97 /* BackFillBannerAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackFillBannerAdapter.h; path = adapter/BackFillBannerAdapter.h; sourceTree = "<group>"; };
+		E0BCEBD619E5443E00975F97 /* BackFillBannerAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BackFillBannerAdapter.m; path = adapter/BackFillBannerAdapter.m; sourceTree = "<group>"; };
+		E0BF36CE19E7B5A4004FBCD0 /* BackFillInterstitialAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = BackFillInterstitialAdapter.h; path = adapter/BackFillInterstitialAdapter.h; sourceTree = "<group>"; };
+		E0BF36CF19E7B5A4004FBCD0 /* BackFillInterstitialAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BackFillInterstitialAdapter.m; path = adapter/BackFillInterstitialAdapter.m; sourceTree = "<group>"; };
+		E0BF36D219E8D53B004FBCD0 /* close_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close_button.png; sourceTree = "<group>"; };
+		E0BF36D319E8D53B004FBCD0 /* close_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close_button@2x.png"; sourceTree = "<group>"; };
 		E0E2AD5419AF79530097D303 /* AmazonAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AmazonAd.framework; sourceTree = "<group>"; };
 		E0E2AD5519AF79530097D303 /* AmazonInsightsSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AmazonInsightsSDK.framework; sourceTree = "<group>"; };
 		E0E2AD5719AF79530097D303 /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
@@ -259,6 +269,8 @@
 		E0848BAB19AC318800FB4930 /* Advertising */ = {
 			isa = PBXGroup;
 			children = (
+				E0BF36D219E8D53B004FBCD0 /* close_button.png */,
+				E0BF36D319E8D53B004FBCD0 /* close_button@2x.png */,
 				E0E2AD7A19B0480E0097D303 /* adapter */,
 				E0848BC019AC324A00FB4930 /* core */,
 				E0848BAE19AC318800FB4930 /* Advertising.h */,
@@ -365,6 +377,10 @@
 				E012409419BC2A97002C94C4 /* MMBannerAdapter.m */,
 				E01240A319BC45EF002C94C4 /* MMInterstitialAdapter.h */,
 				E01240A419BC45EF002C94C4 /* MMInterstitialAdapter.m */,
+				E0BCEBD519E5443E00975F97 /* BackFillBannerAdapter.h */,
+				E0BCEBD619E5443E00975F97 /* BackFillBannerAdapter.m */,
+				E0BF36CE19E7B5A4004FBCD0 /* BackFillInterstitialAdapter.h */,
+				E0BF36CF19E7B5A4004FBCD0 /* BackFillInterstitialAdapter.m */,
 			);
 			name = adapter;
 			sourceTree = "<group>";
@@ -390,6 +406,7 @@
 				E012409519BC2A97002C94C4 /* MMBannerAdapter.h in Headers */,
 				E01240A919BDAE82002C94C4 /* InMobiInterstitialAdapter.h in Headers */,
 				E012409119BBE6FC002C94C4 /* InMobiBannerAdapter.h in Headers */,
+				E0BCEBD719E5443E00975F97 /* BackFillBannerAdapter.h in Headers */,
 				E012408619BBE642002C94C4 /* IMError.h in Headers */,
 				E012408819BBE642002C94C4 /* IMInterstitial.h in Headers */,
 				E01240A119BC3CE1002C94C4 /* AmazonInterstitialAdapter.h in Headers */,
@@ -447,6 +464,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0E2AD9A19B2C29B0097D303 /* AdmobInterstitialAdapter.m in Sources */,
+				E0BF36D019E7B5A4004FBCD0 /* BackFillInterstitialAdapter.h in Sources */,
+				E0BCEBD819E5443E00975F97 /* BackFillBannerAdapter.m in Sources */,
 				E0E2AD7E19B0484B0097D303 /* AbstractAdAdapter.m in Sources */,
 				E0E2AD8E19B1D9260097D303 /* IAdBannerAdapter.m in Sources */,
 				E0E2AD8619B04A410097D303 /* AdmobBannerAdapter.m in Sources */,
@@ -457,6 +476,7 @@
 				E01240AA19BDAE82002C94C4 /* InMobiInterstitialAdapter.m in Sources */,
 				E0848BC419AC324A00FB4930 /* AdManager.m in Sources */,
 				E0E2AD9619B20B6E0097D303 /* IAdInterstitialAdapter.m in Sources */,
+				E0BF36D119E7B5A4004FBCD0 /* BackFillInterstitialAdapter.m in Sources */,
 				E01240A219BC3CE1002C94C4 /* AmazonInterstitialAdapter.m in Sources */,
 				E0848BB019AC318800FB4930 /* Advertising.m in Sources */,
 			);
@@ -489,7 +509,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				USER_HEADER_SEARCH_PATHS = /Users/tsangwailam/Documents/Digicrafts/libs/as3/AIRSDK_Compiler_14/include/;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/** /Users/tsangwailam/Documents/Digicrafts/libs/as3/AIRSDK_Compiler_14/include/";
 			};
 			name = Debug;
 		};
@@ -509,7 +529,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
-				USER_HEADER_SEARCH_PATHS = /Users/tsangwailam/Documents/Digicrafts/libs/as3/AIRSDK_Compiler_14/include/;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/** /Users/tsangwailam/Documents/Digicrafts/libs/as3/AIRSDK_Compiler_14/include/";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

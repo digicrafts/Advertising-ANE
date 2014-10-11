@@ -2,11 +2,13 @@ package digicrafts.extensions.core;
 
 import android.graphics.Rect;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import com.google.android.gms.ads.AdRequest;
 import digicrafts.extensions.data.AdAdapterPosition;
+import digicrafts.extensions.data.AdAdapterSize;
 import digicrafts.extensions.utils.ViewUtils;
 
 import java.util.ArrayList;
@@ -25,35 +27,38 @@ public class AbstractAdAdapter implements AdAdapterInterface{
     protected AdAdapterListener listener;
     protected Map<String,Object> settings;
 
-// Override Methods
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-//    public AbstractAdAdapter(String size, String adUnitId, Map<String, Object> settings){
-//
-//        this.settings=settings;
-//        setAdUnitId(adUnitId);
-//        setSize(size);
-//    }
-
 // Protected Methods
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    protected void _show(ViewGroup view, ViewGroup container, String position, int x, int y, int w, int h){
+    protected void _show(View view, ViewGroup container, String position, int x, int y, int w, int h){
 
         // Remove it if already on screen
         if(view.getParent()==container){
             container.removeView(view);
         }
-//        Log.d("_show","_show 2: " + position + " x:" + x + " y:"+y + " w:" + w + " h:"+ h+ " gw:" + view.getWidth() + " gh:"+ view.getHeight());
+
+        // check if there any interstitial view on top
+        int interstitialID = -1;
+        View checkView = container.getChildAt(container.getChildCount()-1);
+        if(checkView!=null){
+            if(checkView.getTag()=="INTERSTITIAL_VIEW"){
+                interstitialID=9;
+            }
+        }
 
         // Show the view in position
-        if(position.equals(AdAdapterPosition.FLOAT)){
+        if(position.equals(AdAdapterPosition.FLOAT)||_size.equals(AdAdapterSize.INTERSTITIAL)){
             container.addView(view, ViewUtils.getViewParams(x, y, w, h));
         } else {
-            container.addView(view, ViewUtils.getViewPositionParams(position,x,y,w,h));
+            container.addView(view, ViewUtils.getViewPositionParams(position,x,y,w,h,0));
             view.setTranslationX(x);
             view.setTranslationY(y);
+        }
+
+        // Bring the interstitial back to top
+        if(interstitialID>0){
+            checkView.bringToFront();
         }
 
         // Deal with bug that first load not display correctly

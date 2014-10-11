@@ -15,7 +15,7 @@ public class AdNetworkType {
     public static const BACKFILL:String         ='backfill';
 
     ad_internal static const OFFLINE_NETWORK:Object = {
-
+        'backfill':true
     }
 
 }

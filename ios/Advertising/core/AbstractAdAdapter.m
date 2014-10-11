@@ -46,6 +46,8 @@
 
 - (void) dealloc {
     
+    [self remove];
+    
     visible_=FALSE;
     ready_=FALSE;
     isNeedToShow_=NO;
@@ -112,7 +114,7 @@
     // create content container view
     if(contentContainer_==nil){
         self.contentContainer=[[UIView alloc] initWithFrame:CGRectMake(0, 0, w, h)];
-        [contentContainer_ setBackgroundColor:[UIColor blackColor]];
+//        [contentContainer_ setBackgroundColor:[UIColor blackColor]];
         contentContainer_.translatesAutoresizingMaskIntoConstraints = NO;
     }
 

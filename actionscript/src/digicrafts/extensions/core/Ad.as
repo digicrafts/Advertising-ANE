@@ -181,7 +181,6 @@ public class Ad extends EventDispatcher {
 //            "maxCount",ad_internal::maxCount
 //        );
 
-
         if(setting) {
 
             // get current adapter

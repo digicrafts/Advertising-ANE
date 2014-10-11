@@ -11,8 +11,8 @@ ios/build
 *.iml
 
 ios/AdNetworkSupport/
-vendor/
 test/
 out/
 media/
 doc/
+product/

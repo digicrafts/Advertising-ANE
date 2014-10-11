@@ -14,7 +14,7 @@
 
 @interface AdmobBannerAdapter : AbstractAdAdapter <GADBannerViewDelegate>{
     
-    GADBannerView* adView_;
+    GADBannerView* adView_;    
     
 }
 @property (nonatomic, retain) GADBannerView* adView;

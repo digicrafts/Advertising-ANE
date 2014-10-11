@@ -63,7 +63,7 @@ public class ViewUtils {
     }
 
 
-    public static RelativeLayout.LayoutParams getViewPositionParams(String alignment, int offsetX, int offsetY, int w, int h)
+    public static RelativeLayout.LayoutParams getViewPositionParams(String alignment, int offsetX, int offsetY, int w, int h, int below)
     {
 
         // create a layout params
@@ -87,10 +87,22 @@ public class ViewUtils {
             params.addRule(RelativeLayout.CENTER_HORIZONTAL);
         }
 
+        // set below
+        if(below>0){
+            params.addRule(RelativeLayout.BELOW,below);
+        }
+
         return params;
     }
 
-
+    /**
+     *
+     * @param x
+     * @param y
+     * @param w
+     * @param h
+     * @return
+     */
     public static RelativeLayout.LayoutParams getViewParams(int x, int y, int w, int h)
     {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(w, h);

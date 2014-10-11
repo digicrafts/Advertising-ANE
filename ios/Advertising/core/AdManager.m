@@ -17,6 +17,8 @@
 #import "InMobiInterstitialAdapter.h"
 #import "MMBannerAdapter.h"
 #import "MMInterstitialAdapter.h"
+#import "BackFillBannerAdapter.h"
+#import "BackFillInterstitialAdapter.h"
 
 
 @implementation AdManager
@@ -109,12 +111,19 @@
             
             // create new adapter
             adapter = [self createAdAdapter:uid size:size network:network adUnitId:adUnitId settings:settings];
+                        
+            if(adapter){
+                
+                // put adpater in the index
+                [adapterIndex_ setObject:adapter forKey:uid];
+                
+                // refresh the ad
+                [adapter load:settings];
+                
+            } else {
+                
+            }
             
-            // put adpater in the index
-            [adapterIndex_ setObject:adapter forKey:uid];
-            
-            // refresh the ad
-            [adapter load:settings];
         }
         
     } else {
@@ -230,6 +239,10 @@
             
             adapter = [[InMobiInterstitialAdapter alloc] initWithAdUnitId:adUnitId settings:settings];
             
+        } else if([network isEqualToString:kNetworkTypeBACKFILL]){
+            
+            adapter = [[BackFillInterstitialAdapter alloc] initWithLink:adUnitId settings:settings];
+            
         }
     } else {
         if([network isEqualToString:kNetworkTypeADMOB]){
@@ -251,6 +264,10 @@
         } else if([network isEqualToString:kNetworkTypeINMOBI]){
             
             adapter = [[InMobiBannerAdapter alloc] initWithSize:size adUnitId:adUnitId settings:settings];
+            
+        } else if([network isEqualToString:kNetworkTypeBACKFILL]){
+            
+            adapter = [[BackFillBannerAdapter alloc] initWithSize:size link:adUnitId settings:settings];
         }
     }
     

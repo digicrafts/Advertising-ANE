@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D9569467-C706-415B-A054-0C3332461D9D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Advertising</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>65209B9492335C1C8CBD8AD1D1BE7CA53487560B</key>
+		<string>bitbucket.org:digicrafts/advertisingane.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ios/Advertising.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>65209B9492335C1C8CBD8AD1D1BE7CA53487560B</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>bitbucket.org:digicrafts/advertisingane.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>65209B9492335C1C8CBD8AD1D1BE7CA53487560B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>65209B9492335C1C8CBD8AD1D1BE7CA53487560B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Advertisting-ANE</string>
+		</dict>
+	</array>
+</dict>
+</plist>

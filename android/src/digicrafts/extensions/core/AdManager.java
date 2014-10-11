@@ -314,6 +314,10 @@ public class AdManager {
 
                 adapter = new InMobiInterstitialAdapter(_activity, adUnitId, settings);
 
+            } else if(network.equals(AdAdapterNetworkType.BACKFILL)) {
+
+                adapter = new BackFillIinterstitialAdapter(_activity, adUnitId, settings);
+
             }
         } else {
             if(network.equals(AdAdapterNetworkType.ADMOB)) {
@@ -331,6 +335,10 @@ public class AdManager {
             } else if(network.equals(AdAdapterNetworkType.INMOBI)) {
 
                 adapter = new InMobiBannerAdapter(_activity, size, adUnitId, settings);
+
+            } else if(network.equals(AdAdapterNetworkType.BACKFILL)) {
+
+                adapter = new BackFillBannerAdapter(_activity, size, adUnitId, settings);
 
             }
         }

@@ -15,6 +15,7 @@
 #define kNetworkTypeMILLENNIALMEDIA     @"millennialmedia"
 #define kNetworkTypeAMAZON              @"amazon"
 #define kNetworkTypeINMOBI              @"inmobi"
+#define kNetworkTypeBACKFILL            @"backfill"
 
 
 #define kAdAdapterSizeINTERSTITIAL     @"interstitial" //interstitial
