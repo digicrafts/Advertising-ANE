@@ -44,11 +44,10 @@ public class banner extends Sprite {
         var amazon:AmazonAdapter=new AmazonAdapter('YOUR_APP_ID');
         // iAd
         var iAd:IAdAdapter=new IAdAdapter();
-        // android
+        // MillennialMedia
         var mm:MillennialMediaAdapter=new MillennialMediaAdapter("YOUR_APP_ID");//banner
         mm.rectangle = "YOUR_SLOT_ID_1";//square
         mm.interstitial = "YOUR_SLOT_ID_2";//interstitial
-
         // InMobi
         var inmobi:InMobiAdapter=new InMobiAdapter("YOUR_APP_ID");
         inmobi.interstitial="YOUR_SLOT_ID_INTERSTITIAL";// interstitial
@@ -56,6 +55,9 @@ public class banner extends Sprite {
         inmobi.full_banner="YOUR_SLOT_ID_FULL";
         inmobi.leaderboard="YOUR_SLOT_ID_LEADERBOARD";
         inmobi.medium_rectangle="YOUR_SLOT_ID_RECTANGLE";
+        // Back fill
+        var backfill:BackFillAdapter=new BackFillAdapter("http://LINK_TO_AD");
+        backfill.banner="BANNER.png";
 
 
         // Add adapter to the settings object
@@ -64,6 +66,7 @@ public class banner extends Sprite {
         settings.add(amazon);
         settings.add(mm);
         settings.add(inmobi);
+        settings.add(backfill);
 
         // Enable test mode
 //        Advertising.testMode=true;
