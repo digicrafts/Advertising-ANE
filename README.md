@@ -26,11 +26,11 @@ The Universal Advertising AIR native extension will include the following highli
 The current supporting network are list below:
 
 * Google Mobile Ads (AdMob) (ios 6.11.1/newest google play services)
-* iAd (IOS only/Compile with IOS SDK 8.0)
-* MillennialMedia (ios 5.3.0/android 5.3.0)
-* InMobi (ios 4.5.0/android 4.5.0)
-* Amazon Mobile Ads (ios 2.0.3/android 5.4.78)
-* Static backfill in house ads (via bitmap or external images)
+* iAd (IOS only/Compile with IOS SDK 8.1)
+* MillennialMedia (ios 5.4.1/android 5.3.0)
+* InMobi (ios 4.5.1/android 4.5.1)
+* Amazon Mobile Ads (ios 2.1.4/android 5.4.78)
+* Static backfill in house ads (via external images)
 * Platform supporting via AdMob Mediation Networks
 
 ##Install the library

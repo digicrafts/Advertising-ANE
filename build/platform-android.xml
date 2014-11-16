@@ -1,10 +1,10 @@
 <platform xmlns="http://ns.adobe.com/air/extension/4.0">
     <packagedDependencies>
-        <packagedDependency>amazon-ads-5.4.46.jar</packagedDependency>
+        <packagedDependency>amazon-ads-5.4.192.jar</packagedDependency>
         <packagedDependency>google-play-services.jar</packagedDependency>
         <packagedDependency>MMSDK.jar</packagedDependency>
         <packagedDependency>nmdp_speech_kit.jar</packagedDependency>
-        <packagedDependency>InMobi-4.5.0.jar</packagedDependency>
+        <packagedDependency>InMobi-4.5.1.jar</packagedDependency>
     </packagedDependencies>
     <packagedResources>
         <packagedResource>

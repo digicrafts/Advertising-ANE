@@ -18,7 +18,6 @@
 		E012408B19BBE642002C94C4 /* IMNativeDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E012407F19BBE642002C94C4 /* IMNativeDelegate.h */; };
 		E012408C19BBE642002C94C4 /* InMobi.h in Headers */ = {isa = PBXBuildFile; fileRef = E012408019BBE642002C94C4 /* InMobi.h */; };
 		E012408D19BBE642002C94C4 /* InMobiAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = E012408119BBE642002C94C4 /* InMobiAnalytics.h */; };
-		E012408E19BBE642002C94C4 /* libInMobi-4.4.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E012408219BBE642002C94C4 /* libInMobi-4.4.1.a */; };
 		E012409119BBE6FC002C94C4 /* InMobiBannerAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = E012408F19BBE6FC002C94C4 /* InMobiBannerAdapter.h */; };
 		E012409219BBE6FC002C94C4 /* InMobiBannerAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E012409019BBE6FC002C94C4 /* InMobiBannerAdapter.m */; };
 		E012409519BC2A97002C94C4 /* MMBannerAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = E012409319BC2A97002C94C4 /* MMBannerAdapter.h */; };
@@ -68,6 +67,7 @@
 		E0E2AD9219B208D80097D303 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0E2AD9019B208D80097D303 /* iAd.framework */; };
 		E0E2AD9619B20B6E0097D303 /* IAdInterstitialAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E0E2AD9419B20B6E0097D303 /* IAdInterstitialAdapter.m */; };
 		E0E2AD9A19B2C29B0097D303 /* AdmobInterstitialAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E0E2AD9819B2C29B0097D303 /* AdmobInterstitialAdapter.m */; };
+		E0FDFFD61A1857B80016570D /* libInMobi-4.5.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0FDFFD51A1857B80016570D /* libInMobi-4.5.1.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,7 +82,6 @@
 		E012407F19BBE642002C94C4 /* IMNativeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMNativeDelegate.h; sourceTree = "<group>"; };
 		E012408019BBE642002C94C4 /* InMobi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InMobi.h; sourceTree = "<group>"; };
 		E012408119BBE642002C94C4 /* InMobiAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InMobiAnalytics.h; sourceTree = "<group>"; };
-		E012408219BBE642002C94C4 /* libInMobi-4.4.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libInMobi-4.4.1.a"; sourceTree = "<group>"; };
 		E012408F19BBE6FC002C94C4 /* InMobiBannerAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InMobiBannerAdapter.h; path = adapter/InMobiBannerAdapter.h; sourceTree = "<group>"; };
 		E012409019BBE6FC002C94C4 /* InMobiBannerAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InMobiBannerAdapter.m; path = adapter/InMobiBannerAdapter.m; sourceTree = "<group>"; };
 		E012409319BC2A97002C94C4 /* MMBannerAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMBannerAdapter.h; path = adapter/MMBannerAdapter.h; sourceTree = "<group>"; };
@@ -161,6 +160,7 @@
 		E0E2AD9419B20B6E0097D303 /* IAdInterstitialAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IAdInterstitialAdapter.m; path = adapter/IAdInterstitialAdapter.m; sourceTree = "<group>"; };
 		E0E2AD9719B2C29B0097D303 /* AdmobInterstitialAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = AdmobInterstitialAdapter.h; path = adapter/AdmobInterstitialAdapter.h; sourceTree = "<group>"; };
 		E0E2AD9819B2C29B0097D303 /* AdmobInterstitialAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdmobInterstitialAdapter.m; path = adapter/AdmobInterstitialAdapter.m; sourceTree = "<group>"; };
+		E0FDFFD51A1857B80016570D /* libInMobi-4.5.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libInMobi-4.5.1.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +171,7 @@
 				E012409E19BC2CBC002C94C4 /* StoreKit.framework in Frameworks */,
 				E012409C19BC2CA2002C94C4 /* PassKit.framework in Frameworks */,
 				E012409A19BC2C8F002C94C4 /* MediaPlayer.framework in Frameworks */,
+				E0FDFFD61A1857B80016570D /* libInMobi-4.5.1.a in Frameworks */,
 				E012409819BC2C81002C94C4 /* EventKit.framework in Frameworks */,
 				E0848B9819AC318800FB4930 /* CoreLocation.framework in Frameworks */,
 				E0E2AD9119B208D80097D303 /* AdSupport.framework in Frameworks */,
@@ -194,7 +195,6 @@
 				E0848B9E19AC318800FB4930 /* AVFoundation.framework in Frameworks */,
 				E0E2AD7819AF79530097D303 /* MillennialMedia.framework in Frameworks */,
 				E0848B9419AC318800FB4930 /* QuartzCore.framework in Frameworks */,
-				E012408E19BBE642002C94C4 /* libInMobi-4.4.1.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +204,7 @@
 		E012407619BBE642002C94C4 /* InMobi */ = {
 			isa = PBXGroup;
 			children = (
+				E0FDFFD51A1857B80016570D /* libInMobi-4.5.1.a */,
 				E012407719BBE642002C94C4 /* IMBanner.h */,
 				E012407819BBE642002C94C4 /* IMBannerDelegate.h */,
 				E012407919BBE642002C94C4 /* IMConstants.h */,
@@ -215,7 +216,6 @@
 				E012407F19BBE642002C94C4 /* IMNativeDelegate.h */,
 				E012408019BBE642002C94C4 /* InMobi.h */,
 				E012408119BBE642002C94C4 /* InMobiAnalytics.h */,
-				E012408219BBE642002C94C4 /* libInMobi-4.4.1.a */,
 			);
 			path = InMobi;
 			sourceTree = "<group>";

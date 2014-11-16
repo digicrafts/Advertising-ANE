@@ -36,22 +36,24 @@
 
         <javac srcdir="../android/src" destdir="../android/temp/classes" includeantruntime="false">
             <classpath>
+                <!--<pathelement path="${sdk.dir}/*"/>-->
+                <fileset dir="${sdk.dir}">
+                    <include name="**/*.jar"/>
+                </fileset>
                 <pathelement location="${android.sdk}/android.jar"/>
                 <pathelement location="${flex.sdk}/lib/android/FlashRuntimeExtensions.jar"/>
-                <pathelement location="${amazon.sdk.jar}"/>
                 <pathelement location="${googleplay.sdk}/libs/google-play-services.jar"/>
-                <pathelement location="${millennialmedia.sdk}/MMSDK.jar"/>
-                <pathelement location="${millennialmedia.sdk}/nmdp_speech_kit.jar"/>
-                <pathelement location="${inmobi.sdk}/InMobi-4.5.0.jar"/>
             </classpath>
         </javac>
+
+        <mkdir dir="../temp/android/"/>
 
         <copy todir="../temp/android/res/">
             <fileset dir="../android/res"/>
         </copy>
 
         <copy todir="../temp/android/">
-            <fileset dir="../android/libs"/>
+            <fileset dir="${sdk.dir}"/>
         </copy>
 
         <!-- google play -->
@@ -63,18 +65,9 @@
             <fileset dir="${googleplay.sdk}/libs"/>
         </copy>
 
-        <!-- millennialmedia -->
-        <copy todir="../temp/android/">
-            <fileset dir="${millennialmedia.sdk}"/>
-        </copy>
-
-        <!-- inmobi -->
-        <copy todir="../temp/android/">
-            <fileset dir="${inmobi.sdk}"/>
-        </copy>
-
-        <mkdir dir="../temp/android/"/>
-        <jar basedir="../android/temp/classes" destfile="../temp/android/lib${name}.jar"/>
+        <jar basedir="../android/temp/classes" destfile="../temp/android/lib${name}.jar">
+            <!--<zipgroupfileset dir="${googleplay.sdk}/libs" includes="*.jar" excludes="*.properties" />-->
+        </jar>
 
         <delete dir="../android/temp"/>
     </target>
@@ -89,9 +82,6 @@
         </copy>
         <copy todir="../temp/AmazonAd.framework" overwrite="true">
             <fileset dir="../ios/AdNetworkSupport/Amazon/AmazonAd.framework"/>
-        </copy>
-        <copy todir="../temp/AmazonInsightsSDK.framework" overwrite="true">
-            <fileset dir="../ios/AdNetworkSupport/Amazon/AmazonInsightsSDK.framework"/>
         </copy>
         <copy todir="../temp/AmazonInsightsSDK.framework" overwrite="true">
             <fileset dir="../ios/AdNetworkSupport/Amazon/AmazonInsightsSDK.framework"/>

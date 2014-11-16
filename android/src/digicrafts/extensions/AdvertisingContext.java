@@ -44,11 +44,14 @@ public class AdvertisingContext extends FREContext {
 
         super();
 
+        log("start init");
+
         // create list to hold the functions
         _methods = new ArrayList<AdvertisingFunction<?>>();
 
         try {
 
+            log("init method");
             //
         _methods.add(new AdvertisingFunction<Void>("ext_initialize") {
                 public Void onCall(AdvertisingContext context, Object[] args) {
@@ -201,6 +204,8 @@ public class AdvertisingContext extends FREContext {
             e.printStackTrace();
 
         }
+
+        log("start end");
     }
 
 	@Override
@@ -311,7 +316,7 @@ public class AdvertisingContext extends FREContext {
      */
     public void log(String message) {
         Log.d(TAG, message);
-        dispatchStatusEventAsync("LOGGING", message);
+//        dispatchStatusEventAsync("LOGGING", message);
     }
 
     /**
