@@ -13,9 +13,11 @@ Thanks to our Backers.
 
 ##Support
 
+This is an open source software. We welcome any contribution and you can send us feedback or features requests in the issues section. But we don't guarantee we can answer all your questions.
+
 > Your kind donations will help us pause my daily job and put more serious effort into the development of this software for the future updates. Thanks.
 >
-> <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EAPDTXAME7DMU"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="[paypal]" /></a>
+> <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EAPDTXAME7DMU" target="_blank"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="[paypal]" /></a>
 
 If you need a dedicated support service for using this software, you can contact us at support[at]digicrafts.com.hk. We also provide software development services and you can contact us with email.
 
