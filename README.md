@@ -113,11 +113,20 @@ var adMob:AdMobAdapter=new AdMobAdapter('AD-UNIT-ID');
 var amazon:AmazonAdapter=new AmazonAdapter('APP_ID');        
 // iAd
 var iAd:IAdAdapter=new IAdAdapter();
+// Backfill
+// * Remember to include banner images when you packaging the app
+var backfill:BackFillAdapter=new BackFillAdapter('http://www.google.com');
+backfill.interstitial="BANNER.png";
+backfill.banner="BANNER.png";
+backfill.full_banner="FULL_BANNER.png";
+backfill.leaderboard="LEADERBOARD.png";
+backfill.medium_rectangle="MEDIUM_RECTANGLE.png";
 
 // Add the adapter to the settings
 settings.add(adMob,2);
 settings.add(amazon,1);
-settings.iAd(amazon,3);
+settings.add(iAd,3);
+settings.add(backfill,4);
 ```
 
 Create a banner and load. Supply an unique name and size for each banner.
@@ -255,4 +264,4 @@ http://www.digicrafts.com.hk/components
 
 ##License
 
-This project is licensed under the BSD license [link](https://github.com/digicrafts/Adevertising-ANE/blob/release/LICENSE)
+This project is licensed under the BSD license [link](https://github.com/digicrafts/Advertising-ANE/blob/master/LICENSE)
