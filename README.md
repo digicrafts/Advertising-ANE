@@ -131,6 +131,12 @@ settings.add(iAd,3);
 settings.add(backfill,4);
 ```
 
+If you want to load test ads, you can set the testMode property.
+
+```javascript
+  Advertising.testMode=true;
+```
+
 Create a banner and load. Supply an unique name and size for each banner.
 
 ```javascript
