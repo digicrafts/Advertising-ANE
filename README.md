@@ -204,7 +204,7 @@ Supported events.
 
 ##Setup for Android
 
-> Important Notice: Since the current AIR SDK (<15.0) use an old version build tools and it is not compatialbe 
+> *Important Notice:* Since the current AIR SDK (<15.0) use an old version build tools and it is not compatialbe 
 > with the recent Google Play Service library. It lead to a class missing exception when using AdMob adapter.
 > To fix, copy the dx.jar from the new Android SDK to the AIR SDK. 
 
