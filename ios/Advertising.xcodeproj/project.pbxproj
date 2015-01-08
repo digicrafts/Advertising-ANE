@@ -52,7 +52,6 @@
 		E0848BC419AC324A00FB4930 /* AdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E0848BC219AC324A00FB4930 /* AdManager.m */; };
 		E0BCEBD719E5443E00975F97 /* BackFillBannerAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = E0BCEBD519E5443E00975F97 /* BackFillBannerAdapter.h */; };
 		E0BCEBD819E5443E00975F97 /* BackFillBannerAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BCEBD619E5443E00975F97 /* BackFillBannerAdapter.m */; };
-		E0BF36D019E7B5A4004FBCD0 /* BackFillInterstitialAdapter.h in Sources */ = {isa = PBXBuildFile; fileRef = E0BF36CE19E7B5A4004FBCD0 /* BackFillInterstitialAdapter.h */; };
 		E0BF36D119E7B5A4004FBCD0 /* BackFillInterstitialAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF36CF19E7B5A4004FBCD0 /* BackFillInterstitialAdapter.m */; };
 		E0E2AD6919AF79530097D303 /* AmazonAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0E2AD5419AF79530097D303 /* AmazonAd.framework */; };
 		E0E2AD6A19AF79530097D303 /* AmazonInsightsSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0E2AD5519AF79530097D303 /* AmazonInsightsSDK.framework */; };
@@ -464,7 +463,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0E2AD9A19B2C29B0097D303 /* AdmobInterstitialAdapter.m in Sources */,
-				E0BF36D019E7B5A4004FBCD0 /* BackFillInterstitialAdapter.h in Sources */,
 				E0BCEBD819E5443E00975F97 /* BackFillBannerAdapter.m in Sources */,
 				E0E2AD7E19B0484B0097D303 /* AbstractAdAdapter.m in Sources */,
 				E0E2AD8E19B1D9260097D303 /* IAdBannerAdapter.m in Sources */,
