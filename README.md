@@ -23,8 +23,10 @@ If you need a dedicated support service for using this software, you can contact
 
 ##Version History
 
-1.1
+1.2
+Add Revmob support ios 8.1.0/android 7.0.0
 
+1.1
 64-bit support for IOS (Need AIR SDK 16+)
 GooglePlay > 6.12.2
 Amazon > ios 2.1.8 /android 5.4.235

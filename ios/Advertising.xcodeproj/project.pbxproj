@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E007C7EA1A7784EC00FA954A /* RevMobAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E007C7E91A7784EC00FA954A /* RevMobAds.framework */; };
+		E007C7ED1A77852900FA954A /* RevmobBanner.h in Sources */ = {isa = PBXBuildFile; fileRef = E007C7EB1A77852900FA954A /* RevmobBanner.h */; };
+		E007C7EE1A77852900FA954A /* RevmobBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = E007C7EC1A77852900FA954A /* RevmobBanner.m */; };
 		E012408319BBE642002C94C4 /* IMBanner.h in Headers */ = {isa = PBXBuildFile; fileRef = E012407719BBE642002C94C4 /* IMBanner.h */; };
 		E012408419BBE642002C94C4 /* IMBannerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E012407819BBE642002C94C4 /* IMBannerDelegate.h */; };
 		E012408519BBE642002C94C4 /* IMConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = E012407919BBE642002C94C4 /* IMConstants.h */; };
@@ -70,6 +73,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E007C7E91A7784EC00FA954A /* RevMobAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RevMobAds.framework; sourceTree = "<group>"; };
+		E007C7EB1A77852900FA954A /* RevmobBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = RevmobBanner.h; path = adapter/RevmobBanner.h; sourceTree = "<group>"; };
+		E007C7EC1A77852900FA954A /* RevmobBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RevmobBanner.m; path = adapter/RevmobBanner.m; sourceTree = "<group>"; };
 		E012407719BBE642002C94C4 /* IMBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMBanner.h; sourceTree = "<group>"; };
 		E012407819BBE642002C94C4 /* IMBannerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMBannerDelegate.h; sourceTree = "<group>"; };
 		E012407919BBE642002C94C4 /* IMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMConstants.h; sourceTree = "<group>"; };
@@ -189,6 +195,7 @@
 				E0E2AD7719AF79530097D303 /* libGoogleAdMobAds.a in Frameworks */,
 				E0848B9619AC318800FB4930 /* OpenGLES.framework in Frameworks */,
 				E0848B9019AC318800FB4930 /* AudioToolbox.framework in Frameworks */,
+				E007C7EA1A7784EC00FA954A /* RevMobAds.framework in Frameworks */,
 				E0848B8E19AC318800FB4930 /* SystemConfiguration.framework in Frameworks */,
 				E0848B8419AC318800FB4930 /* Foundation.framework in Frameworks */,
 				E0848B9E19AC318800FB4930 /* AVFoundation.framework in Frameworks */,
@@ -200,6 +207,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E007C7E81A7784EC00FA954A /* RevMob */ = {
+			isa = PBXGroup;
+			children = (
+				E007C7E91A7784EC00FA954A /* RevMobAds.framework */,
+			);
+			path = RevMob;
+			sourceTree = "<group>";
+		};
 		E012407619BBE642002C94C4 /* InMobi */ = {
 			isa = PBXGroup;
 			children = (
@@ -305,6 +320,7 @@
 		E0E2AD5219AF79530097D303 /* AdNetworkSupport */ = {
 			isa = PBXGroup;
 			children = (
+				E007C7E81A7784EC00FA954A /* RevMob */,
 				E012407619BBE642002C94C4 /* InMobi */,
 				E0E2AD5319AF79530097D303 /* Amazon */,
 				E0E2AD5619AF79530097D303 /* Google */,
@@ -380,6 +396,8 @@
 				E0BCEBD619E5443E00975F97 /* BackFillBannerAdapter.m */,
 				E0BF36CE19E7B5A4004FBCD0 /* BackFillInterstitialAdapter.h */,
 				E0BF36CF19E7B5A4004FBCD0 /* BackFillInterstitialAdapter.m */,
+				E007C7EB1A77852900FA954A /* RevmobBanner.h */,
+				E007C7EC1A77852900FA954A /* RevmobBanner.m */,
 			);
 			name = adapter;
 			sourceTree = "<group>";
@@ -467,7 +485,9 @@
 				E0E2AD7E19B0484B0097D303 /* AbstractAdAdapter.m in Sources */,
 				E0E2AD8E19B1D9260097D303 /* IAdBannerAdapter.m in Sources */,
 				E0E2AD8619B04A410097D303 /* AdmobBannerAdapter.m in Sources */,
+				E007C7ED1A77852900FA954A /* RevmobBanner.h in Sources */,
 				E012409219BBE6FC002C94C4 /* InMobiBannerAdapter.m in Sources */,
+				E007C7EE1A77852900FA954A /* RevmobBanner.m in Sources */,
 				E01240A619BC45EF002C94C4 /* MMInterstitialAdapter.m in Sources */,
 				E012409619BC2A97002C94C4 /* MMBannerAdapter.m in Sources */,
 				E0E2AD8A19B0913B0097D303 /* AmazonBannerAdapter.m in Sources */,
@@ -540,6 +560,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/AdNetworkSupport/Amazon",
 					"$(PROJECT_DIR)/AdNetworkSupport/Millennial",
+					"$(PROJECT_DIR)/AdNetworkSupport/RevMob",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Advertising/Advertising-Prefix.pch";
@@ -562,6 +583,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/AdNetworkSupport/Amazon",
 					"$(PROJECT_DIR)/AdNetworkSupport/Millennial",
+					"$(PROJECT_DIR)/AdNetworkSupport/RevMob",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Advertising/Advertising-Prefix.pch";
