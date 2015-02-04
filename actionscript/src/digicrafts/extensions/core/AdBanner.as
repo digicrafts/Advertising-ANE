@@ -20,6 +20,13 @@ public class AdBanner extends Ad {
     }
 
     /**
+     * Get the current position of the banner
+     */
+    public function get position():String {
+        return _position;
+    }
+
+    /**
      * Display the ads in position on the screen
      * @param position
      * @param refresh
@@ -28,8 +35,7 @@ public class AdBanner extends Ad {
      */
     public function show(position:String=AdPosition.BOTTOM,refresh:int=-1,offsetX:int=0,offsetY:int=0):void
     {
-
-        _position=position;
+        _position=position?position:AdPosition.BOTTOM;
         _offsetX=offsetX;
         _offsetY=offsetY;
         if(refresh==-1) refresh=Advertising.defaultBannerRefresh;
