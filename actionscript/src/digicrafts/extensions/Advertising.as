@@ -795,7 +795,7 @@ public class Advertising extends EventDispatcher{
             for each(var banner:AdBanner in _instance.mBannerDictionary){
                 banner.ad_internal::retry=0;
                 if(banner.ad_internal::showAfterLoad){
-                    banner.show();
+                    banner.show(banner.position);
                 }
             }
 //            // For each banner
