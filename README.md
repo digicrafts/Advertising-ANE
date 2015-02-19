@@ -56,8 +56,8 @@ The current supporting network are list below:
 * Static backfill in house ads (via external images)
 * Platform supporting via AdMob Mediation Networks
 
-* AdColony (ios 2.4.13/android 2.1.3)
-* Unity Ads (ios 1.3.10/android 1.3.10)
+(In development)* AdColony (ios 2.4.13/android 2.1.3)
+(In development)* Unity Ads (ios 1.3.10/android 1.3.10)
 
 ##Install the library
 
