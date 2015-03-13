@@ -19,6 +19,9 @@
 #import "MMInterstitialAdapter.h"
 #import "BackFillBannerAdapter.h"
 #import "BackFillInterstitialAdapter.h"
+//
+#import "RevmobBannerAdapter.h"
+#import "RevmobInterstitialAdapter.h"
 
 
 @implementation AdManager
@@ -243,6 +246,10 @@
             
             adapter = [[BackFillInterstitialAdapter alloc] initWithLink:adUnitId settings:settings];
             
+        } else if([network isEqualToString:kNetworkTypeREVMOB]){
+            
+            adapter = [[RevmobInterstitialAdapter alloc] initWithAdUnitId:adUnitId settings:settings];
+            
         }
     } else {
         if([network isEqualToString:kNetworkTypeADMOB]){
@@ -268,6 +275,11 @@
         } else if([network isEqualToString:kNetworkTypeBACKFILL]){
             
             adapter = [[BackFillBannerAdapter alloc] initWithSize:size link:adUnitId settings:settings];
+            
+        } else if([network isEqualToString:kNetworkTypeREVMOB]){
+            
+            adapter = [[RevMobBannerAdapter alloc] initWithSize:size adUnitId:adUnitId settings:settings];
+            
         }
     }
     

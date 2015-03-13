@@ -86,6 +86,12 @@
         <copy todir="../temp/AmazonInsightsSDK.framework" overwrite="true">
             <fileset dir="../ios/AdNetworkSupport/Amazon/AmazonInsightsSDK.framework"/>
         </copy>
+        <copy todir="../temp/RevMobAds.framework" overwrite="true">
+            <fileset dir="../vendor/revmob-ios-sdk/RevMobAds.framework"/>
+        </copy>
+        <!--<copy todir="../temp/AdColony.framework" overwrite="true">-->
+            <!--<fileset dir="../vendor/AdColony-iOS-SDK/AdColony.framework"/>-->
+        <!--</copy>-->
     </target>
 
     <!-- Actionscript -->
@@ -151,7 +157,7 @@
             <arg value="${name}.ane"/>
             <arg value="../build/extension.xml"/>
             <arg line="-swc swc/${name}.swc"/>
-            <arg line="-platform iPhone-ARM -platformoptions ../build/platform-ios.xml AmazonAd.framework AmazonInsightsSDK.framework MillennialMedia.framework SpeechKit.framework -C ios/ ."/>
+            <arg line="-platform iPhone-ARM -platformoptions ../build/platform-ios.xml AmazonAd.framework AmazonInsightsSDK.framework RevMobAds.framework MillennialMedia.framework SpeechKit.framework -C ios/ ."/>
             <arg line="-platform Android-ARM -platformoptions ../build/platform-android.xml -C android/ ."/>
             <arg line="-platform Android-x86 -platformoptions ../build/platform-android.xml -C android/ ."/>
             <arg line="-platform default -C default/ ."/>

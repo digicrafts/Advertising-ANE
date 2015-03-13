@@ -40,7 +40,14 @@ public class AdEvent extends Event {
      * Event type for ad did fail to load.
      */
     public static const AD_ACTION:String="onAdAction";
-
+    /**
+     * Event type for video ad started.
+     */
+    public static const AD_VIDEO_START:String="onAdVideoStart";
+    /**
+     * Event type for video ad finish.
+     */
+    public static const AD_VIDEO_END:String="onAdVideoEnd";
 
     /**
      * Store the data for the event

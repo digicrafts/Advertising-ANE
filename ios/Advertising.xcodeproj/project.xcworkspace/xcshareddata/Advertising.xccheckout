@@ -12,6 +12,8 @@
 	<dict>
 		<key>65209B9492335C1C8CBD8AD1D1BE7CA53487560B</key>
 		<string>bitbucket.org:digicrafts/advertisingane.git</string>
+		<key>78EFEB2F3C12FF38F83D106B99C306C91EF9CBC2</key>
+		<string>https://github.com/AdColony/AdColony-iOS-SDK.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>ios/Advertising.xcodeproj</string>
@@ -19,6 +21,8 @@
 	<dict>
 		<key>65209B9492335C1C8CBD8AD1D1BE7CA53487560B</key>
 		<string>../../..</string>
+		<key>78EFEB2F3C12FF38F83D106B99C306C91EF9CBC2</key>
+		<string>../../../vendor/AdColony-iOS-SDK/</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>bitbucket.org:digicrafts/advertisingane.git</string>
@@ -28,6 +32,14 @@
 	<string>65209B9492335C1C8CBD8AD1D1BE7CA53487560B</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>78EFEB2F3C12FF38F83D106B99C306C91EF9CBC2</string>
+			<key>IDESourceControlWCCName</key>
+			<string>AdColony-iOS-SDK</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

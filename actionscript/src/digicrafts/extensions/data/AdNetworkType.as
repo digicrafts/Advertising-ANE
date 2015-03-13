@@ -13,6 +13,11 @@ public class AdNetworkType {
     public static const INMOBI:String           ='inmobi';
     public static const SAMSUNG:String          ='samsung';
     public static const BACKFILL:String         ='backfill';
+    public static const ADCOLONY:String         ='adcolony';
+    public static const PLAYHAVEN:String        ='playhaven';
+    public static const UNITY:String            ='unity';
+    public static const REVMOB:String           ='revmob';
+    public static const CHARTBOOST:String       ='chartboost';
 
     ad_internal static const OFFLINE_NETWORK:Object = {
         'backfill':true

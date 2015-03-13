@@ -30,5 +30,7 @@
         <packagedDependency>SpeechKit.framework</packagedDependency>
         <packagedDependency>AmazonAd.framework</packagedDependency>
         <packagedDependency>AmazonInsightsSDK.framework</packagedDependency>
+        <packagedDependency>RevMobAds.framework</packagedDependency>
+        <!--<packagedDependency>AdColony.framework</packagedDependency>-->
     </packagedDependencies>
 </platform>

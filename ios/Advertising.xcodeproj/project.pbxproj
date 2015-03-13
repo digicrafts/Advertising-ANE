@@ -8,8 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E007C7EA1A7784EC00FA954A /* RevMobAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E007C7E91A7784EC00FA954A /* RevMobAds.framework */; };
-		E007C7ED1A77852900FA954A /* RevmobBanner.h in Sources */ = {isa = PBXBuildFile; fileRef = E007C7EB1A77852900FA954A /* RevmobBanner.h */; };
-		E007C7EE1A77852900FA954A /* RevmobBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = E007C7EC1A77852900FA954A /* RevmobBanner.m */; };
+		E007C7EE1A77852900FA954A /* RevMobBannerAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E007C7EC1A77852900FA954A /* RevMobBannerAdapter.m */; };
 		E012408319BBE642002C94C4 /* IMBanner.h in Headers */ = {isa = PBXBuildFile; fileRef = E012407719BBE642002C94C4 /* IMBanner.h */; };
 		E012408419BBE642002C94C4 /* IMBannerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E012407819BBE642002C94C4 /* IMBannerDelegate.h */; };
 		E012408519BBE642002C94C4 /* IMConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = E012407919BBE642002C94C4 /* IMConstants.h */; };
@@ -35,6 +34,8 @@
 		E01240A619BC45EF002C94C4 /* MMInterstitialAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E01240A419BC45EF002C94C4 /* MMInterstitialAdapter.m */; };
 		E01240A919BDAE82002C94C4 /* InMobiInterstitialAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = E01240A719BDAE82002C94C4 /* InMobiInterstitialAdapter.h */; };
 		E01240AA19BDAE82002C94C4 /* InMobiInterstitialAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E01240A819BDAE82002C94C4 /* InMobiInterstitialAdapter.m */; };
+		E01ABFDE1AB2B00000A9EA8D /* RevMobInterstitialAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E01ABFDC1AB2B00000A9EA8D /* RevMobInterstitialAdapter.m */; };
+		E01ABFE01AB2B05300A9EA8D /* RevMobAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01ABFDF1AB2B05300A9EA8D /* RevMobAds.framework */; };
 		E0848B8419AC318800FB4930 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0848B8319AC318800FB4930 /* Foundation.framework */; };
 		E0848B8619AC318800FB4930 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0848B8519AC318800FB4930 /* CoreFoundation.framework */; };
 		E0848B8819AC318800FB4930 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0848B8719AC318800FB4930 /* UIKit.framework */; };
@@ -74,8 +75,8 @@
 
 /* Begin PBXFileReference section */
 		E007C7E91A7784EC00FA954A /* RevMobAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RevMobAds.framework; sourceTree = "<group>"; };
-		E007C7EB1A77852900FA954A /* RevmobBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = RevmobBanner.h; path = adapter/RevmobBanner.h; sourceTree = "<group>"; };
-		E007C7EC1A77852900FA954A /* RevmobBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RevmobBanner.m; path = adapter/RevmobBanner.m; sourceTree = "<group>"; };
+		E007C7EB1A77852900FA954A /* RevMobBannerAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = RevMobBannerAdapter.h; path = adapter/RevMobBannerAdapter.h; sourceTree = "<group>"; };
+		E007C7EC1A77852900FA954A /* RevMobBannerAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RevMobBannerAdapter.m; path = adapter/RevMobBannerAdapter.m; sourceTree = "<group>"; };
 		E012407719BBE642002C94C4 /* IMBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMBanner.h; sourceTree = "<group>"; };
 		E012407819BBE642002C94C4 /* IMBannerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMBannerDelegate.h; sourceTree = "<group>"; };
 		E012407919BBE642002C94C4 /* IMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMConstants.h; sourceTree = "<group>"; };
@@ -101,6 +102,11 @@
 		E01240A419BC45EF002C94C4 /* MMInterstitialAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMInterstitialAdapter.m; path = adapter/MMInterstitialAdapter.m; sourceTree = "<group>"; };
 		E01240A719BDAE82002C94C4 /* InMobiInterstitialAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InMobiInterstitialAdapter.h; path = adapter/InMobiInterstitialAdapter.h; sourceTree = "<group>"; };
 		E01240A819BDAE82002C94C4 /* InMobiInterstitialAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InMobiInterstitialAdapter.m; path = adapter/InMobiInterstitialAdapter.m; sourceTree = "<group>"; };
+		E01AAA221AB3123D00268299 /* AdColonyInterstitialAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = AdColonyInterstitialAdapter.h; path = adapter/AdColonyInterstitialAdapter.h; sourceTree = "<group>"; };
+		E01AAA231AB3123D00268299 /* AdColonyInterstitialAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdColonyInterstitialAdapter.m; path = adapter/AdColonyInterstitialAdapter.m; sourceTree = "<group>"; };
+		E01ABFDB1AB2B00000A9EA8D /* RevMobInterstitialAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = RevMobInterstitialAdapter.h; path = adapter/RevMobInterstitialAdapter.h; sourceTree = "<group>"; };
+		E01ABFDC1AB2B00000A9EA8D /* RevMobInterstitialAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RevMobInterstitialAdapter.m; path = adapter/RevMobInterstitialAdapter.m; sourceTree = "<group>"; };
+		E01ABFDF1AB2B05300A9EA8D /* RevMobAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevMobAds.framework; path = "../vendor/revmob-ios-sdk/RevMobAds.framework"; sourceTree = "<group>"; };
 		E0848B8019AC318800FB4930 /* libAdvertising.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAdvertising.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0848B8319AC318800FB4930 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E0848B8519AC318800FB4930 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -196,6 +202,7 @@
 				E0848B9619AC318800FB4930 /* OpenGLES.framework in Frameworks */,
 				E0848B9019AC318800FB4930 /* AudioToolbox.framework in Frameworks */,
 				E007C7EA1A7784EC00FA954A /* RevMobAds.framework in Frameworks */,
+				E01ABFE01AB2B05300A9EA8D /* RevMobAds.framework in Frameworks */,
 				E0848B8E19AC318800FB4930 /* SystemConfiguration.framework in Frameworks */,
 				E0848B8419AC318800FB4930 /* Foundation.framework in Frameworks */,
 				E0848B9E19AC318800FB4930 /* AVFoundation.framework in Frameworks */,
@@ -255,6 +262,7 @@
 		E0848B8219AC318800FB4930 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E01ABFDF1AB2B05300A9EA8D /* RevMobAds.framework */,
 				E012409D19BC2CBC002C94C4 /* StoreKit.framework */,
 				E012409B19BC2CA2002C94C4 /* PassKit.framework */,
 				E012409919BC2C8F002C94C4 /* MediaPlayer.framework */,
@@ -372,6 +380,8 @@
 		E0E2AD7A19B0480E0097D303 /* adapter */ = {
 			isa = PBXGroup;
 			children = (
+				E01AAA221AB3123D00268299 /* AdColonyInterstitialAdapter.h */,
+				E01AAA231AB3123D00268299 /* AdColonyInterstitialAdapter.m */,
 				E0E2AD8319B04A410097D303 /* AdmobBannerAdapter.h */,
 				E0E2AD8419B04A410097D303 /* AdmobBannerAdapter.m */,
 				E0E2AD9719B2C29B0097D303 /* AdmobInterstitialAdapter.h */,
@@ -396,8 +406,10 @@
 				E0BCEBD619E5443E00975F97 /* BackFillBannerAdapter.m */,
 				E0BF36CE19E7B5A4004FBCD0 /* BackFillInterstitialAdapter.h */,
 				E0BF36CF19E7B5A4004FBCD0 /* BackFillInterstitialAdapter.m */,
-				E007C7EB1A77852900FA954A /* RevmobBanner.h */,
-				E007C7EC1A77852900FA954A /* RevmobBanner.m */,
+				E007C7EB1A77852900FA954A /* RevMobBannerAdapter.h */,
+				E007C7EC1A77852900FA954A /* RevMobBannerAdapter.m */,
+				E01ABFDB1AB2B00000A9EA8D /* RevMobInterstitialAdapter.h */,
+				E01ABFDC1AB2B00000A9EA8D /* RevMobInterstitialAdapter.m */,
 			);
 			name = adapter;
 			sourceTree = "<group>";
@@ -483,11 +495,11 @@
 				E0E2AD9A19B2C29B0097D303 /* AdmobInterstitialAdapter.m in Sources */,
 				E0BCEBD819E5443E00975F97 /* BackFillBannerAdapter.m in Sources */,
 				E0E2AD7E19B0484B0097D303 /* AbstractAdAdapter.m in Sources */,
+				E01ABFDE1AB2B00000A9EA8D /* RevMobInterstitialAdapter.m in Sources */,
 				E0E2AD8E19B1D9260097D303 /* IAdBannerAdapter.m in Sources */,
 				E0E2AD8619B04A410097D303 /* AdmobBannerAdapter.m in Sources */,
-				E007C7ED1A77852900FA954A /* RevmobBanner.h in Sources */,
 				E012409219BBE6FC002C94C4 /* InMobiBannerAdapter.m in Sources */,
-				E007C7EE1A77852900FA954A /* RevmobBanner.m in Sources */,
+				E007C7EE1A77852900FA954A /* RevMobBannerAdapter.m in Sources */,
 				E01240A619BC45EF002C94C4 /* MMInterstitialAdapter.m in Sources */,
 				E012409619BC2A97002C94C4 /* MMBannerAdapter.m in Sources */,
 				E0E2AD8A19B0913B0097D303 /* AmazonBannerAdapter.m in Sources */,
@@ -561,6 +573,8 @@
 					"$(PROJECT_DIR)/AdNetworkSupport/Amazon",
 					"$(PROJECT_DIR)/AdNetworkSupport/Millennial",
 					"$(PROJECT_DIR)/AdNetworkSupport/RevMob",
+					"/Users/tsangwailam/Documents/Digicrafts/ane/Advertisting-ANE/vendor/revmob-ios-sdk",
+					"/Users/tsangwailam/Documents/Digicrafts/ane/Advertisting-ANE/vendor/AdColony-iOS-SDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Advertising/Advertising-Prefix.pch";
@@ -584,6 +598,8 @@
 					"$(PROJECT_DIR)/AdNetworkSupport/Amazon",
 					"$(PROJECT_DIR)/AdNetworkSupport/Millennial",
 					"$(PROJECT_DIR)/AdNetworkSupport/RevMob",
+					"/Users/tsangwailam/Documents/Digicrafts/ane/Advertisting-ANE/vendor/revmob-ios-sdk",
+					"/Users/tsangwailam/Documents/Digicrafts/ane/Advertisting-ANE/vendor/AdColony-iOS-SDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Advertising/Advertising-Prefix.pch";

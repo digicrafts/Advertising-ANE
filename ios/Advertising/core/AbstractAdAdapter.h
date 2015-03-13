@@ -16,6 +16,12 @@
 #define kNetworkTypeAMAZON              @"amazon"
 #define kNetworkTypeINMOBI              @"inmobi"
 #define kNetworkTypeBACKFILL            @"backfill"
+//
+#define kNetworkTypeADCOLONY            @"adcolony"
+#define kNetworkTypePLAYHAVEN           @"playhaven"
+#define kNetworkTypeUNITY               @"unity"
+#define kNetworkTypeREVMOB              @"revmob"
+#define kNetworkTypeCHARTBOOST          @"chartboost"
 
 
 #define kAdAdapterSizeINTERSTITIAL     @"interstitial" //interstitial
